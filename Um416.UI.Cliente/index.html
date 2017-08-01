@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Um416 - Cliente</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!--Estilos-->
+    <link href="./css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./css/lumen.min.css" rel="stylesheet" />
+    <link href="./css/on-loading.css" rel="stylesheet" />
+    <link href="./css/custom.css" rel="stylesheet" />
+    <link href="./css/dashboard.css" rel="stylesheet" />
+    <link href="./css/ionicons.min.css" rel="stylesheet" />
+    <link href="./css/font-awesome.min.css" rel="stylesheet" />
+
+    <!--Scripts-->
+    <script src="./js/angular.min.js"></script>
+    <script src="./js/angular-ui-router.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/moment.js"></script>
+    <script src="./js/moment-timezone.js"></script>
+    <script src="./js/moment-pt-br.js"></script>
+    <script src="./js/angular-moment.min.js"></script>
+    <script src="./js/angular-input-masks-standalone.min.js"></script>
+    <script src="./js/angular-br-filters.min.js"></script>
+    <script src="./js/ui-bootstrap.js"></script>
+    <script src="./js/custom.js"></script>
+</head>
+<body ng-app="ngApp">
+    <div ng-controller="homeController as vm" ng-init="vm.init(); isNavCollapsed = true;">
+        <nav class="navbar navbar-fixed-top navbar-inverse" ng-show="login != null">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header" style="position: relative;">
+                            <button type="button" class="navbar-toggle" ng-click="isNavCollapsed = !isNavCollapsed">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a ng-click="isNavCollapsed = true;" class="navbar-brand" ui-sref="home"><img src="./images/Logo.svg" style="max-height: 24px" class="img-responsive" /></a>
+                            <a ui-sref="notificacoes" class="navbar-brand" style="position: absolute; right: 60px;">
+                                <i class="fa fa-bell-o"></i>
+                                <i ng-show="notificacoes != 0" class="fa fa-circle text-danger" style="position: absolute; right: 12px; bottom: 12px; font-size: 12px;"></i>
+                            </a>
+                            <a ui-sref="chamados" class="navbar-brand" style="position: absolute; right: 95px;">
+                                <i class="fa fa-life-ring"></i>
+                                <i ng-show="chamados != 0" class="fa fa-circle text-danger" style="position: absolute; right: 12px; bottom: 12px; font-size: 12px;"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
+                            <ul class="nav navbar-nav" ng-show="!isNavCollapsed">
+                                <li><strong>Navegação</strong></li>
+                                <li ng-click="isNavCollapsed = true;"><a ui-sref="home"><i class="fa fa-home"></i> Home</a></li>
+                                <li ng-click="isNavCollapsed = true;"><a ui-sref="notificacoes"><i class="fa fa-bell-o"></i> Notificações</a></li>
+                                <li><strong>Menu</strong></li>
+                            </ul>
+                        </div>
+
+                        <div class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+                                        <i class="fa fa-user-circle-o"></i> {{login.Nome}}
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li ng-click="isNavCollapsed = true;"><a ui-sref="perfil"><i class="fa fa-id-card-o"></i> Alterar Perfil</a></li>
+                                        <li ng-click="isNavCollapsed = true;"><a ui-sref="alterar-senha"><i class="fa fa-key"></i> Alterar Senha</a></li>
+                                    </ul>
+                                </li>
+                                <li ng-click="isNavCollapsed = true;"><a ui-sref="logout" ng-click="vm.logout();"><i class="fa fa-sign-out"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar" ng-controller="homeController as vm" ng-show="login != null">
+                <ul class="nav nav-sidebar" style="padding: 0 10px;">
+                    <li>
+                        <img src="././images/Logo.svg" class="img-responsive" />
+                        <br />
+                    </li>
+                    <li><strong>Navegação</strong></li>
+                    <li ng-click="isNavCollapsed = true;" class="active" ui-sref-active="active">
+                        <a ui-sref="home"><i class="fa fa-home"></i> Home</a>
+                    </li>
+                    <li ng-click="isNavCollapsed = true;" class="active" ui-sref-active="active">
+                        <a ui-sref="notificacoes">
+                            <i class="fa fa-bell-o"></i> Notificações
+                            <span ng-show="notificacoes != 0" class="badge progress-bar-danger pull-right">{{notificacoes}}</span>
+                        </a>
+                    </li>
+                    <li ng-click="isNavCollapsed = true;" class="active" ui-sref-active="active">
+                        <a ui-sref="chamados">
+                            <i class="fa fa-life-ring"></i> Chamados
+                            <span ng-show="chamados != 0" class="badge progress-bar-danger pull-right">{{chamados}}</span>
+                        </a>
+                    </li>
+                    <li><strong>Menu</strong></li>
+                </ul>
+            </div>
+            <div ng-class="{'col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main': login != null}">
+                <ui-view></ui-view>
+            </div>
+        </div>
+    </div>
+
+    <on-loading>
+        <on-content>
+            <div class="panel panel-default">
+                <div class="panel-body text-center" style="padding: 10px;">
+                    <i class="ion-load-c fa fa-5x fa-spin"></i>
+                    <br />
+                    Carregando...
+                </div>
+            </div>
+        </on-content>
+    </on-loading>
+
+    <!--Scripts App-->
+    <script src="./configs/app.config.js"></script>
+    <script src="./configs/route.config.js"></script>
+
+    <script src="./directives/ngMatch.directive.js"></script>
+    <script src="./directives/on-loading.directive.js"></script>
+
+    <script src="./controllers/login.controller.js"></script>
+    <script src="./controllers/home.controller.js"></script>
+    <script src="./controllers/usuarios.controller.js"></script>
+    <script src="./controllers/notificacoes.controller.js"></script>
+    <script src="./controllers/chamados.controller.js"></script>
+
+    <script src="./services/login.service.js"></script>
+    <script src="./services/usuarios.service.js"></script>
+    <script src="./services/ufs.service.js"></script>
+    <script src="./services/notificacoes.service.js"></script>
+    <script src="./services/chamados.service.js"></script>
+</body>
+</html>

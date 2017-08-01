@@ -1,0 +1,172 @@
+﻿<div ng-controller="usuariosController as vm" ng-init="vm.find();">
+    <div class="alert alert-danger" ng-show="vm.error != null">
+        {{vm.error}}
+    </div>
+
+    <form name="usuarioForm" ng-submit="vm.saveProfile()">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="modal-title"><i class="fa fa-id-card-o"></i> Alterar Perfil</h4>
+            </div>
+            <div class="panel-body">
+                <blockquote>
+                    Dados pessoais
+                </blockquote>
+
+                <div class="row">
+                    <div class="form-group col-sm-6 col-md-9">
+                        <label>Nome Completo <span class="text-primary">*</span></label>
+                        <input type="text" class="form-control" placeholder="João da Silva" name="nome" ng-model="vm.usuario.Nome" required />
+                        <p class="text-danger" ng-show="usuarioForm.nome.$invalid && !usuarioForm.nome.$pristine">
+                            Campo obrigatório.
+                        </p>
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>CPF<span class="text-primary">*</span></label>
+                        <input type="text" class="form-control" placeholder="000.000.000-00" name="cpf" ng-model="vm.usuario.Cpf" required ui-br-cpf-mask />
+                        <p class="text-danger" ng-show="usuarioForm.cpf.$error.required && !usuarioForm.cpf.$pristine">
+                            Campo obrigatório.
+                        </p>
+                        <p class="text-danger" ng-show="usuarioForm.cpf.$error.cpf && !usuarioForm.cpf.$pristine">
+                            CPF Inválido.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>RG</label>
+                        <input type="text" class="form-control" placeholder="00.000.000-0" name="rg" ng-model="vm.usuario.Rg" />
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>Sexo<span class="text-primary">*</span></label>
+                        <select class="form-control" name="sexo" ng-model="vm.usuario.Sexo" required>
+                            <option value="" disabled>Selecione</option>
+                            <option ng-selected="vm.usuario.Sexo == sexo.Id" ng-repeat="sexo in vm.sexos" value="{{sexo.Id}}" selected>{{sexo.Nome}}</option>
+                        </select>
+                        <p class="text-danger" ng-show="usuarioForm.sexo.$error.required && !usuarioForm.sexo.$pristine">
+                            Campo obrigatório.
+                        </p>
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>Data Nascimento<span class="text-primary">*</span></label>
+                        <input type="text" class="form-control" placeholder="00/00/0000" name="dataNascimento" ng-model="vm.usuario._DataNascimento" required ui-date-mask="DD/MM/YYYY" parse="false" />
+                        <p class="text-danger" ng-show="usuarioForm.dataNascimento.$error.required && !usuarioForm.dataNascimento.$pristine">
+                            Campo obrigatório.
+                        </p>
+                        <p class="text-danger" ng-show="usuarioForm.dataNascimento.$error.date && !usuarioForm.dataNascimento.$pristine">
+                            Informe uma data válida.
+                        </p>
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>Data Cadastro<span class="text-primary">*</span></label>
+                        <input type="text" class="form-control" placeholder="00/00/0000" ng-model="vm.usuario._DataCadastro" disabled />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label>E-Mail<span class="text-primary">*</span></label>
+                        <input type="text" class="form-control" placeholder="seuemail@seudominio.com" name="email" ng-model="vm.usuario.Email" required ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/" />
+                        <p class="text-danger" ng-show="usuarioForm.email.$error.required && !usuarioForm.email.$pristine">
+                            Campo obrigatório.
+                        </p>
+                        <p class="text-danger" ng-show="usuarioForm.email.$error.pattern && !usuarioForm.email.$pristine">
+                            Informe um endereço de e-mail válido.
+                        </p>
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>Telefone Fixo</label>
+                        <input type="text" class="form-control" placeholder="(00) 0000-0000" name="telFixo" ng-model="vm.usuario.TelFixo" ui-br-phone-number />
+                        <p class="text-danger" ng-show="usuarioForm.telFixo.$error.brPhoneNumber && !usuarioForm.telFixo.$pristine">
+                            Número Inválido.
+                        </p>
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>Telefone Móvel</label>
+                        <input type="text" class="form-control" placeholder="(00) 00000-0000" name="telMovel" ng-model="vm.usuario.TelMovel" ui-br-phone-number />
+                        <p class="text-danger" ng-show="usuarioForm.telMovel.$error.brPhoneNumber && !usuarioForm.telMovel.$pristine">
+                            Número Inválido.
+                        </p>
+                    </div>
+                </div>
+
+                <blockquote>
+                    Endereço
+                </blockquote>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label>Logradouro</label>
+                        <input type="text" class="form-control" placeholder="Rua Um" name="logradouro" ng-model="vm.usuario.Logradouro" />
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>Número</label>
+                        <input type="text" class="form-control" placeholder="100" name="numero" ng-model="vm.usuario.Numero" />
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>Complemento</label>
+                        <input type="text" class="form-control" placeholder="Térreo" name="complemento" ng-model="vm.usuario.Complemento" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>Bairro</label>
+                        <input type="text" class="form-control" placeholder="Centro" name="bairro" ng-model="vm.usuario.Bairro" />
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>Cidade</label>
+                        <input type="text" class="form-control" placeholder="São Paulo" name="cidade" ng-model="vm.usuario.Cidade" />
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>UF</label>
+                        <select class="form-control" name="sexo" ng-model="vm.usuario.Uf">
+                            <option value="">Selecione</option>
+                            <option ng-selected="vm.usuario.Uf == uf.Sigla" ng-repeat="uf in vm.ufs" value="{{uf.Sigla}}" selected>{{uf.Nome}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>CEP</label>
+                        <input type="text" class="form-control" placeholder="00000-000" name="cep" ng-model="vm.usuario.Cep" ui-br-cep-mask />
+                        <p class="text-danger" ng-show="usuarioForm.cep.$error.cep && !usuarioForm.cep.$pristine">
+                            CEP inválido.
+                        </p>
+                    </div>
+                </div>
+
+                <blockquote>
+                    Dados de acesso
+                </blockquote>
+
+                <div class="row">
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>Nome de Usuário<span class="text-primary">*</span></label>
+                        <input type="text" class="form-control" placeholder="Seu Login" name="login" ng-model="vm.usuario.Login" required ng-pattern="/^[a-zA-Z0-9_.]*$/" ng-trim="false" disabled />
+                        <p class="text-danger" ng-show="usuarioForm.login.$error.required && !usuarioForm.login.$pristine">
+                            Campo obrigatório.
+                        </p>
+                        <p class="text-danger" ng-show="usuarioForm.login.$error.pattern && !usuarioForm.login.$pristine">
+                            Este campo não pode conter espaços e caracteres especiais.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer text-right">
+                <button type="submit" class="btn btn-sm btn-primary" ng-disabled="usuarioForm.$invalid || vm.areSubmitting"><i class="fa fa-check"></i> Salvar</button>
+                <a ui-sref="home" class="btn btn-sm btn-default"><i class="fa fa-ban"></i> Cancelar</a>
+            </div>
+        </div>
+    </form>
+</div>

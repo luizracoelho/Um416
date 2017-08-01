@@ -1,0 +1,43 @@
+﻿<div class="vcenter-parent" ng-init="vm.init();">
+    <div class="col-md-4 col-sm-6 col-xs-10 vcenter">
+
+        <div class="alert alert-danger" ng-show="vm.error != null">
+            {{vm.error}}
+        </div>
+
+        <div class="panel panel-default">
+            <form name="formLogin" ng-submit="vm.autenticar()">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <img src="./images/Logo.svg" class="img-responsive center-block" />
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            <label>Login <span class="text-primary">*</span></label>
+                            <input type="text" class="form-control" placeholder="Seu Login" name="login" ng-model="vm.login" required />
+                            <p class="text-danger" ng-show="formLogin.login.$invalid && !formLogin.login.$pristine">
+                                Campo obrigatório.
+                            </p>
+                        </div>
+
+                        <div class="form-group col-xs-12">
+                            <label>Senha <span class="text-primary">*</span></label>
+                            <input type="password" class="form-control" placeholder="Sua Senha" name="senha" ng-model="vm.senha" required />
+                            <p class="text-danger" ng-show="formLogin.senha.$invalid && !formLogin.senha.$pristine">
+                                Campo obrigatório.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer text-center">
+                    <button type="submit" class="btn btn-sm btn-primary" ng-disabled="formLogin.$invalid || vm.areSubmitting"><i class="fa fa-check"></i> Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

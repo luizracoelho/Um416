@@ -1,0 +1,186 @@
+﻿<div ng-controller="usuariosController as vm" ng-init="vm.list();">
+    <div class="alert alert-danger" ng-show="vm.error != null">
+        {{vm.error}}
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <button type="button" ng-click="vm.add();" class="btn btn-sm btn-success pull-right"><i class="fa fa-plus"></i> Adicionar</button>
+            <h4><i class="fa fa-user"></i> Usuários</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6" ng-show="vm.showGrid()">
+                    <span class="input-group">
+                        <input type="text" ng-model="filtro" placeholder="Pesquisar" class="form-control" />
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12" ng-show="!vm.showGrid()">
+                    <h5>
+                        Nenhum registro encontrado!
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-condensed table-hover" ng-show="vm.showGrid()">
+                <thead>
+                    <tr class="active">
+                        <th>Login</th>
+                        <th>Nome</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="usuario in vm.usuarios | filter: filtro" class="text-nowrap">
+                        <td>{{usuario.Login}}</td>
+                        <td>{{usuario.Nome}}</td>
+                        <td class="text-nowrap" style="width: 1%;">
+                            <span ng-show="usuario.Login != login.Login">
+                                <button class="btn btn-sm btn-primary" ng-click="vm.find(usuario.Id)"><i class="fa fa-refresh"></i> Atualizar</button>
+                                <button class="btn btn-sm btn-danger" ng-click="vm.find(usuario.Id, true)"><i class="fa fa-remove"></i> Remover</button>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modalDetails" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form name="usuarioForm" ng-submit="vm.save()">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-user"></i> {{vm.modalTitle}} Usuário</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger" ng-show="vm.errorDetail != null">
+                            {{vm.errorDetail}}
+                        </div>
+
+                        <blockquote>
+                            Dados pessoais
+                        </blockquote>
+
+                        <div class="row">
+                            <div class="form-group col-sm-6 col-md-9">
+                                <label>Nome Completo <span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="João da Silva" name="nome" ng-model="vm.usuario.Nome" required />
+                                <p class="text-danger" ng-show="usuarioForm.nome.$invalid && !usuarioForm.nome.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>CPF<span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="000.000.000-00" name="cpf" ng-model="vm.usuario.Cpf" required ui-br-cpf-mask />
+                                <p class="text-danger" ng-show="usuarioForm.cpf.$error.required && !usuarioForm.cpf.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                                <p class="text-danger" ng-show="usuarioForm.cpf.$error.cpf && !usuarioForm.cpf.$pristine">
+                                    CPF Inválido.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label>E-Mail<span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="seuemail@seudominio.com" name="email" ng-model="vm.usuario.Email" required ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/" />
+                                <p class="text-danger" ng-show="usuarioForm.email.$error.required && !usuarioForm.email.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                                <p class="text-danger" ng-show="usuarioForm.email.$error.pattern && !usuarioForm.email.$pristine">
+                                    Informe um endereço de e-mail válido.
+                                </p>
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Telefone Fixo</label>
+                                <input type="text" class="form-control" placeholder="(00) 0000-0000" name="telFixo" ng-model="vm.usuario.TelFixo" ui-br-phone-number />
+                                <p class="text-danger" ng-show="usuarioForm.telFixo.$error.brPhoneNumber && !usuarioForm.telFixo.$pristine">
+                                    Número Inválido.
+                                </p>
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Telefone Móvel</label>
+                                <input type="text" class="form-control" placeholder="(00) 00000-0000" name="telMovel" ng-model="vm.usuario.TelMovel" ui-br-phone-number />
+                                <p class="text-danger" ng-show="usuarioForm.telMovel.$error.brPhoneNumber && !usuarioForm.telMovel.$pristine">
+                                    Número Inválido.
+                                </p>
+                            </div>
+                        </div>
+
+                        <blockquote>
+                            Dados de acesso
+                        </blockquote>
+
+                        <div class="row">
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Nome de Usuário<span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="Seu Login" name="login" ng-model="vm.usuario.Login" required ng-pattern="/^[a-zA-Z0-9_.]*$/" ng-trim="false" ng-disabled="vm.usuario.Id != 0" />
+                                <p class="text-danger" ng-show="usuarioForm.login.$error.required && !usuarioForm.login.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                                <p class="text-danger" ng-show="usuarioForm.login.$error.pattern && !usuarioForm.login.$pristine">
+                                    Este campo não pode conter espaços e caracteres especiais.
+                                </p>
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3" ng-if="vm.usuario.Id == 0">
+                                <label>Senha <span class="text-primary">*</span></label>
+                                <input type="password" class="form-control" placeholder="Sua Senha" name="senha" ng-model="vm.usuario.Senha" required />
+                                <p class="text-danger" ng-show="usuarioForm.senha.$invalid && !usuarioForm.senha.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3" ng-if="vm.usuario.Id == 0">
+                                <label>Confirme sua Senha<span class="text-primary">*</span></label>
+                                <input type="password" class="form-control" placeholder="Confirme sua Senha" name="confirmarSenha" ng-model="vm.usuario.ConfirmarSenha" required ng-match="vm.usuario.Senha" />
+                                <p class="text-danger" ng-show="usuarioForm.confirmarSenha.$error.match">
+                                    As senhas não coincidem.
+                                </p>
+
+                                <p class="text-danger" ng-show="usuarioForm.confirmarSenha.$error.required && !usuarioForm.confirmarSenha.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-primary" ng-disabled="usuarioForm.$invalid || vm.areSubmitting"><i class="fa fa-check"></i> Salvar</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalRemove" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-user"></i> Remover Usuário</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Confirma a remoção do usuário <strong>{{vm.usuario.Nome}} ({{vm.usuario.Login}})</strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" ng-click="vm.remove();" ng-disabled="vm.areSubmitting"><i class="fa fa-remove"></i> Remover</button>
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

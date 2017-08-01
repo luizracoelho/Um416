@@ -1,0 +1,47 @@
+﻿<div ng-controller="notificacoesController as vm" ng-init="vm.list();">
+    <div class="alert alert-danger" ng-show="vm.error != null">
+        {{vm.error}}
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4><i class="fa fa-bell-o"></i> Notificações</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6" ng-show="vm.showGrid()">
+                    <span class="input-group">
+                        <input type="text" ng-model="filtro" placeholder="Pesquisar" class="form-control" />
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12" ng-show="!vm.showGrid()">
+                    <h5>
+                        Nenhum registro encontrado!
+                    </h5>
+                </div>
+
+                <div ng-show="vm.showGrid();">
+                    <hr />
+                    <div class="col-md-6 col-lg-4" ng-repeat="notificacao in vm.notificacoes | filter: filtro">
+                        <div class="panel" ng-class="notificacao.Lida ? 'panel-default' : 'panel-secondary'">
+                            <div class="panel-heading">
+                                {{notificacao.Titulo}}
+                                <small class="pull-right">{{notificacao.DataHora | date : "dd/MM/yyyy HH:mm"}}</small>
+                            </div>
+                            <div class="panel-body">
+                                {{notificacao.Mensagem}}
+                            </div>
+                            <div class="panel-footer text-right">
+                                <button class="btn btn-sm btn-default" ng-show="notificacao.Lida" ng-click="vm.read(notificacao.Id)"><i class="fa fa-eye"></i> Marcar como não lida</button>
+                                <button class="btn btn-sm btn-primary" ng-show="!notificacao.Lida" ng-click="vm.read(notificacao.Id)"><i class="fa fa-eye-slash"></i> Marcar como lida</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
