@@ -44,12 +44,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="controllers\chamados.controller.js" />
+    <Content Include="controllers\loteamentos.controller.js" />
     <Content Include="controllers\notificacoes.controller.js" />
     <Content Include="controllers\login.controller.js" />
     <Content Include="controllers\clientes.controller.js" />
     <Content Include="controllers\usuarios.controller.js" />
     <Content Include="css\ionicons.min.css" />
     <Content Include="css\lumen.min.css" />
+    <Content Include="directives\filereader.directive.js" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -96,8 +98,10 @@
     <Content Include="services\login.service.js" />
     <Content Include="services\clientes.service.js" />
     <Content Include="services\ufs.service.js" />
+    <Content Include="services\loteamentos.service.js" />
     <Content Include="services\usuarios.service.js" />
     <Content Include="views\chamados.view.html" />
+    <Content Include="views\loteamentos.view.html" />
     <Content Include="views\notificacoes.view.html" />
     <Content Include="views\home.view.html" />
     <Content Include="views\login.view.html" />

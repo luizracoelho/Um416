@@ -60,6 +60,7 @@
                                 <li><strong>Menu</strong></li>
                                 <li ng-click="isNavCollapsed = true;"><a ui-sref="usuarios"><i class="fa fa-user"></i> Usuários</a></li>
                                 <li ng-click="isNavCollapsed = true;"><a ui-sref="clientes"><i class="fa fa-briefcase"></i> Clientes</a></li>
+                                <li ng-click="isNavCollapsed = true;"><a ui-sref="loteamentos"><i class="fa fa-cube"></i> Loteamentos</a></li>
                             </ul>
                         </div>
 
@@ -111,6 +112,9 @@
                     <li ng-click="isNavCollapsed = true;" ui-sref-active="active">
                         <a ui-sref="clientes"><i class="fa fa-briefcase"></i> Clientes</a>
                     </li>
+                    <li ng-click="isNavCollapsed = true;" ui-sref-active="active">
+                        <a ui-sref="loteamentos"><i class="fa fa-cube"></i> Loteamentos</a>
+                    </li>
                 </ul>
             </div>
             <div ng-class="{'col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main': login != null}">
@@ -137,6 +141,7 @@
 
     <script src="./directives/ngMatch.directive.js"></script>
     <script src="./directives/on-loading.directive.js"></script>
+    <script src="./directives/filereader.directive.js"></script>
 
     <script src="./controllers/login.controller.js"></script>
     <script src="./controllers/home.controller.js"></script>
@@ -144,6 +149,7 @@
     <script src="./controllers/clientes.controller.js"></script>
     <script src="./controllers/notificacoes.controller.js"></script>
     <script src="./controllers/chamados.controller.js"></script>
+    <script src="./controllers/loteamentos.controller.js"></script>
 
     <script src="./services/login.service.js"></script>
     <script src="./services/usuarios.service.js"></script>
@@ -151,5 +157,6 @@
     <script src="./services/ufs.service.js"></script>
     <script src="./services/notificacoes.service.js"></script>
     <script src="./services/chamados.service.js"></script>
+    <script src="./services/loteamentos.service.js"></script>
 </body>
 </html>

@@ -15,6 +15,9 @@ namespace Um416.DAL.Mappings.Register
                 config.AddMap(new LeituraNotificacaoMap());
                 config.AddMap(new ChamadoMap());
                 config.AddMap(new IteracaoChamadoMap());
+                config.AddMap(new ImagemMap());
+                config.AddMap(new LoteamentoMap());
+                config.AddMap(new LoteMap());
 
                 config.ForDommel();
             });

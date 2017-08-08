@@ -55,12 +55,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChamadoRepository.cs" />
+    <Compile Include="ImagemRepository.cs" />
     <Compile Include="Interfaces\IBaseRepository.cs" />
     <Compile Include="IteracaoChamadoRepository.cs" />
     <Compile Include="LeituraNotificacaoRepository.cs" />
+    <Compile Include="LoteamentoRepository.cs" />
+    <Compile Include="LoteRepository.cs" />
+    <Compile Include="Mappings\ImagemMap.cs" />
     <Compile Include="Mappings\IteracaoChamadoMap.cs" />
     <Compile Include="Mappings\ChamadoMap.cs" />
     <Compile Include="Mappings\LeituraNotificacaoMap.cs" />
+    <Compile Include="Mappings\LoteamentoMap.cs" />
+    <Compile Include="Mappings\LoteMap.cs" />
     <Compile Include="Mappings\NotificacaoMap.cs" />
     <Compile Include="Mappings\UsuarioAdminMap.cs" />
     <Compile Include="Mappings\UsuarioClienteMap.cs" />

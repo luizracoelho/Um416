@@ -44,10 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\BaseLogic.cs" />
+    <Compile Include="ImagemLogic.cs" />
     <Compile Include="Interfaces\IBaseLogic.cs" />
     <Compile Include="IteracaoChamadoLogic.cs" />
     <Compile Include="LeituraNotificacaoLogic.cs" />
     <Compile Include="ChamadoLogic.cs" />
+    <Compile Include="LoteamentoLogic.cs" />
+    <Compile Include="LoteLogic.cs" />
     <Compile Include="NotificacaoLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\Crypt.cs" />

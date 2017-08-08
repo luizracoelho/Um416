@@ -114,6 +114,18 @@
                 }
             };
 
+            var loteamentosState = {
+                url: '/loteamentos',
+                templateUrl: 'views/loteamentos.view.html',
+                controller: 'loteamentosController',
+                controllerAs: 'vm',
+                resolve: {
+                    auth: function (loginService) {
+                        loginService.authorize();
+                    }
+                }
+            };
+
             $stateProvider.state("login", loginState);
             $stateProvider.state("logout", logoutState);
             $stateProvider.state("home", homeState);
@@ -123,6 +135,7 @@
             $stateProvider.state("clientes", clientesState);
             $stateProvider.state("notificacoes", notificacoesState);
             $stateProvider.state("chamados", chamadosState);
+            $stateProvider.state("loteamentos", loteamentosState);
 
             //Outras rotas
             $urlRouterProvider.otherwise('/');

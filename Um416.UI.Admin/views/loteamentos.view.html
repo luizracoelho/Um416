@@ -1,0 +1,178 @@
+﻿<div ng-controller="loteamentosController as vm" ng-init="vm.list();">
+    <div class="alert alert-danger" ng-show="vm.error != null">
+        {{vm.error}}
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <button type="button" ng-click="vm.add();" class="btn btn-sm btn-success pull-right"><i class="fa fa-plus"></i> Adicionar</button>
+            <h4><i class="fa fa-cube"></i> Loteamentos</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6" ng-show="vm.showGrid()">
+                    <span class="input-group">
+                        <input type="text" ng-model="filtro" placeholder="Pesquisar" class="form-control" />
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12" ng-show="!vm.showGrid()">
+                    <h5>
+                        Nenhum registro encontrado!
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-condensed table-hover" ng-show="vm.showGrid()">
+                <thead>
+                    <tr class="active">
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Data Cadastro</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="loteamento in vm.loteamentos | filter: filtro" class="text-nowrap">
+                        <td>{{loteamento.Id}}</td>
+                        <td>{{loteamento.Nome}}</td>
+                        <td>{{loteamento.DataCadastro | date : "dd/MM/yyyy"}}</td>
+                        <td class="text-nowrap" style="width: 1%;">
+                            <button class="btn btn-sm btn-primary" ng-click="vm.find(loteamento.Id)"><i class="fa fa-refresh"></i> Atualizar</button>
+                            <button class="btn btn-sm btn-danger" ng-click="vm.find(loteamento.Id, true)"><i class="fa fa-remove"></i> Remover</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modalDetails" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form name="loteamentoForm" ng-submit="vm.save()">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-cube"></i> {{vm.modalTitle}} Loteamento</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger" ng-show="vm.errorDetail != null">
+                            {{vm.errorDetail}}
+                        </div>
+
+                        <blockquote>
+                            Informações
+                        </blockquote>
+
+                        <div class="row">
+                            <div class="form-group col-sm-6 col-md-9">
+                                <label>Nome <span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="Residencial Moriá" name="nome" ng-model="vm.loteamento.Nome" required />
+                                <p class="text-danger" ng-show="loteamentoForm.nome.$invalid && !loteamentoForm.nome.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Data Cadastro<span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="00/00/0000" ng-model="vm.loteamento._DataCadastro" disabled />
+                            </div>
+
+                            <div class="form-group col-xs-12">
+                                <label>Descrição<span class="text-primary">*</span></label>
+                                <textarea class="form-control" placeholder="Lotes residencias e comerciais..." name="descricao" ng-model="vm.loteamento.Descricao" rows="5" required></textarea>
+                                <p class="text-danger" ng-show="loteamentoForm.descricao.$error.required && !loteamentoForm.descricao.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                            </div>
+                        </div>
+
+                        <blockquote>
+                            Endereço
+                        </blockquote>
+
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label>Logradouro</label>
+                                <input type="text" class="form-control" placeholder="Rua Um" name="logradouro" ng-model="vm.loteamento.Logradouro" />
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Número</label>
+                                <input type="text" class="form-control" placeholder="100" name="numero" ng-model="vm.loteamento.Numero" />
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Bairro</label>
+                                <input type="text" class="form-control" placeholder="Centro" name="bairro" ng-model="vm.loteamento.Bairro" />
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label>Cidade</label>
+                                <input type="text" class="form-control" placeholder="São Paulo" name="cidade" ng-model="vm.loteamento.Cidade" />
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>UF</label>
+                                <select class="form-control" name="sexo" ng-model="vm.loteamento.Uf">
+                                    <option value="">Selecione</option>
+                                    <option ng-selected="vm.loteamento.Uf == uf.Sigla" ng-repeat="uf in vm.ufs" value="{{uf.Sigla}}" selected>{{uf.Nome}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>CEP</label>
+                                <input type="text" class="form-control" placeholder="00000-000" name="cep" ng-model="vm.loteamento.Cep" ui-br-cep-mask />
+                                <p class="text-danger" ng-show="loteamentoForm.cep.$error.cep && !loteamentoForm.cep.$pristine">
+                                    CEP inválido.
+                                </p>
+                            </div>
+                        </div>
+
+                        <input type="file" accept=".svg" ng-model="vm.loteamento.Mapa.Source" file-reader="vm.mapa" class="btn pull-right" />
+                        <blockquote>
+                            Mapa
+                        </blockquote>
+
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <img src="{{vm.mapa}}" class="img-responsive center-block" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-primary" ng-disabled="loteamentoForm.$invalid || vm.areSubmitting"><i class="fa fa-check"></i> Salvar</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalRemove" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-cube"></i> Remover Loteamento</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" ng-show="vm.errorDetail != null">
+                        {{vm.errorDetail}}
+                    </div>
+
+                    <p>Confirma a remoção do loteamento <strong>#{{vm.loteamento.Id}} {{vm.loteamento.Nome}}</strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" ng-click="vm.remove();" ng-disabled="vm.areSubmitting"><i class="fa fa-remove"></i> Remover</button>
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

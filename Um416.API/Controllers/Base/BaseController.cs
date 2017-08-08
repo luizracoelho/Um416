@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
+using Um416.API.Interfaces;
 using Um416.BLL.Interfaces;
 using Um416.Interfaces;
 
 namespace Um416.API.Controllers.Base
 {
-    public class BaseController<T, TBO> : ApiController
+    public class BaseController<T, TBO> : ApiController, IBaseController<T, TBO>
         where T : class, IBaseClass
         where TBO : class, IBaseLogic<T>, new()
     {
