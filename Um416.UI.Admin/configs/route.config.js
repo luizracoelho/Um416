@@ -126,6 +126,18 @@
                 }
             };
 
+            var lotesState = {
+                url: '/lotes',
+                templateUrl: 'views/lotes.view.html',
+                controller: 'lotesController',
+                controllerAs: 'vm',
+                resolve: {
+                    auth: function (loginService) {
+                        loginService.authorize();
+                    }
+                }
+            };
+
             $stateProvider.state("login", loginState);
             $stateProvider.state("logout", logoutState);
             $stateProvider.state("home", homeState);
@@ -136,6 +148,7 @@
             $stateProvider.state("notificacoes", notificacoesState);
             $stateProvider.state("chamados", chamadosState);
             $stateProvider.state("loteamentos", loteamentosState);
+            $stateProvider.state("lotes", lotesState);
 
             //Outras rotas
             $urlRouterProvider.otherwise('/');

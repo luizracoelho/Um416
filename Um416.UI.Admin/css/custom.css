@@ -106,3 +106,8 @@ blockquote {
 .navbar {
     z-index: 999 !important;
 }
+
+/*Remover option vazia dos selects*/
+select option:empty {
+    display: none;
+}

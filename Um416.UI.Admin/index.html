@@ -16,6 +16,7 @@
 
     <!--Scripts-->
     <script src="./js/angular.min.js"></script>
+    <script src="./js/angular-locale_pt-br.js"></script>
     <script src="./js/angular-ui-router.js"></script>
     <script src="./js/jquery.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
@@ -61,6 +62,7 @@
                                 <li ng-click="isNavCollapsed = true;"><a ui-sref="usuarios"><i class="fa fa-user"></i> Usuários</a></li>
                                 <li ng-click="isNavCollapsed = true;"><a ui-sref="clientes"><i class="fa fa-briefcase"></i> Clientes</a></li>
                                 <li ng-click="isNavCollapsed = true;"><a ui-sref="loteamentos"><i class="fa fa-cube"></i> Loteamentos</a></li>
+                                <li ng-click="isNavCollapsed = true;"><a ui-sref="lotes"><i class="fa fa-cubes"></i> Lotes</a></li>
                             </ul>
                         </div>
 
@@ -115,6 +117,9 @@
                     <li ng-click="isNavCollapsed = true;" ui-sref-active="active">
                         <a ui-sref="loteamentos"><i class="fa fa-cube"></i> Loteamentos</a>
                     </li>
+                    <li ng-click="isNavCollapsed = true;" ui-sref-active="active">
+                        <a ui-sref="lotes"><i class="fa fa-cubes"></i> Lotes</a>
+                    </li>
                 </ul>
             </div>
             <div ng-class="{'col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main': login != null}">
@@ -150,6 +155,7 @@
     <script src="./controllers/notificacoes.controller.js"></script>
     <script src="./controllers/chamados.controller.js"></script>
     <script src="./controllers/loteamentos.controller.js"></script>
+    <script src="./controllers/lotes.controller.js"></script>
 
     <script src="./services/login.service.js"></script>
     <script src="./services/usuarios.service.js"></script>
@@ -158,5 +164,6 @@
     <script src="./services/notificacoes.service.js"></script>
     <script src="./services/chamados.service.js"></script>
     <script src="./services/loteamentos.service.js"></script>
+    <script src="./services/lotes.service.js"></script>
 </body>
 </html>

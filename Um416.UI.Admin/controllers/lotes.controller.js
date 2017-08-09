@@ -3,18 +3,24 @@
 
     angular
         .module('ngApp')
-        .controller('loteamentosController', loteamentosController);
+        .controller('lotesController', lotesController)
 
-    function loteamentosController($scope, loteamentosService, ufsService) {
+    function lotesController($scope, lotesService, loteamentosService, ufsService) {
         var vm = this;
+
+        //Definir tipos de loteamento
+        vm.TIPOLOTE_LOTEAMENTO = 0;
+        vm.TIPOLOTE_AVULSO = 1;
 
         vm.areSubmitting = false;
 
         vm.showGrid = function () {
-            return vm.loteamentos != null && vm.loteamentos.length != 0;
+            return vm.lotes != null && vm.lotes.length != 0;
         }
 
-        vm.list = function () {
+        vm.init = function () {
+            vm.loteamentoId = null;
+
             loteamentosService
                 .list()
                 .then(function (loteamentos) {
@@ -30,50 +36,84 @@
                 }, function (error) {
                     vm.error = error;
                 });
+        }
+
+        vm.list = function () {
+            lotesService
+                .list(vm.loteamentoSelected.Id)
+                .then(function (lotes) {
+                    vm.lotes = lotes;
+                }, function (error) {
+                    vm.error = error;
+                });
+        };
+
+        vm.select = function () {
+            vm.error = null;
+            vm.loteamentoSelected = vm.loteamentos.filter(x => x.Id == vm.loteamentoId)[0];
+
+            if (vm.loteamentoSelected == null) {
+                vm.loteamentoSelected = {
+                    Id: null,
+                    Nome: 'Lotes Avulsos'
+                };
+                vm.tipoLote = vm.TIPOLOTE_AVULSO;
+            }
+            else {
+                loteamentosService
+                    .find(vm.loteamentoSelected.Id)
+                    .then(function (loteamento) {
+                        vm.loteamentoSelected = loteamento;
+                    }, function (error) {
+                        vm.error = error;
+                    });
+                vm.tipoLote = vm.TIPOLOTE_LOTEAMENTO;
+            }
+
+            vm.list();
+        };
+
+        vm.deselect = function () {
+            vm.error = null;
+            vm.loteamentoSelected = null;
         };
 
         vm.limparCampos = function () {
             vm.errorDetail = null;
-            vm.loteamento = {
+            vm.lote = {
                 Id: 0,
                 Nome: null,
+                Codigo: null,
+                Area: null,
+                Valor: null,
+                TipoLote: null,
                 Descricao: null,
-                Mapa: null,
-                DataCadastro: moment().format('DD/MM/YYYY'),
-                _DataCadastro: moment().format('DD/MM/YYYY'),
                 Logradouro: null,
                 Numero: null,
+                Complemento: null,
                 Bairro: null,
                 Cidade: null,
                 Uf: null,
-                Cep: null
+                Cep: null,
+                LoteamentoId: null
             };
-            $scope.loteamentoForm.$setPristine();
-            $('input[type=file]').val(null);
-            vm.mapa = null;
+            $scope.loteForm.$setPristine();
         }
 
         vm.add = function () {
             vm.modalTitle = 'Adicionar';
-
             vm.limparCampos();
-
             $('#modalDetails').modal('show');
         }
 
         vm.find = function (id, isRemoving = false) {
             if (id != null)
-                loteamentosService
+                lotesService
                     .find(id)
-                    .then(function (loteamento) {
+                    .then(function (lote) {
                         vm.limparCampos();
 
-                        vm.loteamento = loteamento;
-
-                        vm.loteamento._DataCadastro = vm.loteamento.DataCadastro.toJsDate();
-                        vm.mapa = vm.loteamento.Mapa != null ? vm.loteamento.Mapa.Source : null;
-
-                        $scope.loteamentoForm.$setPristine();
+                        vm.lote = lote;
 
                         if (!isRemoving) {
                             vm.modalTitle = 'Atualizar';
@@ -91,12 +131,15 @@
         vm.save = function () {
             vm.areSubmitting = true;
 
-            vm.loteamento.Mapa = {
-                Source : vm.mapa
-            };
+            //Informar o tipo do lote
+            vm.lote.TipoLote = vm.tipoLote;
 
-            loteamentosService
-                .save(vm.loteamento)
+            //Informar a qual loteamento o lote pertence
+            if (vm.tipoLote == vm.TIPOLOTE_LOTEAMENTO)
+                vm.lote.LoteamentoId = vm.loteamentoSelected.Id;
+
+            lotesService
+                .save(vm.lote)
                 .then(function () {
                     vm.areSubmitting = false;
                     vm.list();
@@ -110,8 +153,8 @@
 
         vm.remove = function () {
             vm.areSubmitting = true;
-            loteamentosService
-                .remove(vm.loteamento.Id)
+            lotesService
+                .remove(vm.lote.Id)
                 .then(function () {
                     vm.areSubmitting = false;
                     vm.list();

@@ -44,6 +44,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="controllers\chamados.controller.js" />
+    <Content Include="controllers\lotes.controller.js" />
     <Content Include="controllers\loteamentos.controller.js" />
     <Content Include="controllers\notificacoes.controller.js" />
     <Content Include="controllers\login.controller.js" />
@@ -83,6 +84,7 @@
     <Content Include="index.html" />
     <Content Include="js\angular-br-filters.min.js" />
     <Content Include="js\angular-input-masks-standalone.min.js" />
+    <Content Include="js\angular-locale_pt-br.js" />
     <Content Include="js\angular-moment.min.js" />
     <Content Include="js\angular-ui-router.js" />
     <Content Include="js\angular.min.js" />
@@ -94,6 +96,7 @@
     <Content Include="js\moment.js" />
     <Content Include="js\ui-bootstrap.js" />
     <Content Include="services\chamados.service.js" />
+    <Content Include="services\lotes.service.js" />
     <Content Include="services\notificacoes.service.js" />
     <Content Include="services\login.service.js" />
     <Content Include="services\clientes.service.js" />
@@ -101,6 +104,7 @@
     <Content Include="services\loteamentos.service.js" />
     <Content Include="services\usuarios.service.js" />
     <Content Include="views\chamados.view.html" />
+    <Content Include="views\lotes.view.html" />
     <Content Include="views\loteamentos.view.html" />
     <Content Include="views\notificacoes.view.html" />
     <Content Include="views\home.view.html" />
