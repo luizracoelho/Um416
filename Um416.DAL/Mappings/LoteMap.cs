@@ -9,6 +9,7 @@ namespace Um416.DAL.Mappings
             ToTable("Lotes");
 
             Map(x => x.Id).ToColumn("Id").IsKey().IsIdentity();
+            Map(x => x.Nome).ToColumn("Nome");
             Map(x => x.Codigo).ToColumn("Codigo");
             Map(x => x.Descricao).ToColumn("Descricao");
             Map(x => x.Area).ToColumn("Area");

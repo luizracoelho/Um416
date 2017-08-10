@@ -5,6 +5,7 @@ namespace Um416
 {
     public class Lote : BaseClass
     {
+        public string Nome { get; set; }
         public string Codigo { get; set; }
         public string Descricao { get; set; }
         public decimal Area { get; set; }

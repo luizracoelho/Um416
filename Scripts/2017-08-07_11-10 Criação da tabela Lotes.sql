@@ -3,6 +3,7 @@ CREATE TABLE Lotes
 (
 	Id bigint NOT NULL IDENTITY PRIMARY KEY,
 	Codigo varchar(100) NOT NULL,
+	Nome varchar(100),
 	Descricao varchar(max) NOT NULL,
 	Area decimal(18, 2) NOT NULL,
 	Valor decimal(18, 2) NOT NULL,
