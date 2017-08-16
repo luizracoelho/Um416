@@ -35,18 +35,18 @@
         vm.limparCampos = function () {
             vm.errorDetail = null;
             vm.loteamento = {
-                Id: 0,
-                Nome: null,
-                Descricao: null,
-                Mapa: null,
-                DataCadastro: moment().format('DD/MM/YYYY'),
-                _DataCadastro: moment().format('DD/MM/YYYY'),
-                Logradouro: null,
-                Numero: null,
-                Bairro: null,
-                Cidade: null,
-                Uf: null,
-                Cep: null
+                id: 0,
+                nome: null,
+                descricao: null,
+                mapa: null,
+                dataCadastro: moment().format('DD/MM/YYYY'),
+                _dataCadastro: moment().format('DD/MM/YYYY'),
+                logradouro: null,
+                numero: null,
+                bairro: null,
+                cidade: null,
+                uf: null,
+                cep: null
             };
             $scope.loteamentoForm.$setPristine();
             $('input[type=file]').val(null);
@@ -70,8 +70,8 @@
 
                         vm.loteamento = loteamento;
 
-                        vm.loteamento._DataCadastro = vm.loteamento.DataCadastro.toJsDate();
-                        vm.mapa = vm.loteamento.Mapa != null ? vm.loteamento.Mapa.Source : null;
+                        vm.loteamento._dataCadastro = vm.loteamento.dataCadastro.toJsDate();
+                        vm.mapa = vm.loteamento.mapa != null ? vm.loteamento.mapa.source : null;
 
                         $scope.loteamentoForm.$setPristine();
 
@@ -91,8 +91,8 @@
         vm.save = function () {
             vm.areSubmitting = true;
 
-            vm.loteamento.Mapa = {
-                Source : vm.mapa
+            vm.loteamento.mapa = {
+                source : vm.mapa
             };
 
             loteamentosService
@@ -111,7 +111,7 @@
         vm.remove = function () {
             vm.areSubmitting = true;
             loteamentosService
-                .remove(vm.loteamento.Id)
+                .remove(vm.loteamento.id)
                 .then(function () {
                     vm.areSubmitting = false;
                     vm.list();

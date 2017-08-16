@@ -33,8 +33,13 @@
     <Reference Include="Onsoft.Security">
       <HintPath>..\Dlls\Onsoft.Security.dll</HintPath>
     </Reference>
+    <Reference Include="Svg, Version=2.2.1.39233, Culture=neutral, PublicKeyToken=12a0bac221edeae2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Svg.2.3.0\lib\net35\Svg.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,12 +58,15 @@
     <Compile Include="LoteLogic.cs" />
     <Compile Include="NotificacaoLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\Area.cs" />
     <Compile Include="Tools\Crypt.cs" />
     <Compile Include="UfLogic.cs" />
     <Compile Include="UsuarioClienteLogic.cs" />
     <Compile Include="UsuarioAdminLogic.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Um416.DAL\02 - Um416.DAL.csproj">
       <Project>{2b57f0c6-b34f-4e26-be1f-a5a1336e654b}</Project>

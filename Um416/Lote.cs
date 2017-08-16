@@ -20,5 +20,7 @@ namespace Um416
         public string Cep { get; set; }
         public virtual Loteamento Loteamento { get; set; }
         public long? LoteamentoId { get; set; }
+        //Esta propriedade não está sendo mapeada no banco, somente serve para mostrar ícones na interface gráfica
+        public StatusAdicao StatusAdicao { get; set; }
     }
 }

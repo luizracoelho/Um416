@@ -25,7 +25,7 @@
             if (login != null) {
                 $http({
                     method: "get",
-                    url: baseUrl + `chamados/${login.Id}/list`,
+                    url: baseUrl + `chamados/${login.id}/list`,
                     headers: { 'Authorization': loginService.getToken() }
                 })
                     .then(function success(resp) {
@@ -63,7 +63,7 @@
         function save(chamado, iteracao) {
             var def = $q.defer();
 
-            chamado.ClienteId = loginService.getLogin().Id;
+            chamado.clienteId = loginService.getLogin().id;
 
             $http({
                 method: "post",
@@ -77,7 +77,7 @@
                 .then(function success(resp) {
                     def.resolve("Chamado salvo com sucesso.");
                 }, function error(err) {
-                    def.reject(err.data.ExceptionMessage);
+                    def.reject(err.data.exceptionMessage);
 
                     if (err.status == 401)
                         loginService.logout();
@@ -98,7 +98,7 @@
                 .then(function success(resp) {
                     def.resolve("Chamado encerrado com sucesso.");
                 }, function error(err) {
-                    def.reject(err.data.ExceptionMessage);
+                    def.reject(err.data.exceptionMessage);
 
                     if (err.status == 401)
                         loginService.logout();

@@ -14,7 +14,7 @@
             chamadosService
                 .list()
                 .then(function (chamados) {
-                    $rootScope.chamados = chamados.filter(x => !x.Encerrado).length;
+                    $rootScope.chamados = chamados.filter(x => !x.encerrado).length;
                 }, function (error) {
                     $rootScope.chamados = 0;
                 });

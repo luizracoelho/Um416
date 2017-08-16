@@ -39,14 +39,14 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="notificacao in vm.notificacoes | filter: filtro" class="text-nowrap">
-                        <td>{{notificacao.Id}}</td>
-                        <td>{{notificacao.Titulo}}</td>
-                        <td>{{notificacao.Mensagem}}</td>
-                        <td>{{notificacao.DataHora | date : "dd/MM/yyyy HH:mm"}}</td>
+                        <td>{{notificacao.id}}</td>
+                        <td>{{notificacao.titulo}}</td>
+                        <td>{{notificacao.mensagem}}</td>
+                        <td>{{notificacao.dataHora | date : "dd/MM/yyyy HH:mm"}}</td>
                         <td class="text-nowrap" style="width: 1%;">
-                            <button class="btn btn-sm btn-primary" ng-click="vm.find(notificacao.Id)"><i class="fa fa-refresh"></i> Atualizar</button>
-                            <button class="btn btn-sm btn-success" ng-click="vm.find(notificacao.Id, 'duplicar')"><i class="fa fa-clone"></i> Duplicar</button>
-                            <button class="btn btn-sm btn-danger" ng-click="vm.find(notificacao.Id, 'remover')"><i class="fa fa-remove"></i> Remover</button>
+                            <button class="btn btn-sm btn-primary" ng-click="vm.find(notificacao.id)"><i class="fa fa-refresh"></i> Atualizar</button>
+                            <button class="btn btn-sm btn-success" ng-click="vm.find(notificacao.id, 'duplicar')"><i class="fa fa-clone"></i> Duplicar</button>
+                            <button class="btn btn-sm btn-danger" ng-click="vm.find(notificacao.id, 'remover')"><i class="fa fa-remove"></i> Remover</button>
                         </td>
                     </tr>
                 </tbody>
@@ -74,7 +74,7 @@
                         <div class="row">
                             <div class="form-group col-sm-6 col-md-9">
                                 <label>Título <span class="text-primary">*</span></label>
-                                <input type="text" class="form-control" placeholder="Seja bem vindo" name="titulo" ng-model="vm.notificacao.Titulo" required />
+                                <input type="text" class="form-control" placeholder="Seja bem vindo" name="titulo" ng-model="vm.notificacao.titulo" required />
                                 <p class="text-danger" ng-show="notificacaoForm.titulo.$invalid && !notificacaoForm.titulo.$pristine">
                                     Campo obrigatório.
                                 </p>
@@ -82,14 +82,14 @@
 
                             <div class="form-group col-sm-6 col-md-3">
                                 <label>Data/Hora<span class="text-primary">*</span></label>
-                                <input type="text" class="form-control" placeholder="00/00/0000 00:00" ng-model="vm.notificacao._DataHora" disabled />
+                                <input type="text" class="form-control" placeholder="00/00/0000 00:00" ng-model="vm.notificacao._dataHora" disabled />
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group col-xs-12">
                                 <label>Mensagem<span class="text-primary">*</span></label>
-                                <textarea class="form-control" placeholder="Estamos muito felizes com sua aquisição..." name="mensagem" ng-model="vm.notificacao.Mensagem" rows="5" required>
+                                <textarea class="form-control" placeholder="Estamos muito felizes com sua aquisição..." name="mensagem" ng-model="vm.notificacao.mensagem" rows="5" required>
                                 </textarea>
                                 <p class="text-danger" ng-show="notificacaoForm.mensagem.$error.required && !notificacaoForm.mensagem.$pristine">
                                     Campo obrigatório.
@@ -118,7 +118,7 @@
                         {{vm.errorDetail}}
                     </div>
 
-                    <p>Confirma a remoção da notificação <strong>#{{vm.notificacao.Id}} {{vm.notificacao.Titulo}}</strong>?</p>
+                    <p>Confirma a remoção da notificação <strong>#{{vm.notificacao.id}} {{vm.notificacao.titulo}}</strong>?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" ng-click="vm.remove();" ng-disabled="vm.areSubmitting"><i class="fa fa-remove"></i> Remover</button>

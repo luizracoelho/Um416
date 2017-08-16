@@ -14,7 +14,7 @@
                         <optgroup label="Avulsos"></optgroup>
                         <option value="">Lotes Avulsos</option>
                         <optgroup label="Cadastrados"></optgroup>
-                        <option ng-repeat="loteamento in vm.loteamentos" value="{{loteamento.Id}}" selected>{{loteamento.Nome}}</option>
+                        <option ng-repeat="loteamento in vm.loteamentos" value="{{loteamento.id}}" selected>{{loteamento.nome}}</option>
                     </select>
                 </div>
             </div>
@@ -27,12 +27,12 @@
     <div class="panel panel-default" ng-if="vm.loteamentoSelected != null">
         <div class="panel-heading">
             <button type="button" ng-click="vm.add();" class="btn btn-sm btn-success pull-right"><i class="fa fa-plus"></i><span class="hidden-xs"> Adicionar</span></button>
-            <button type="button" ng-click="vm.import();" class="btn btn-sm btn-primary pull-right" style="margin-right: 10px;" title="Importar os lotes do mapa" ng-if="vm.tipoLote == vm.TIPOLOTE_LOTEAMENTO && vm.loteamentoSelected.MapaId != null"><i class="fa fa-download"></i><span class="hidden-xs"> Importar <small>(Em desenv.)</small></span></button>
+            <button type="button" ng-click="vm.import();" class="btn btn-sm btn-primary pull-right" style="margin-right: 10px;" title="Importar os lotes do mapa" ng-if="vm.tipoLote == vm.TIPOLOTE_LOTEAMENTO && vm.loteamentoSelected.mapaId != null"><i class="fa fa-download"></i><span class="hidden-xs"> Importar</span></button>
             <button type="button" ng-click="vm.deselect();" class="btn btn-sm btn-default pull-right" style="margin-right: 10px;"><i class="fa fa-arrow-left"></i><span class="hidden-xs"> Voltar</span></button>
             <h4>
                 <i class="fa fa-cubes"></i> Lotes
                 <br />
-                <small class="text-nowrap"><i class="fa fa-cube"></i> {{vm.loteamentoSelected.Nome}}</small>
+                <small class="text-nowrap"><i class="fa fa-cube"></i> {{vm.loteamentoSelected.nome}}</small>
             </h4>
         </div>
         <div class="panel-body">
@@ -67,14 +67,14 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="lote in vm.lotes | filter: filtro" class="text-nowrap">
-                        <td>{{lote.Id}}</td>
-                        <td ng-if="vm.tipoLote == vm.TIPOLOTE_AVULSO">{{lote.Nome}}</td>
-                        <td>{{lote.Codigo}}</td>
-                        <td>{{lote.Area | number}}m²</td>
-                        <td>{{lote.Valor | currency}}</td>
+                        <td>{{lote.id}}</td>
+                        <td ng-if="vm.tipoLote == vm.TIPOLOTE_AVULSO">{{lote.nome}}</td>
+                        <td>{{lote.codigo}}</td>
+                        <td>{{lote.area | number}}m²</td>
+                        <td>{{lote.valor | currency}}</td>
                         <td class="text-nowrap" style="width: 1%;">
-                            <button class="btn btn-sm btn-primary" ng-click="vm.find(lote.Id)"><i class="fa fa-refresh"></i> Atualizar</button>
-                            <button class="btn btn-sm btn-danger" ng-click="vm.find(lote.Id, true)"><i class="fa fa-remove"></i> Remover</button>
+                            <button class="btn btn-sm btn-primary" ng-click="vm.find(lote.id)"><i class="fa fa-refresh"></i> Atualizar</button>
+                            <button class="btn btn-sm btn-danger" ng-click="vm.find(lote.id, true)"><i class="fa fa-remove"></i> Remover</button>
                         </td>
                     </tr>
                 </tbody>
@@ -85,7 +85,7 @@
     <div id="modalDetails" class="modal fade" role="dialog" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form name="loteForm" ng-submit="vm.save()">
+                <form name="loteForm" ng-submit="vm.saveImport()">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title"><i class="fa fa-cubes"></i> {{vm.modalTitle}} Lote</h4>
@@ -102,7 +102,7 @@
                         <div class="row">
                             <div class="form-group col-md-8" ng-if="vm.tipoLote == vm.TIPOLOTE_AVULSO">
                                 <label>Nome <span class="text-primary">*</span></label>
-                                <input type="text" class="form-control" placeholder="Casa Padrão" name="nome" ng-model="vm.lote.Nome" required />
+                                <input type="text" class="form-control" placeholder="Casa Padrão" name="nome" ng-model="vm.lote.nome" required />
                                 <p class="text-danger" ng-show="loteForm.nome.$invalid && !loteForm.nome.$pristine">
                                     Campo obrigatório.
                                 </p>
@@ -112,7 +112,7 @@
                         <div class="row">
                             <div class="form-group col-sm-6 col-md-4">
                                 <label>Número <span class="text-primary">*</span></label>
-                                <input type="text" class="form-control" placeholder="0" name="codigo" ng-model="vm.lote.Codigo" required />
+                                <input type="text" class="form-control" placeholder="0" name="codigo" ng-model="vm.lote.codigo" required />
                                 <p class="text-danger" ng-show="loteForm.codigo.$invalid && !loteForm.codigo.$pristine">
                                     Campo obrigatório.
                                 </p>
@@ -121,7 +121,7 @@
                             <div class="form-group col-sm-6 col-md-4">
                                 <label>Área <span class="text-primary">*</span></label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="0" name="area" ng-model="vm.lote.Area" required ui-number-mask="0" />
+                                    <input type="text" class="form-control" placeholder="0" name="area" ng-model="vm.lote.area" required ui-number-mask="0" />
                                     <span class="input-group-addon">m²</span>
                                 </div>
                                 <p class="text-danger" ng-show="loteForm.area.$invalid && !loteForm.area.$pristine">
@@ -133,7 +133,7 @@
                                 <label>Valor <span class="text-primary">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-addon">R$</span>
-                                    <input type="text" class="form-control" placeholder="0,00" name="valor" ng-model="vm.lote.Valor" required ui-number-mask />
+                                    <input type="text" class="form-control" placeholder="0,00" name="valor" ng-model="vm.lote.valor" required ui-number-mask />
                                 </div>
                                 <p class="text-danger" ng-show="loteForm.valor.$invalid && !loteForm.valor.$pristine">
                                     Campo obrigatório.
@@ -142,7 +142,7 @@
 
                             <div class="form-group col-xs-12">
                                 <label>Descrição<span class="text-primary">*</span></label>
-                                <textarea class="form-control" placeholder="3 quartos, 2 banheiros, garagem..." name="descricao" ng-model="vm.lote.Descricao" rows="3" required></textarea>
+                                <textarea class="form-control" placeholder="3 quartos, 2 banheiros, garagem..." name="descricao" ng-model="vm.lote.descricao" rows="3" required></textarea>
                                 <p class="text-danger" ng-show="loteForm.descricao.$error.required && !loteForm.descricao.$pristine">
                                     Campo obrigatório.
                                 </p>
@@ -157,40 +157,40 @@
                             <div class="row">
                                 <div class="form-group col-sm-6">
                                     <label>Logradouro</label>
-                                    <input type="text" class="form-control" placeholder="Rua Um" name="logradouro" ng-model="vm.lote.Logradouro" />
+                                    <input type="text" class="form-control" placeholder="Rua Um" name="logradouro" ng-model="vm.lote.logradouro" />
                                 </div>
 
                                 <div class="form-group col-sm-6 col-md-3">
                                     <label>Número</label>
-                                    <input type="text" class="form-control" placeholder="100" name="numero" ng-model="vm.lote.Numero" />
+                                    <input type="text" class="form-control" placeholder="100" name="numero" ng-model="vm.lote.numero" />
                                 </div>
 
                                 <div class="form-group col-sm-6 col-md-3">
                                     <label>Complemento</label>
-                                    <input type="text" class="form-control" placeholder="Casa" name="complemento" ng-model="vm.lote.Complemento" />
+                                    <input type="text" class="form-control" placeholder="Casa" name="complemento" ng-model="vm.lote.complemento" />
                                 </div>
 
                                 <div class="form-group col-sm-6 col-md-3">
                                     <label>Bairro</label>
-                                    <input type="text" class="form-control" placeholder="Centro" name="bairro" ng-model="vm.lote.Bairro" />
+                                    <input type="text" class="form-control" placeholder="Centro" name="bairro" ng-model="vm.lote.bairro" />
                                 </div>
 
                                 <div class="form-group col-sm-6 col-md-3">
                                     <label>Cidade</label>
-                                    <input type="text" class="form-control" placeholder="São Paulo" name="cidade" ng-model="vm.lote.Cidade" />
+                                    <input type="text" class="form-control" placeholder="São Paulo" name="cidade" ng-model="vm.lote.cidade" />
                                 </div>
 
                                 <div class="form-group col-sm-6 col-md-3">
                                     <label>UF</label>
-                                    <select class="form-control" name="sexo" ng-model="vm.lote.Uf">
+                                    <select class="form-control" name="sexo" ng-model="vm.lote.uf">
                                         <option value="">Selecione</option>
-                                        <option ng-selected="vm.lote.Uf == uf.Sigla" ng-repeat="uf in vm.ufs" value="{{uf.Sigla}}" selected>{{uf.Nome}}</option>
+                                        <option ng-selected="vm.lote.uf == uf.sigla" ng-repeat="uf in vm.ufs" value="{{uf.sigla}}" selected>{{uf.nome}}</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group col-sm-6 col-md-3">
                                     <label>CEP</label>
-                                    <input type="text" class="form-control" placeholder="00000-000" name="cep" ng-model="vm.lote.Cep" ui-br-cep-mask />
+                                    <input type="text" class="form-control" placeholder="00000-000" name="cep" ng-model="vm.lote.cep" ui-br-cep-mask />
                                     <p class="text-danger" ng-show="loteForm.cep.$error.cep && !loteForm.cep.$pristine">
                                         CEP inválido.
                                     </p>
@@ -200,6 +200,111 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-sm btn-primary" ng-disabled="loteForm.$invalid || vm.areSubmitting"><i class="fa fa-check"></i> Salvar</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalImport" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form name="loteMultipleForm" ng-submit="vm.saveMultiple()">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-cubes"></i> Importar Lote</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger" ng-show="vm.errorImport != null">
+                            {{vm.errorImport}}
+                        </div>
+
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" data-toggle="collapse" data-target="#valoresPadrao" ng-click="vm.valoresPadraoIsOpen=!vm.valoresPadraoIsOpen;" style="cursor: pointer;">
+                                    <span class="panel-title">Valores Padrão <i ng-class="vm.valoresPadraoIsOpen ? 'fa fa-angle-down' : 'fa fa-angle-right'" class="pull-right"></i></span>
+                                </div>
+                                <div id="valoresPadrao" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <table class="table table-condensed">
+                                            <caption>
+                                                <p>
+                                                    *Se você optar por definir os valores padrão, todos os lotes com a mesma área receberão a mesma informação definida aqui.
+                                                </p>
+                                            </caption>
+                                            <thead>
+                                                <tr class="active">
+                                                    <th>Área</th>
+                                                    <th>Valor</th>
+                                                    <th>Descrição</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="lote in vm.lotesDefault | filter: filtro" class="text-nowrap">
+                                                    <td class="col-md-2">{{lote.area}}m²</td>
+                                                    <td class="col-md-3" style="min-width: 150px;">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">R$</span>
+                                                            <input type="text" class="form-control" placeholder="0,00" ng-model="lote.valor" ui-number-mask />
+                                                        </div>
+                                                    </td>
+                                                    <td class="col-md-5" style="min-width: 250px;">
+                                                        <textarea class="form-control" placeholder="3 quartos, 2 banheiros, garagem..." ng-model="lote.descricao" rows="3"></textarea>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="panel-footer text-right">
+                                        <button type="button" class="btn btn-sm btn-primary" ng-click="vm.setDefault();" ng-disabled="vm.areSubmitting"><i class="fa fa-check"></i> Aplicar</button>
+                                        <button type="button" class="btn btn-sm btn-default" ng-click="vm.clearDefault();" ng-disabled="vm.areSubmitting"><i class="fa fa-ban"></i> Limpar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="panel panel-default">
+                                <div class="panel-heading" data-toggle="collapse" data-target="#lotesGerados" ng-init="vm.lotesIsOpen=true;" ng-click="vm.lotesIsOpen=!vm.lotesIsOpen;" style="cursor: pointer;">
+                                    <span class="panel-title">Lotes Gerados <i ng-class="vm.lotesIsOpen ? 'fa fa-angle-down' : 'fa fa-angle-right'" class="pull-right"></i></span>
+                                </div>
+                                <div id="lotesGerados" class="panel-collapse collapse in">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-condensed table-hover">
+                                            <thead>
+                                                <tr class="active">
+                                                    <th>Número</th>
+                                                    <th>Área</th>
+                                                    <th>Valor <span class="text-primary">*</span></th>
+                                                    <th>Descrição <span class="text-primary">*</span></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="lote in vm.lotesAdd | filter: filtro" class="text-nowrap">
+                                                    <td class="col-md-2">
+                                                        <i class="fa " ng-class="lote.statusAdicao == vm.STATUSADICAO_ADICAO ? 'fa-asterisk text-warning' : lote.statusAdicao == vm.STATUSADICAO_ALTERACAO ? 'fa-refresh text-primary' : 'fa-ban text-danger'" title="{{lote.statusAdicao == vm.STATUSADICAO_ADICAO ? 'Adição' : lote.statusAdicao == vm.STATUSADICAO_ALTERACAO ? 'Alteração' : 'Remoção'}}"></i>
+                                                        {{lote.codigo}}
+                                                    </td>
+                                                    <td class="col-md-2">{{lote.area}}m²</td>
+                                                    <td class="col-md-3" style="min-width: 150px;">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">R$</span>
+                                                            <input type="text" class="form-control" placeholder="0,00" ng-model="lote.valor" required ui-number-mask />
+                                                        </div>
+                                                    </td>
+                                                    <td class="col-md-5" style="min-width: 250px;">
+                                                        <textarea class="form-control" placeholder="3 quartos, 2 banheiros, garagem..." ng-model="lote.descricao" rows="3" required></textarea>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-primary" ng-disabled="vm.areSubmitting || loteMultipleForm.$invalid"><i class="fa fa-check"></i> Salvar</button>
                         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
                     </div>
                 </form>
@@ -219,7 +324,7 @@
                         {{vm.errorDetail}}
                     </div>
 
-                    <p>Confirma a remoção do lote <strong>#{{vm.lote.Id}} {{vm.lote.Codigo}}</strong>?</p>
+                    <p>Confirma a remoção do lote <strong>#{{vm.lote.id}} {{vm.lote.codigo}}</strong>?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" ng-click="vm.remove();" ng-disabled="vm.areSubmitting"><i class="fa fa-remove"></i> Remover</button>

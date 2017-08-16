@@ -26,17 +26,17 @@
                 <div ng-show="vm.showGrid();">
                     <hr />
                     <div class="col-md-6 col-lg-4" ng-repeat="notificacao in vm.notificacoes | filter: filtro">
-                        <div class="panel" ng-class="notificacao.Lida ? 'panel-default' : 'panel-secondary'">
+                        <div class="panel" ng-class="notificacao.lida ? 'panel-default' : 'panel-secondary'">
                             <div class="panel-heading">
-                                {{notificacao.Titulo}}
-                                <small class="pull-right">{{notificacao.DataHora | date : "dd/MM/yyyy HH:mm"}}</small>
+                                {{notificacao.titulo}}
+                                <small class="pull-right">{{notificacao.dataHora | date : "dd/MM/yyyy HH:mm"}}</small>
                             </div>
                             <div class="panel-body">
-                                {{notificacao.Mensagem}}
+                                {{notificacao.mensagem}}
                             </div>
                             <div class="panel-footer text-right">
-                                <button class="btn btn-sm btn-default" ng-show="notificacao.Lida" ng-click="vm.read(notificacao.Id)"><i class="fa fa-eye"></i> Marcar como não lida</button>
-                                <button class="btn btn-sm btn-primary" ng-show="!notificacao.Lida" ng-click="vm.read(notificacao.Id)"><i class="fa fa-eye-slash"></i> Marcar como lida</button>
+                                <button class="btn btn-sm btn-default" ng-show="notificacao.lida" ng-click="vm.read(notificacao.id)"><i class="fa fa-eye"></i> Marcar como não lida</button>
+                                <button class="btn btn-sm btn-primary" ng-show="!notificacao.lida" ng-click="vm.read(notificacao.id)"><i class="fa fa-eye-slash"></i> Marcar como lida</button>
                             </div>
                         </div>
                     </div>

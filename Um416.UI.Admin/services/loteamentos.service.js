@@ -68,7 +68,7 @@
             .then(function success(resp) {
                 def.resolve("Salvo com sucesso.");
             }, function error(err) {
-                def.reject(err.data.ExceptionMessage);
+                def.reject(err.data.exceptionMessage);
 
                 if (err.status == 401)
                     loginService.logout();
@@ -88,7 +88,7 @@
             .then(function success(resp) {
                 def.resolve("Removido com sucesso.");
             }, function error(err) {
-                def.reject(err.data.ExceptionMessage);
+                def.reject(err.data.exceptionMessage);
 
                 if (err.status == 401)
                     loginService.logout();

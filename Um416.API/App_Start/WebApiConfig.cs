@@ -1,4 +1,7 @@
-﻿using System.Web.Http;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System.Net.Http.Formatting;
+using System.Web.Http;
 using System.Web.Http.Cors;
 
 namespace Um416.API
@@ -12,8 +15,14 @@ namespace Um416.API
             var cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);
 
-            // Remover XML => Retornar Json como padrão
+            // Remover json xml
             config.Formatters.Remove(config.Formatters.XmlFormatter);
+            config.Formatters.Remove(config.Formatters.JsonFormatter);
+
+            // Configurar json como cammel case
+            var serializer = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
+            var formatter = new JsonMediaTypeFormatter { SerializerSettings = serializer };
+            config.Formatters.Add(formatter);
 
             // Web API routes
             config.MapHttpAttributeRoutes();

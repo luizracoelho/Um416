@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="form-group col-sm-6 col-md-9">
                         <label>Nome Completo <span class="text-primary">*</span></label>
-                        <input type="text" class="form-control" placeholder="João da Silva" name="nome" ng-model="vm.usuario.Nome" required />
+                        <input type="text" class="form-control" placeholder="João da Silva" name="nome" ng-model="vm.usuario.nome" required />
                         <p class="text-danger" ng-show="usuarioForm.nome.$invalid && !usuarioForm.nome.$pristine">
                             Campo obrigatório.
                         </p>
@@ -24,7 +24,7 @@
 
                     <div class="form-group col-sm-6 col-md-3">
                         <label>CPF<span class="text-primary">*</span></label>
-                        <input type="text" class="form-control" placeholder="000.000.000-00" name="cpf" ng-model="vm.usuario.Cpf" required ui-br-cpf-mask />
+                        <input type="text" class="form-control" placeholder="000.000.000-00" name="cpf" ng-model="vm.usuario.cpf" required ui-br-cpf-mask />
                         <p class="text-danger" ng-show="usuarioForm.cpf.$error.required && !usuarioForm.cpf.$pristine">
                             Campo obrigatório.
                         </p>
@@ -37,7 +37,7 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label>E-Mail<span class="text-primary">*</span></label>
-                        <input type="text" class="form-control" placeholder="seuemail@seudominio.com" name="email" ng-model="vm.usuario.Email" required ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/" />
+                        <input type="text" class="form-control" placeholder="seuemail@seudominio.com" name="email" ng-model="vm.usuario.email" required ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/" />
                         <p class="text-danger" ng-show="usuarioForm.email.$error.required && !usuarioForm.email.$pristine">
                             Campo obrigatório.
                         </p>
@@ -48,7 +48,7 @@
 
                     <div class="form-group col-sm-6 col-md-3">
                         <label>Telefone Fixo</label>
-                        <input type="text" class="form-control" placeholder="(00) 0000-0000" name="telFixo" ng-model="vm.usuario.TelFixo" ui-br-phone-number />
+                        <input type="text" class="form-control" placeholder="(00) 0000-0000" name="telFixo" ng-model="vm.usuario.telFixo" ui-br-phone-number />
                         <p class="text-danger" ng-show="usuarioForm.telFixo.$error.brPhoneNumber && !usuarioForm.telFixo.$pristine">
                             Número Inválido.
                         </p>
@@ -56,7 +56,7 @@
 
                     <div class="form-group col-sm-6 col-md-3">
                         <label>Telefone Móvel</label>
-                        <input type="text" class="form-control" placeholder="(00) 00000-0000" name="telMovel" ng-model="vm.usuario.TelMovel" ui-br-phone-number />
+                        <input type="text" class="form-control" placeholder="(00) 00000-0000" name="telMovel" ng-model="vm.usuario.telMovel" ui-br-phone-number />
                         <p class="text-danger" ng-show="usuarioForm.telMovel.$error.brPhoneNumber && !usuarioForm.telMovel.$pristine">
                             Número Inválido.
                         </p>
@@ -70,7 +70,7 @@
                 <div class="row">
                     <div class="form-group col-sm-6 col-md-3">
                         <label>Nome de Usuário<span class="text-primary">*</span></label>
-                        <input type="text" class="form-control" placeholder="Seu Login" name="login" ng-model="vm.usuario.Login" required ng-pattern="/^[a-zA-Z0-9_.]*$/" ng-trim="false" disabled />
+                        <input type="text" class="form-control" placeholder="Seu Login" name="login" ng-model="vm.usuario.login" required ng-pattern="/^[a-zA-Z0-9_.]*$/" ng-trim="false" disabled />
                         <p class="text-danger" ng-show="usuarioForm.login.$error.required && !usuarioForm.login.$pristine">
                             Campo obrigatório.
                         </p>

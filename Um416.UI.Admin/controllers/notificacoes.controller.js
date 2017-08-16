@@ -28,11 +28,11 @@
             vm.modalTitle = 'Adicionar';
             vm.errorDetail = null;
             vm.notificacao = {
-                Id: 0,
-                Titulo: null,
-                Mensagem: null,
-                DataHora: moment().format('DD/MM/YYYY HH:mm'),
-                _DataHora: moment().format('DD/MM/YYYY HH:mm')
+                id: 0,
+                titulo: null,
+                mensagem: null,
+                dataHora: moment().format('DD/MM/YYYY HH:mm'),
+                _dataHora: moment().format('DD/MM/YYYY HH:mm')
             };
             $scope.notificacaoForm.$setPristine();
             $('#modalDetails').modal('show');
@@ -45,7 +45,7 @@
                     .then(function (notificacao) {
                         vm.notificacao = notificacao;
 
-                        vm.notificacao._DataHora = vm.notificacao.DataHora.toJsDateTime();
+                        vm.notificacao._dataHora = vm.notificacao.dataHora.toJsDateTime();
 
                         $scope.notificacaoForm.$setPristine();
 
@@ -60,9 +60,9 @@
                             vm.errorDetail = null;
 
                             //Resetar os valores
-                            vm.notificacao.Id = 0;
-                            vm.notificacao.DataHora = moment().format('DD/MM/YYYY HH:mm');
-                            vm.notificacao._DataHora = moment().format('DD/MM/YYYY HH:mm');
+                            vm.notificacao.id = 0;
+                            vm.notificacao.dataHora = moment().format('DD/MM/YYYY HH:mm');
+                            vm.notificacao._dataHora = moment().format('DD/MM/YYYY HH:mm');
 
                             $('#modalDetails').modal('show');
                         }
@@ -77,7 +77,7 @@
         vm.save = function () {
             vm.areSubmitting = true;
 
-            vm.notificacao.DataHora = vm.notificacao._DataHora.toCsDateTime();
+            vm.notificacao.dataHora = vm.notificacao._dataHora.toCsDateTime();
 
             notificacoesService
                 .save(vm.notificacao)
@@ -95,7 +95,7 @@
         vm.remove = function () {
             vm.areSubmitting = true;
             notificacoesService
-                .remove(vm.notificacao.Id)
+                .remove(vm.notificacao.id)
                 .then(function () {
                     vm.areSubmitting = false;
                     vm.list();

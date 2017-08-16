@@ -59,7 +59,7 @@
         function save(chamado, iteracao) {
             var def = $q.defer();
 
-            iteracao.AdminId = loginService.getLogin().Id;
+            iteracao.adminId = loginService.getLogin().id;
 
             $http({
                 method: "post",
@@ -73,7 +73,7 @@
                 .then(function success(resp) {
                     def.resolve("Chamado salvo com sucesso.");
                 }, function error(err) {
-                    def.reject(err.data.ExceptionMessage);
+                    def.reject(err.data.exceptionMessage);
 
                     if (err.status == 401)
                         loginService.logout();
@@ -88,7 +88,7 @@
             var login = loginService.getLogin();
 
             if (login != null) {
-                chamado.AdminEncerramentoId = login.Id;
+                chamado.adminEncerramentoId = login.id;
 
                 $http({
                     method: "post",
@@ -99,7 +99,7 @@
                     .then(function success(resp) {
                         def.resolve("Chamado encerrado com sucesso.");
                     }, function error(err) {
-                        def.reject(err.data.ExceptionMessage);
+                        def.reject(err.data.exceptionMessage);
 
                         if (err.status == 401)
                             loginService.logout();

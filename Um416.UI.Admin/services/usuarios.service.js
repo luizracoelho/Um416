@@ -42,7 +42,7 @@
             var def = $q.defer();
 
             if (id == null)
-                id = loginService.getLogin().Id;
+                id = loginService.getLogin().id;
 
             $http({
                 method: "get",
@@ -73,7 +73,7 @@
             .then(function success(resp) {
                 def.resolve("Usuário salvo com sucesso.");
             }, function error(err) {
-                def.reject(err.data.ExceptionMessage);
+                def.reject(err.data.exceptionMessage);
 
                 if (err.status == 401)
                     loginService.logout();
@@ -93,7 +93,7 @@
             .then(function success(resp) {
                 def.resolve("Usuário removido com sucesso.");
             }, function error(err) {
-                def.reject(err.data.ExceptionMessage);
+                def.reject(err.data.exceptionMessage);
 
                 if (err.status == 401)
                     loginService.logout();
@@ -114,7 +114,7 @@
             .then(function success(resp) {
                 def.resolve("Usuário salvo com sucesso.");
             }, function error(err) {
-                def.reject(err.data.ExceptionMessage);
+                def.reject(err.data.exceptionMessage);
 
                 if (err.status == 401)
                     loginService.logout();
@@ -135,7 +135,7 @@
             .then(function success(resp) {
                 def.resolve("Senha alterada com sucesso.");
             }, function error(err) {
-                def.reject(err.data.ExceptionMessage);
+                def.reject(err.data.exceptionMessage);
 
                 if (err.status == 401)
                     loginService.logout();

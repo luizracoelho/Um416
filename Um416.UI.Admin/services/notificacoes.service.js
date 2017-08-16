@@ -67,7 +67,7 @@
             .then(function success(resp) {
                 def.resolve("Notificação salva com sucesso.");
             }, function error(err) {
-                def.reject(err.data.ExceptionMessage);
+                def.reject(err.data.exceptionMessage);
 
                 if (err.status == 401)
                     loginService.logout();
@@ -87,7 +87,7 @@
             .then(function success(resp) {
                 def.resolve("Notificação removida com sucesso.");
             }, function error(err) {
-                def.reject(err.data.ExceptionMessage);
+                def.reject(err.data.exceptionMessage);
 
                 if (err.status == 401)
                     loginService.logout();

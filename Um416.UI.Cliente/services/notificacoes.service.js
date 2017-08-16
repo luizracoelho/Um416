@@ -23,7 +23,7 @@
             if (login != null) {
                 $http({
                     method: "get",
-                    url: baseUrl + `notificacoes/${login.Id}/clientes`,
+                    url: baseUrl + `notificacoes/${login.id}/clientes`,
                     headers: { 'Authorization': loginService.getToken() }
                 })
                     .then(function success(resp) {
@@ -42,7 +42,7 @@
         function read(id) {
             var def = $q.defer();
 
-            var clienteId = loginService.getLogin().Id;
+            var clienteId = loginService.getLogin().id;
 
             $http({
                 method: "get",
@@ -52,7 +52,7 @@
             .then(function success(resp) {
                 def.resolve("Notificação salva com sucesso.");
             }, function error(err) {
-                def.reject(err.data.ExceptionMessage);
+                def.reject(err.data.exceptionMessage);
 
                 if (err.status == 401)
                     loginService.logout();

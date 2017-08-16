@@ -9,8 +9,8 @@
         var vm = this;
 
         vm.sexos = [
-            { Id: 0, Nome: 'Masculino' },
-            { Id: 1, Nome: 'Feminino' }
+            { id: 0, nome: 'Masculino' },
+            { id: 1, nome: 'Feminino' }
         ];
 
         vm.find = function (id) {
@@ -19,8 +19,8 @@
                 .then(function (usuario) {
                     vm.usuario = usuario;
 
-                    vm.usuario._DataNascimento = vm.usuario.DataNascimento.toJsDate();
-                    vm.usuario._DataCadastro = vm.usuario.DataCadastro.toJsDate();
+                    vm.usuario._dataNascimento = vm.usuario.dataNascimento.toJsDate();
+                    vm.usuario._dataCadastro = vm.usuario.dataCadastro.toJsDate();
 
                     $scope.usuarioForm.$setPristine();
                 }, function (error) {
@@ -43,7 +43,7 @@
                 .then(function () {
                     vm.areSubmitting = false;
                     var login = loginService.getLogin();
-                    login.Nome = vm.usuario.Nome;
+                    login.nome = vm.usuario.nome;
                     loginService.setLogin(login);
                     $location.url('/', true);
                 }, function (error) {
@@ -55,7 +55,7 @@
         vm.changePassword = function () {
             vm.areSubmitting = true;
 
-            vm.profile.Id = vm.usuario.Id;
+            vm.profile.id = vm.usuario.id;
 
             usuariosService
                 .changePassword(vm.profile)

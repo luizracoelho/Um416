@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Um416.Base;
 
 namespace Um416
@@ -16,5 +17,6 @@ namespace Um416
         public string Cep { get; set; }
         public virtual Imagem Mapa { get; set; }
         public long? MapaId { get; set; }
+        public IList<Lote> Lotes { get; set; }
     }
 }

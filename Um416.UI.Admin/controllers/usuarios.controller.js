@@ -28,15 +28,15 @@
             vm.modalTitle = 'Adicionar';
             vm.errorDetail = null;
             vm.usuario = {
-                Id: 0,
-                Nome: null,
-                Cpf: null,
-                Email: null,
-                TelFixo: null,
-                TelMovel: null,
-                Login: null,
-                Senha: null,
-                ConfirmarSenha: null
+                id: 0,
+                nome: null,
+                cpf: null,
+                email: null,
+                telFixo: null,
+                telMovel: null,
+                login: null,
+                senha: null,
+                confirmarSenha: null
             };
             $scope.usuarioForm.$setPristine();
             $('#modalDetails').modal('show');
@@ -47,7 +47,7 @@
                 .find(id)
                 .then(function (usuario) {
 
-                    usuario.Senha = null;
+                    usuario.senha = null;
                     vm.usuario = usuario;
 
                     $scope.usuarioForm.$setPristine();
@@ -87,7 +87,7 @@
                 .then(function () {
                     vm.areSubmitting = false;
                     var login = loginService.getLogin();
-                    login.Nome = vm.usuario.Nome;
+                    login.nome = vm.usuario.nome;
                     loginService.setLogin(login);
                     $location.url('/', true);
                 }, function (error) {
@@ -99,7 +99,7 @@
         vm.changePassword = function () {
             vm.areSubmitting = true;
 
-            vm.profile.Id = vm.usuario.Id;
+            vm.profile.id = vm.usuario.id;
 
             usuariosService
                 .changePassword(vm.profile)
@@ -115,7 +115,7 @@
         vm.remove = function () {
             vm.areSubmitting = true;
             usuariosService
-                .remove(vm.usuario.Id)
+                .remove(vm.usuario.id)
                 .then(function () {
                     vm.areSubmitting = false;
                     vm.list();

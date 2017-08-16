@@ -15,8 +15,8 @@
         }
 
         vm.sexos = [
-            { Id: 0, Nome: 'Masculino' },
-            { Id: 1, Nome: 'Feminino' }
+            { id: 0, nome: 'Masculino' },
+            { id: 1, nome: 'Feminino' }
         ];
 
         vm.list = function () {
@@ -41,28 +41,28 @@
             vm.modalTitle = 'Adicionar';
             vm.errorDetail = null;
             vm.cliente = {
-                Id: 0,
-                Nome: null,
-                Cpf: null,
-                Rg: null,
-                Sexo: null,
-                DataNascimento: null,
-                _DataNascimento: null,
-                DataCadastro: moment().format('DD/MM/YYYY'),
-                _DataCadastro: moment().format('DD/MM/YYYY'),
-                Email: null,
-                TelFixo: null,
-                TelMovel: null,
-                Logradouro: null,
-                Numero: null,
-                Complemento: null,
-                Bairro: null,
-                Cidade: null,
-                Uf: null,
-                Cep: null,
-                Login: null,
-                Senha: null,
-                ConfirmarSenha: null
+                id: 0,
+                nome: null,
+                cpf: null,
+                rg: null,
+                sexo: null,
+                dataNascimento: null,
+                _dataNascimento: null,
+                dataCadastro: moment().format('DD/MM/YYYY'),
+                _dataCadastro: moment().format('DD/MM/YYYY'),
+                email: null,
+                telFixo: null,
+                telMovel: null,
+                logradouro: null,
+                numero: null,
+                complemento: null,
+                bairro: null,
+                cidade: null,
+                uf: null,
+                cep: null,
+                login: null,
+                senha: null,
+                confirmarSenha: null
             };
             $scope.clienteForm.$setPristine();
             $('#modalDetails').modal('show');
@@ -75,8 +75,8 @@
                     .then(function (cliente) {
                         vm.cliente = cliente;
 
-                        vm.cliente._DataNascimento = vm.cliente.DataNascimento.toJsDate();
-                        vm.cliente._DataCadastro = vm.cliente.DataCadastro.toJsDate();
+                        vm.cliente._dataNascimento = vm.cliente.dataNascimento.toJsDate();
+                        vm.cliente._dataCadastro = vm.cliente.dataCadastro.toJsDate();
 
                         $scope.clienteForm.$setPristine();
 
@@ -96,7 +96,7 @@
         vm.save = function () {
             vm.areSubmitting = true;
 
-            vm.cliente.DataNascimento = vm.cliente._DataNascimento.toCsDate();
+            vm.cliente.dataNascimento = vm.cliente._dataNascimento.toCsDate();
 
             clientesService
                 .save(vm.cliente)
@@ -114,7 +114,7 @@
         vm.remove = function () {
             vm.areSubmitting = true;
             clientesService
-                .remove(vm.cliente.Id)
+                .remove(vm.cliente.id)
                 .then(function () {
                     vm.areSubmitting = false;
                     vm.list();

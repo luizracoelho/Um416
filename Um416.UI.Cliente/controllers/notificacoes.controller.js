@@ -19,7 +19,7 @@
                 .list()
                 .then(function (notificacoes) {
                     vm.notificacoes = notificacoes;
-                    $rootScope.notificacoes = notificacoes.filter(x => !x.Lida).length;
+                    $rootScope.notificacoes = notificacoes.filter(x => !x.lida).length;
                 }, function (error) {
                     vm.error = error;
                     $rootScope.notificacoes = 0;

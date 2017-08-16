@@ -19,7 +19,7 @@
                 .list()
                 .then(function (chamados) {
                     vm.chamados = chamados;
-                    $rootScope.chamados = chamados.filter(x => !x.Encerrado).length;
+                    $rootScope.chamados = chamados.filter(x => !x.encerrado).length;
                 }, function (error) {
                     vm.error = error;
                     $rootScope.chamados = 0;
@@ -30,14 +30,14 @@
             vm.modalTitle = 'Adicionar';
             vm.errorDetail = null;
             vm.chamado = {
-                Id: 0,
-                Titulo: null,
-                DataHoraCriacao: moment().format('DD/MM/YYYY HH:mm'),
-                _DataHoraCriacao: moment().format('DD/MM/YYYY HH:mm')
+                id: 0,
+                titulo: null,
+                dataHoraCriacao: moment().format('DD/MM/YYYY HH:mm'),
+                _dataHoraCriacao: moment().format('DD/MM/YYYY HH:mm')
             };
             vm.iteracao = {
-                Id: 0,
-                Conteudo: null
+                id: 0,
+                conteudo: null
             }
             $scope.chamadoForm.$setPristine();
             $('#modalDetails').modal('show');
@@ -52,7 +52,7 @@
 
                         vm.chamado = chamado;
 
-                        vm.chamado._DataHoraCriacao = vm.chamado.DataHoraCriacao.toJsDateTime();
+                        vm.chamado._dataHoraCriacao = vm.chamado.dataHoraCriacao.toJsDateTime();
 
                         $scope.chamadoForm.$setPristine();
 
@@ -85,7 +85,7 @@
         vm.save = function () {
             vm.areSubmitting = true;
 
-            vm.chamado.DataHoraCriacao = vm.chamado._DataHoraCriacao.toCsDateTime();
+            vm.chamado.dataHoraCriacao = vm.chamado._dataHoraCriacao.toCsDateTime();
 
             chamadosService
                 .save(vm.chamado, vm.iteracao)
