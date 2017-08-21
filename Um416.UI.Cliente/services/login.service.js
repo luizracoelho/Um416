@@ -26,7 +26,7 @@
                 'grant_type': 'password',
                 'username': username,
                 'password': password,
-                'tipo': 'cliente'
+                'regra': 'cliente'
             };
 
             var config = {

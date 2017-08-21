@@ -6,7 +6,7 @@ using Um416.TransferModels;
 namespace Um416.API.Controllers
 {
     [Authorize]
-    public class UsuariosVendedoresController : BaseController<UsuarioCliente, UsuarioClienteLogic>
+    public class UsuariosVendedoresController : BaseController<UsuarioVendedor, UsuarioVendedorLogic>
     {
         [HttpPost, Route("api/usuariosVendedores/password"), Authorize]
         public void ChangePassword(PasswordProfile profile)

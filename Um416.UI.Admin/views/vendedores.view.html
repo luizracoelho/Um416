@@ -1,4 +1,4 @@
-﻿<div ng-controller="clientesController as vm" ng-init="vm.list();">
+﻿<div ng-controller="vendedoresController as vm" ng-init="vm.list();">
     <div class="alert alert-danger" ng-show="vm.error != null">
         {{vm.error}}
     </div>
@@ -6,7 +6,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <button type="button" ng-click="vm.add();" class="btn btn-sm btn-success pull-right"><i class="fa fa-plus"></i> Adicionar</button>
-            <h4><i class="fa fa-address-card"></i> Clientes</h4>
+            <h4><i class="fa fa-briefcase"></i> Vendedores</h4>
         </div>
         <div class="panel-body">
             <div class="row">
@@ -36,20 +36,22 @@
                         <th>E-Mail</th>
                         <th>Tel. Fixo</th>
                         <th>Tel. Móvel</th>
+                        <th>Perc. Comissão</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="cliente in vm.clientes | filter: filtro" class="text-nowrap">
-                        <td>{{cliente.id}}</td>
-                        <td>{{cliente.nome}}</td>
-                        <td>{{cliente.login}}</td>
-                        <td>{{cliente.email}}</td>
-                        <td>{{cliente.telFixo | brPhoneNumber}}</td>
-                        <td>{{cliente.telMovel | brPhoneNumber}}</td>
+                    <tr ng-repeat="vendedor in vm.vendedores | filter: filtro" class="text-nowrap">
+                        <td>{{vendedor.id}}</td>
+                        <td>{{vendedor.nome}}</td>
+                        <td>{{vendedor.login}}</td>
+                        <td>{{vendedor.email}}</td>
+                        <td>{{vendedor.telFixo | brPhoneNumber}}</td>
+                        <td>{{vendedor.telMovel | brPhoneNumber}}</td>
+                        <td>{{vendedor.percentualComissao | percentage}}</td>
                         <td class="text-nowrap" style="width: 1%;">
-                            <button class="btn btn-sm btn-primary" ng-click="vm.find(cliente.id)"><i class="fa fa-refresh"></i> Atualizar</button>
-                            <button class="btn btn-sm btn-danger" ng-click="vm.find(cliente.id, true)"><i class="fa fa-remove"></i> Remover</button>
+                            <button class="btn btn-sm btn-primary" ng-click="vm.find(vendedor.id)"><i class="fa fa-refresh"></i> Atualizar</button>
+                            <button class="btn btn-sm btn-danger" ng-click="vm.find(vendedor.id, true)"><i class="fa fa-remove"></i> Remover</button>
                         </td>
                     </tr>
                 </tbody>
@@ -60,10 +62,10 @@
     <div id="modalDetails" class="modal fade" role="dialog" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form name="clienteForm" ng-submit="vm.save()">
+                <form name="vendedorForm" ng-submit="vm.save()">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title"><i class="fa fa-address-card"></i> {{vm.modalTitle}} Cliente</h4>
+                        <h4 class="modal-title"><i class="fa fa-briefcase"></i> {{vm.modalTitle}} Vendedor</h4>
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-danger" ng-show="vm.errorDetail != null">
@@ -77,19 +79,19 @@
                         <div class="row">
                             <div class="form-group col-sm-6 col-md-9">
                                 <label>Nome Completo <span class="text-primary">*</span></label>
-                                <input type="text" class="form-control" placeholder="João da Silva" name="nome" ng-model="vm.cliente.nome" required />
-                                <p class="text-danger" ng-show="clienteForm.nome.$invalid && !clienteForm.nome.$pristine">
+                                <input type="text" class="form-control" placeholder="João da Silva" name="nome" ng-model="vm.vendedor.nome" required />
+                                <p class="text-danger" ng-show="vendedorForm.nome.$invalid && !vendedorForm.nome.$pristine">
                                     Campo obrigatório.
                                 </p>
                             </div>
 
                             <div class="form-group col-sm-6 col-md-3">
                                 <label>CPF<span class="text-primary">*</span></label>
-                                <input type="text" class="form-control" placeholder="000.000.000-00" name="cpf" ng-model="vm.cliente.cpf" required ui-br-cpf-mask />
-                                <p class="text-danger" ng-show="clienteForm.cpf.$error.required && !clienteForm.cpf.$pristine">
+                                <input type="text" class="form-control" placeholder="000.000.000-00" name="cpf" ng-model="vm.vendedor.cpf" required ui-br-cpf-mask />
+                                <p class="text-danger" ng-show="vendedorForm.cpf.$error.required && !vendedorForm.cpf.$pristine">
                                     Campo obrigatório.
                                 </p>
-                                <p class="text-danger" ng-show="clienteForm.cpf.$error.cpf && !clienteForm.cpf.$pristine">
+                                <p class="text-danger" ng-show="vendedorForm.cpf.$error.cpf && !vendedorForm.cpf.$pristine">
                                     CPF Inválido.
                                 </p>
                             </div>
@@ -98,61 +100,61 @@
                         <div class="row">
                             <div class="form-group col-sm-6 col-md-3">
                                 <label>RG</label>
-                                <input type="text" class="form-control" placeholder="00.000.000-0" name="rg" ng-model="vm.cliente.rg" />
+                                <input type="text" class="form-control" placeholder="00.000.000-0" name="rg" ng-model="vm.vendedor.rg" />
                             </div>
 
                             <div class="form-group col-sm-6 col-md-3">
                                 <label>Sexo<span class="text-primary">*</span></label>
-                                <select class="form-control" name="sexo" ng-model="vm.cliente.sexo" required>
+                                <select class="form-control" name="sexo" ng-model="vm.vendedor.sexo" required>
                                     <option value="" disabled>Selecione</option>
-                                    <option ng-selected="vm.cliente.sexo == sexo.id" ng-repeat="sexo in vm.sexos" value="{{sexo.id}}" selected>{{sexo.nome}}</option>
+                                    <option ng-selected="vm.vendedor.sexo == sexo.id" ng-repeat="sexo in vm.sexos" value="{{sexo.id}}" selected>{{sexo.nome}}</option>
                                 </select>
-                                <p class="text-danger" ng-show="clienteForm.sexo.$error.required && !clienteForm.sexo.$pristine">
+                                <p class="text-danger" ng-show="vendedorForm.sexo.$error.required && !vendedorForm.sexo.$pristine">
                                     Campo obrigatório.
                                 </p>
                             </div>
 
                             <div class="form-group col-sm-6 col-md-3">
                                 <label>Data Nascimento<span class="text-primary">*</span></label>
-                                <input type="text" class="form-control" placeholder="00/00/0000" name="dataNascimento" ng-model="vm.cliente._dataNascimento" required ui-date-mask="DD/MM/YYYY" parse="false" />
-                                <p class="text-danger" ng-show="clienteForm.dataNascimento.$error.required && !clienteForm.dataNascimento.$pristine">
+                                <input type="text" class="form-control" placeholder="00/00/0000" name="dataNascimento" ng-model="vm.vendedor._dataNascimento" required ui-date-mask="DD/MM/YYYY" parse="false" />
+                                <p class="text-danger" ng-show="vendedorForm.dataNascimento.$error.required && !vendedorForm.dataNascimento.$pristine">
                                     Campo obrigatório.
                                 </p>
-                                <p class="text-danger" ng-show="clienteForm.dataNascimento.$error.date && !clienteForm.dataNascimento.$pristine">
+                                <p class="text-danger" ng-show="vendedorForm.dataNascimento.$error.date && !vendedorForm.dataNascimento.$pristine">
                                     Informe uma data válida.
                                 </p>
                             </div>
 
                             <div class="form-group col-sm-6 col-md-3">
                                 <label>Data Cadastro<span class="text-primary">*</span></label>
-                                <input type="text" class="form-control" placeholder="00/00/0000" ng-model="vm.cliente._dataCadastro" disabled />
+                                <input type="text" class="form-control" placeholder="00/00/0000" ng-model="vm.vendedor._dataCadastro" disabled />
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group col-sm-6">
                                 <label>E-Mail<span class="text-primary">*</span></label>
-                                <input type="text" class="form-control" placeholder="seuemail@seudominio.com" name="email" ng-model="vm.cliente.email" required ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/" />
-                                <p class="text-danger" ng-show="clienteForm.email.$error.required && !clienteForm.email.$pristine">
+                                <input type="text" class="form-control" placeholder="seuemail@seudominio.com" name="email" ng-model="vm.vendedor.email" required ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/" />
+                                <p class="text-danger" ng-show="vendedorForm.email.$error.required && !vendedorForm.email.$pristine">
                                     Campo obrigatório.
                                 </p>
-                                <p class="text-danger" ng-show="clienteForm.email.$error.pattern && !clienteForm.email.$pristine">
+                                <p class="text-danger" ng-show="vendedorForm.email.$error.pattern && !vendedorForm.email.$pristine">
                                     Informe um endereço de e-mail válido.
                                 </p>
                             </div>
 
                             <div class="form-group col-sm-6 col-md-3">
                                 <label>Telefone Fixo</label>
-                                <input type="text" class="form-control" placeholder="(00) 0000-0000" name="telFixo" ng-model="vm.cliente.telFixo" ui-br-phone-number />
-                                <p class="text-danger" ng-show="clienteForm.telFixo.$error.brPhoneNumber && !clienteForm.telFixo.$pristine">
+                                <input type="text" class="form-control" placeholder="(00) 0000-0000" name="telFixo" ng-model="vm.vendedor.telFixo" ui-br-phone-number />
+                                <p class="text-danger" ng-show="vendedorForm.telFixo.$error.brPhoneNumber && !vendedorForm.telFixo.$pristine">
                                     Número Inválido.
                                 </p>
                             </div>
 
                             <div class="form-group col-sm-6 col-md-3">
                                 <label>Telefone Móvel</label>
-                                <input type="text" class="form-control" placeholder="(00) 00000-0000" name="telMovel" ng-model="vm.cliente.telMovel" ui-br-phone-number />
-                                <p class="text-danger" ng-show="clienteForm.telMovel.$error.brPhoneNumber && !clienteForm.telMovel.$pristine">
+                                <input type="text" class="form-control" placeholder="(00) 00000-0000" name="telMovel" ng-model="vm.vendedor.telMovel" ui-br-phone-number />
+                                <p class="text-danger" ng-show="vendedorForm.telMovel.$error.brPhoneNumber && !vendedorForm.telMovel.$pristine">
                                     Número Inválido.
                                 </p>
                             </div>
@@ -165,44 +167,58 @@
                         <div class="row">
                             <div class="form-group col-sm-6">
                                 <label>Logradouro</label>
-                                <input type="text" class="form-control" placeholder="Rua Um" name="logradouro" ng-model="vm.cliente.logradouro" />
+                                <input type="text" class="form-control" placeholder="Rua Um" name="logradouro" ng-model="vm.vendedor.logradouro" />
                             </div>
 
                             <div class="form-group col-sm-6 col-md-3">
                                 <label>Número</label>
-                                <input type="text" class="form-control" placeholder="100" name="numero" ng-model="vm.cliente.numero" />
+                                <input type="text" class="form-control" placeholder="100" name="numero" ng-model="vm.vendedor.numero" />
                             </div>
 
                             <div class="form-group col-sm-6 col-md-3">
                                 <label>Complemento</label>
-                                <input type="text" class="form-control" placeholder="Térreo" name="complemento" ng-model="vm.cliente.complemento" />
+                                <input type="text" class="form-control" placeholder="Térreo" name="complemento" ng-model="vm.vendedor.complemento" />
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group col-sm-6 col-md-3">
                                 <label>Bairro</label>
-                                <input type="text" class="form-control" placeholder="Centro" name="bairro" ng-model="vm.cliente.bairro" />
+                                <input type="text" class="form-control" placeholder="Centro" name="bairro" ng-model="vm.vendedor.bairro" />
                             </div>
 
                             <div class="form-group col-sm-6 col-md-3">
                                 <label>Cidade</label>
-                                <input type="text" class="form-control" placeholder="São Paulo" name="cidade" ng-model="vm.cliente.cidade" />
+                                <input type="text" class="form-control" placeholder="São Paulo" name="cidade" ng-model="vm.vendedor.cidade" />
                             </div>
 
                             <div class="form-group col-sm-6 col-md-3">
                                 <label>UF</label>
-                                <select class="form-control" name="sexo" ng-model="vm.cliente.uf">
+                                <select class="form-control" name="sexo" ng-model="vm.vendedor.uf">
                                     <option value="">Selecione</option>
-                                    <option ng-selected="vm.cliente.uf == uf.sigla" ng-repeat="uf in vm.ufs" value="{{uf.sigla}}" selected>{{uf.nome}}</option>
+                                    <option ng-selected="vm.vendedor.uf == uf.sigla" ng-repeat="uf in vm.ufs" value="{{uf.sigla}}" selected>{{uf.nome}}</option>
                                 </select>
                             </div>
 
                             <div class="form-group col-sm-6 col-md-3">
                                 <label>CEP</label>
-                                <input type="text" class="form-control" placeholder="00000-000" name="cep" ng-model="vm.cliente.cep" ui-br-cep-mask />
-                                <p class="text-danger" ng-show="clienteForm.cep.$error.cep && !clienteForm.cep.$pristine">
+                                <input type="text" class="form-control" placeholder="00000-000" name="cep" ng-model="vm.vendedor.cep" ui-br-cep-mask />
+                                <p class="text-danger" ng-show="vendedorForm.cep.$error.cep && !vendedorForm.cep.$pristine">
                                     CEP inválido.
+                                </p>
+                            </div>
+                        </div>
+
+                        <blockquote>
+                            Comissionamento
+                        </blockquote>
+
+                        <div class="row">
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Percentual Comissão<span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="10" name="percentualComissao" ng-model="vm.vendedor.percentualComissao" required ui-percentage-mask />
+                                <p class="text-danger" ng-show="vendedorForm.percentualComissao.$error.required && !vendedorForm.percentualComissao.$pristine">
+                                    Campo Obrigatório.
                                 </p>
                             </div>
                         </div>
@@ -214,31 +230,31 @@
                         <div class="row">
                             <div class="form-group col-sm-6 col-md-3">
                                 <label>Nome de Usuário<span class="text-primary">*</span></label>
-                                <input type="text" class="form-control" placeholder="Seu Login" name="login" ng-model="vm.cliente.login" required ng-pattern="/^[a-zA-Z0-9_.]*$/" ng-trim="false" ng-disabled="vm.cliente.id != 0" />
-                                <p class="text-danger" ng-show="clienteForm.login.$error.required && !clienteForm.login.$pristine">
+                                <input type="text" class="form-control" placeholder="Seu Login" name="login" ng-model="vm.vendedor.login" required ng-pattern="/^[a-zA-Z0-9_.]*$/" ng-trim="false" ng-disabled="vm.vendedor.id != 0" />
+                                <p class="text-danger" ng-show="vendedorForm.login.$error.required && !vendedorForm.login.$pristine">
                                     Campo obrigatório.
                                 </p>
-                                <p class="text-danger" ng-show="clienteForm.login.$error.pattern && !clienteForm.login.$pristine">
+                                <p class="text-danger" ng-show="vendedorForm.login.$error.pattern && !vendedorForm.login.$pristine">
                                     Este campo não pode conter espaços e caracteres especiais.
                                 </p>
                             </div>
 
-                            <div class="form-group col-sm-6 col-md-3" ng-if="vm.cliente.id == 0">
+                            <div class="form-group col-sm-6 col-md-3" ng-if="vm.vendedor.id == 0">
                                 <label>Senha <span class="text-primary">*</span></label>
-                                <input type="password" class="form-control" placeholder="Sua Senha" name="senha" ng-model="vm.cliente.senha" required />
-                                <p class="text-danger" ng-show="clienteForm.senha.$invalid && !clienteForm.senha.$pristine">
+                                <input type="password" class="form-control" placeholder="Sua Senha" name="senha" ng-model="vm.vendedor.senha" required />
+                                <p class="text-danger" ng-show="vendedorForm.senha.$invalid && !vendedorForm.senha.$pristine">
                                     Campo obrigatório.
                                 </p>
                             </div>
 
-                            <div class="form-group col-sm-6 col-md-3" ng-if="vm.cliente.id == 0">
+                            <div class="form-group col-sm-6 col-md-3" ng-if="vm.vendedor.id == 0">
                                 <label>Confirme sua Senha<span class="text-primary">*</span></label>
-                                <input type="password" class="form-control" placeholder="Confirme sua Senha" name="confirmarSenha" ng-model="vm.cliente.confirmarSenha" required ng-match="vm.cliente.senha" />
-                                <p class="text-danger" ng-show="clienteForm.confirmarSenha.$error.match">
+                                <input type="password" class="form-control" placeholder="Confirme sua Senha" name="confirmarSenha" ng-model="vm.vendedor.confirmarSenha" required ng-match="vm.vendedor.senha" />
+                                <p class="text-danger" ng-show="vendedorForm.confirmarSenha.$error.match">
                                     As senhas não coincidem.
                                 </p>
 
-                                <p class="text-danger" ng-show="clienteForm.confirmarSenha.$error.required && !clienteForm.confirmarSenha.$pristine">
+                                <p class="text-danger" ng-show="vendedorForm.confirmarSenha.$error.required && !vendedorForm.confirmarSenha.$pristine">
                                     Campo obrigatório.
                                 </p>
                             </div>
@@ -246,7 +262,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-sm btn-primary" ng-disabled="clienteForm.$invalid || vm.areSubmitting"><i class="fa fa-check"></i> Salvar</button>
+                        <button type="submit" class="btn btn-sm btn-primary" ng-disabled="vendedorForm.$invalid || vm.areSubmitting"><i class="fa fa-check"></i> Salvar</button>
                         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
                     </div>
                 </form>
@@ -259,14 +275,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"><i class="fa fa-address-card"></i> Remover Cliente</h4>
+                    <h4 class="modal-title"><i class="fa fa-briefcase"></i> Remover Vendedor</h4>
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-danger" ng-show="vm.errorDetail != null">
                         {{vm.errorDetail}}
                     </div>
 
-                    <p>Confirma a remoção do cliente <strong>#{{vm.cliente.id}} {{vm.cliente.nome}}</strong>?</p>
+                    <p>Confirma a remoção do vendedor <strong>#{{vm.vendedor.id}} {{vm.vendedor.nome}}</strong>?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" ng-click="vm.remove();" ng-disabled="vm.areSubmitting"><i class="fa fa-remove"></i> Remover</button>

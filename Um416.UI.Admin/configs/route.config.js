@@ -78,6 +78,18 @@
                 }
             };
 
+            var vendedoresState = {
+                url: '/vendedores',
+                templateUrl: 'views/vendedores.view.html',
+                controller: 'vendedoresController',
+                controllerAs: 'vm',
+                resolve: {
+                    auth: function (loginService) {
+                        loginService.authorize();
+                    }
+                }
+            };
+
             var clientesState = {
                 url: '/clientes',
                 templateUrl: 'views/clientes.view.html',
@@ -144,6 +156,7 @@
             $stateProvider.state("usuarios", usuariosState);
             $stateProvider.state("perfil", perfilState);
             $stateProvider.state("alterar-senha", alterarSenhaState);
+            $stateProvider.state("vendedores", vendedoresState);
             $stateProvider.state("clientes", clientesState);
             $stateProvider.state("notificacoes", notificacoesState);
             $stateProvider.state("chamados", chamadosState);

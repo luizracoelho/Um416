@@ -27,7 +27,7 @@ namespace Um416.DAL.Mappings
             Map(x => x.Cidade).ToColumn("Cidade");
             Map(x => x.Uf).ToColumn("Uf");
             Map(x => x.Cep).ToColumn("Cep");
-            Map(x => x.Cep).ToColumn("PercentualComissao");
+            Map(x => x.PercentualComissao).ToColumn("PercentualComissao");
         }
     }
 }

@@ -23,6 +23,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +45,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="controllers\chamados.controller.js" />
+    <Content Include="controllers\vendedores.controller.js" />
     <Content Include="controllers\lotes.controller.js" />
     <Content Include="controllers\loteamentos.controller.js" />
     <Content Include="controllers\notificacoes.controller.js" />
@@ -96,6 +98,7 @@
     <Content Include="js\moment.js" />
     <Content Include="js\ui-bootstrap.js" />
     <Content Include="services\chamados.service.js" />
+    <Content Include="services\vendedores.service.js" />
     <Content Include="services\lotes.service.js" />
     <Content Include="services\notificacoes.service.js" />
     <Content Include="services\login.service.js" />
@@ -104,6 +107,7 @@
     <Content Include="services\loteamentos.service.js" />
     <Content Include="services\usuarios.service.js" />
     <Content Include="views\chamados.view.html" />
+    <Content Include="views\vendedores.view.html" />
     <Content Include="views\lotes.view.html" />
     <Content Include="views\loteamentos.view.html" />
     <Content Include="views\notificacoes.view.html" />

@@ -26,7 +26,7 @@
                 'grant_type': 'password',
                 'username': username,
                 'password': password,
-                'tipo': 'admin'
+                'regra': 'admin'
             };
 
             var config = {
