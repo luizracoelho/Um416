@@ -15,6 +15,7 @@
             this.save = save;
             this.saveMultiple = saveMultiple;
             this.remove = remove;
+            this.removeMultiple = removeMultiple;
         };
 
         return new Service();
@@ -127,6 +128,30 @@
                 method: "delete",
                 url: baseUrl + "lotes/" + id,
                 headers: { 'Authorization': loginService.getToken() },
+            })
+                .then(function success(resp) {
+                    def.resolve("Removido com sucesso.");
+                }, function error(err) {
+                    def.reject(err.data.exceptionMessage);
+
+                    if (err.status == 401)
+                        loginService.logout();
+                });
+
+            return def.promise;
+        };
+
+        function removeMultiple(ids) {
+            var def = $q.defer();
+
+            $http({
+                method: "delete",
+                url: baseUrl + 'lotes/multiple',
+                headers: {
+                    'Authorization': loginService.getToken(),
+                    'Content-type': 'application/json'
+                },
+                data: JSON.stringify(ids)
             })
                 .then(function success(resp) {
                     def.resolve("Removido com sucesso.");

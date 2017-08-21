@@ -36,8 +36,7 @@ namespace Um416.BLL
                 return null;
 
             //Formata o source do mapa removendo os carateres adicionados de base64
-            var rgx = new Regex(@"data:image/svg\+xml;base64,?");
-            var source = rgx.Replace(loteamento.Mapa.Source, "");
+            var source = Regex.Replace(loteamento.Mapa.Source, @"data:image/svg\+xml;base64,?", "");
 
             //Converte o base64 em um array de bytes
             var buffer = Convert.FromBase64String(source);
@@ -52,12 +51,15 @@ namespace Um416.BLL
                 {
                     var width = Convert.ToDecimal(rect.Attribute("width").Value);
                     var height = Convert.ToDecimal(rect.Attribute("height").Value);
+                    var style = rect.Attribute("style").Value;
+                    var cor = Regex.Match(style, @"fill:\s*(\#*.*);").Groups[1].Value.Split(';')[0];
 
                     lotes.Add(new Lote
                     {
                         Codigo = rect.Attribute("id").Value,
                         Area = Area.Retangulo(width, height),
-                        StatusAdicao = StatusAdicao.Adicao
+                        StatusAdicao = StatusAdicao.Adicao,
+                        Cor = cor
                     });
                 }
 
@@ -90,11 +92,15 @@ namespace Um416.BLL
                        .Select((p, i) => (points[i + 1].X - p.X) * (points[i + 1].Y + p.Y))
                        .Sum() / 2);
 
+                    var style = path.Attribute("style").Value;
+                    var cor = Regex.Match(style, @"fill:\s*(\#*.*);").Groups[1].Value.Split(';')[0];
+
                     lotes.Add(new Lote
                     {
                         Codigo = path.Attribute("id").Value,
                         Area = area,
-                        StatusAdicao = StatusAdicao.Adicao
+                        StatusAdicao = StatusAdicao.Adicao,
+                        Cor = cor
                     });
                 }
             }
@@ -140,6 +146,19 @@ namespace Um416.BLL
 
                 //Definir a transação como completa
                 scope.Complete();
+            }
+        }
+
+        public virtual bool Delete(long[] ids)
+        {
+            using (var scope = new TransactionScope())
+            {
+                foreach (var id in ids)
+                    _dao.Delete(id);
+
+                scope.Complete();
+
+                return true;
             }
         }
     }

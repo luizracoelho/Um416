@@ -27,6 +27,7 @@
     <div class="panel panel-default" ng-if="vm.loteamentoSelected != null">
         <div class="panel-heading">
             <button type="button" ng-click="vm.add();" class="btn btn-sm btn-success pull-right"><i class="fa fa-plus"></i><span class="hidden-xs"> Adicionar</span></button>
+            <button type="button" ng-click="vm.find(null, true);" class="btn btn-sm btn-danger pull-right" style="margin-right: 10px;" title="Remover os lotes selecionados"><i class="fa fa-remove"></i><span class="hidden-xs"> Remover</span></button>
             <button type="button" ng-click="vm.import();" class="btn btn-sm btn-primary pull-right" style="margin-right: 10px;" title="Importar os lotes do mapa" ng-if="vm.tipoLote == vm.TIPOLOTE_LOTEAMENTO && vm.loteamentoSelected.mapaId != null"><i class="fa fa-download"></i><span class="hidden-xs"> Importar</span></button>
             <button type="button" ng-click="vm.deselect();" class="btn btn-sm btn-default pull-right" style="margin-right: 10px;"><i class="fa fa-arrow-left"></i><span class="hidden-xs"> Voltar</span></button>
             <h4>
@@ -55,6 +56,9 @@
 
         <div class="table-responsive">
             <table class="table table-bordered table-condensed table-hover" ng-show="vm.showGrid()">
+                <caption>
+                    <label title="Marcar/Desmarcar Todos"><input type="checkbox" ng-model="vm.todosSelected" ng-click="vm.selectAllToRemove();" /> Marcar/Desmarcar Todos</label>
+                </caption>
                 <thead>
                     <tr class="active">
                         <th>Id</th>
@@ -67,7 +71,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="lote in vm.lotes | filter: filtro" class="text-nowrap">
-                        <td>{{lote.id}}</td>
+                        <td style="border-left: 10px solid {{lote.cor}};"><label><input type="checkbox" class="removeCheckBox" ng-model="lote.selected" ng-click="vm.selectToRemove(lote);" /> {{lote.id}}</label></td>
                         <td ng-if="vm.tipoLote == vm.TIPOLOTE_AVULSO">{{lote.nome}}</td>
                         <td>{{lote.codigo}}</td>
                         <td>{{lote.area | number}}m²</td>
@@ -141,8 +145,8 @@
                             </div>
 
                             <div class="form-group col-xs-12">
-                                <label>Descrição<span class="text-primary">*</span></label>
-                                <textarea class="form-control" placeholder="3 quartos, 2 banheiros, garagem..." name="descricao" ng-model="vm.lote.descricao" rows="3" required></textarea>
+                                <label>Descrição</label>
+                                <textarea class="form-control" placeholder="3 quartos, 2 banheiros, garagem..." name="descricao" ng-model="vm.lote.descricao" rows="3"></textarea>
                                 <p class="text-danger" ng-show="loteForm.descricao.$error.required && !loteForm.descricao.$pristine">
                                     Campo obrigatório.
                                 </p>
@@ -235,15 +239,13 @@
                                             </caption>
                                             <thead>
                                                 <tr class="active">
-                                                    <th>Área</th>
                                                     <th>Valor</th>
                                                     <th>Descrição</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="lote in vm.lotesDefault | filter: filtro" class="text-nowrap">
-                                                    <td class="col-md-2">{{lote.area}}m²</td>
-                                                    <td class="col-md-3" style="min-width: 150px;">
+                                                    <td class="col-md-3" style="min-width: 150px; border-left: 5px solid {{lote.cor}};">
                                                         <div class="input-group">
                                                             <span class="input-group-addon">R$</span>
                                                             <input type="text" class="form-control" placeholder="0,00" ng-model="lote.valor" ui-number-mask />
@@ -275,12 +277,12 @@
                                                     <th>Número</th>
                                                     <th>Área</th>
                                                     <th>Valor <span class="text-primary">*</span></th>
-                                                    <th>Descrição <span class="text-primary">*</span></th>
+                                                    <th>Descrição</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="lote in vm.lotesAdd | filter: filtro" class="text-nowrap">
-                                                    <td class="col-md-2">
+                                                    <td class="col-md-2" style="border-left: 10px solid {{lote.cor}};">
                                                         <i class="fa " ng-class="lote.statusAdicao == vm.STATUSADICAO_ADICAO ? 'fa-asterisk text-warning' : lote.statusAdicao == vm.STATUSADICAO_ALTERACAO ? 'fa-refresh text-primary' : 'fa-ban text-danger'" title="{{lote.statusAdicao == vm.STATUSADICAO_ADICAO ? 'Adição' : lote.statusAdicao == vm.STATUSADICAO_ALTERACAO ? 'Alteração' : 'Remoção'}}"></i>
                                                         {{lote.codigo}}
                                                     </td>
@@ -291,8 +293,8 @@
                                                             <input type="text" class="form-control" placeholder="0,00" ng-model="lote.valor" required ui-number-mask />
                                                         </div>
                                                     </td>
-                                                    <td class="col-md-5" style="min-width: 250px;">
-                                                        <textarea class="form-control" placeholder="3 quartos, 2 banheiros, garagem..." ng-model="lote.descricao" rows="3" required></textarea>
+                                                    <td class="col-md-4" style="min-width: 250px;">
+                                                        <textarea class="form-control" placeholder="3 quartos, 2 banheiros, garagem..." ng-model="lote.descricao" rows="3"></textarea>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -324,10 +326,36 @@
                         {{vm.errorDetail}}
                     </div>
 
-                    <p>Confirma a remoção do lote <strong>#{{vm.lote.id}} {{vm.lote.codigo}}</strong>?</p>
+                    <p ng-if="vm.lote != null">Confirma a remoção do lote <strong>#{{vm.lote.id}} Número: {{vm.lote.codigo}}</strong>?</p>
+
+                    <p ng-if="vm.lote == null && vm.lotesToRemove == null">Nenhum lote foi selecionado para remoção.</p>
+
+                    <div ng-if="vm.lote == null && vm.lotesToRemove.length > 0" class="table-responsive">
+                        <p>Confirma a remoção dos seguintes lotes: </p>
+                        <table class="table table-bordered table-condensed table-hover" ng-show="vm.showGrid()">
+                            <thead>
+                                <tr class="active">
+                                    <th>Id</th>
+                                    <th ng-if="vm.tipoLote == vm.TIPOLOTE_AVULSO">Nome</th>
+                                    <th>Número</th>
+                                    <th>Área</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="lote in vm.lotesToRemove" class="text-nowrap">
+                                    <td style="border-left: 10px solid {{lote.cor}};">{{lote.id}}</td>
+                                    <td ng-if="vm.tipoLote == vm.TIPOLOTE_AVULSO">{{lote.nome}}</td>
+                                    <td>{{lote.codigo}}</td>
+                                    <td>{{lote.area | number}}m²</td>
+                                    <td>{{lote.valor | currency}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" ng-click="vm.remove();" ng-disabled="vm.areSubmitting"><i class="fa fa-remove"></i> Remover</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" ng-click="vm.remove();" ng-disabled="vm.areSubmitting || vm.lotesToRemove == null"><i class="fa fa-remove"></i> Remover</button>
                     <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
                 </div>
             </div>

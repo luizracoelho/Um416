@@ -119,10 +119,10 @@
                 .then(function (lotes) {
                     vm.lotesDefault = [];
                     for (var lote in lotes) {
-                        var existingLote = vm.lotesDefault.filter(x => x.area == lotes[lote].area)[0];
+                        var existingLote = vm.lotesDefault.filter(x => x.cor == lotes[lote].cor)[0];
                         if (existingLote == null)
                             vm.lotesDefault.push({
-                                area: lotes[lote].area,
+                                cor: lotes[lote].cor,
                                 valor: 0,
                                 descricao: null
                             });
@@ -163,6 +163,10 @@
                     }, function (error) {
                         vm.error = error;
                     });
+            else {
+                vm.lote = null;
+                $('#modalRemove').modal('show');
+            }
         };
 
         vm.save = function () {
@@ -212,24 +216,45 @@
 
         vm.remove = function () {
             vm.areSubmitting = true;
-            lotesService
-                .remove(vm.lote.id)
-                .then(function () {
-                    vm.areSubmitting = false;
-                    vm.list();
-                    $('#modalRemove').modal('hide');
-                }, function (error) {
-                    vm.areSubmitting = false;
-                    vm.errorDetail = error;
-                    $('#modalRemove').animate({ scrollTop: '0px' }, 300);
+
+            if (vm.lote != null)
+                lotesService
+                    .remove(vm.lote.id)
+                    .then(function () {
+                        vm.areSubmitting = false;
+                        vm.list();
+                        $('#modalRemove').modal('hide');
+                    }, function (error) {
+                        vm.areSubmitting = false;
+                        vm.errorDetail = error;
+                        $('#modalRemove').animate({ scrollTop: '0px' }, 300);
+                    });
+            else {
+                var ids = [];
+                vm.lotes.forEach(function (lote) {
+                    if (lote.selected)
+                        ids.push(lote.id);
                 });
+
+                lotesService
+                    .removeMultiple(ids)
+                    .then(function () {
+                        vm.areSubmitting = false;
+                        vm.list();
+                        $('#modalRemove').modal('hide');
+                    }, function (error) {
+                        vm.areSubmitting = false;
+                        vm.errorDetail = error;
+                        $('#modalRemove').animate({ scrollTop: '0px' }, 300);
+                    });
+            }
         };
 
         vm.setDefault = function () {
             vm.areSubmitting = true;
 
             for (var lote in vm.lotesDefault) {
-                var lotesAdd = vm.lotesAdd.filter(x => x.area == vm.lotesDefault[lote].area);
+                var lotesAdd = vm.lotesAdd.filter(x => x.cor == vm.lotesDefault[lote].cor);
 
                 for (var loteAdd in lotesAdd) {
                     lotesAdd[loteAdd].valor = vm.lotesDefault[lote].valor;
@@ -258,6 +283,23 @@
             $('#valoresPadrao').collapse('hide');
 
             vm.areSubmitting = false;
+        }
+
+        vm.selectAllToRemove = function () {
+            vm.lotes.forEach(function (lote) {
+                lote.selected = vm.todosSelected;
+            });
+
+            vm.lotesToRemove = vm.lotes;
+        }
+
+        vm.selectToRemove = function () {
+            vm.lotesToRemove = vm.lotes.filter(x => x.selected);
+
+            if (vm.lotesToRemove.length == 0)
+                vm.todosSelected = false;
+            else
+                vm.todosSelected = true;
         }
     }
 })();

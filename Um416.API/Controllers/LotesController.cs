@@ -30,5 +30,11 @@ namespace Um416.API.Controllers
         {
             _bo.Save(lotes);
         }
+
+        [HttpDelete, Route("api/lotes/multiple")]
+        public void DeleteMultiple(long[] ids)
+        {
+            _bo.Delete(ids);
+        }
     }
 }

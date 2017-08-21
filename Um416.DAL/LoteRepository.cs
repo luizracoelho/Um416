@@ -13,7 +13,7 @@ namespace Um416.DAL
             using (var db = new SqlConnection(ConnectionString))
             {
                 var filter = id == null ? " IS NULL" : " = @LoteamentoId";
-                var query = $"Select * From Lotes Left Join Loteamentos On Loteamentos.Id = Lotes.LoteamentoId Where Lotes.LoteamentoId { filter }";
+                var query = $"Select * From Lotes Left Join Loteamentos On Loteamentos.Id = Lotes.LoteamentoId Where Lotes.LoteamentoId { filter } Order By Lotes.Codigo";
 
                 return db.Query<Lote, Loteamento, Lote>(query, (lote, loteamento) => {
                     lote.Loteamento = loteamento;
