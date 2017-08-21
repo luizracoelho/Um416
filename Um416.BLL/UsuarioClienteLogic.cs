@@ -91,7 +91,7 @@ namespace Um416.BLL
 
         public Usuario Get(string login)
         {
-            return Get(x => x.Login.Equals(login));
+            return Get(x => x.Login == login);
         }
     }
 }
