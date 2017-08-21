@@ -12,20 +12,10 @@ namespace Um416.API.Controllers
         public UserInfo Get()
         {
             var identity = (ClaimsIdentity)User.Identity;
-            var role = identity.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
+            var regra = identity.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
 
-            Usuario usuario;
-
-            if (role == "admin")
-            {
-                var bo = new UsuarioAdminLogic();
-                usuario = bo.Get(x => x.Login == identity.Name);
-            }
-            else
-            {
-                var bo = new UsuarioClienteLogic();
-                usuario = bo.Get(x => x.Login == identity.Name);
-            }
+            var bo = new UsuarioLogic();
+            var usuario = bo.GetUser(identity.Name, regra);
 
             return new UserInfo
             {

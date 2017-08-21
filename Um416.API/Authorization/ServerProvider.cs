@@ -8,7 +8,7 @@ namespace Um416.API.Authorization
 {
     public class ServerProvider : OAuthAuthorizationServerProvider
     {
-        string tipo;
+        string regra;
 
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
@@ -16,7 +16,7 @@ namespace Um416.API.Authorization
             {
                 context.Validated();
 
-                tipo = context.Parameters.FirstOrDefault(x => x.Key == "tipo").Value.FirstOrDefault();
+                regra = context.Parameters.FirstOrDefault(x => x.Key == "regra").Value.FirstOrDefault();
             });
         }
 
@@ -26,22 +26,8 @@ namespace Um416.API.Authorization
             {
                 context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
-                Usuario usuario;
-
-                if (tipo == "admin")
-                {
-                    var bo = new UsuarioAdminLogic();
-                    usuario = bo.GetAuthenticatedUser(context.UserName, context.Password);
-                }
-                else if (tipo == "cliente")
-                {
-                    var bo = new UsuarioClienteLogic();
-                    usuario = bo.GetAuthenticatedUser(context.UserName, context.Password);
-                }
-                else
-                {
-                    usuario = null;
-                }
+                var bo = new UsuarioLogic();
+                var usuario = bo.GetAuthenticatedUser(context.UserName, context.Password, regra);
 
                 if (usuario == null)
                     context.Rejected();
@@ -49,7 +35,7 @@ namespace Um416.API.Authorization
                 {
                     var identity = new ClaimsIdentity(context.Options.AuthenticationType);
                     identity.AddClaim(new Claim(ClaimTypes.Name, usuario.Login));
-                    identity.AddClaim(new Claim(ClaimTypes.Role, tipo));
+                    identity.AddClaim(new Claim(ClaimTypes.Role, regra));
                     context.Validated(identity);
                 }
             });

@@ -11,6 +11,7 @@ namespace Um416.DAL.Mappings.Register
             {
                 config.AddMap(new UsuarioAdminMap());
                 config.AddMap(new UsuarioClienteMap());
+                config.AddMap(new UsuarioVendedorMap());
                 config.AddMap(new NotificacaoMap());
                 config.AddMap(new LeituraNotificacaoMap());
                 config.AddMap(new ChamadoMap());

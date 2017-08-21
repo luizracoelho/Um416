@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Um416.BLL.Base;
+using Um416.BLL.Interfaces;
 using Um416.BLL.Tools;
 using Um416.DAL;
 using Um416.TransferModels;
 
 namespace Um416.BLL
 {
-    public class UsuarioClienteLogic : BaseLogic<UsuarioCliente, UsuarioClienteRepository>
+    public class UsuarioClienteLogic : BaseLogic<UsuarioCliente, UsuarioClienteRepository>, IUsuarioLogic
     {
         Crypt _crypt;
 
@@ -86,6 +87,11 @@ namespace Um416.BLL
             usuarioDB.Senha = _crypt.Encrypt(profile.SenhaNova);
 
             _dao.Update(usuarioDB);
+        }
+
+        public Usuario Get(string login)
+        {
+            return Get(x => x.Login.Equals(login));
         }
     }
 }

@@ -57,10 +57,12 @@
     <Compile Include="NotificacaoLeitura.cs" />
     <Compile Include="TransferModels\ChamadoIteracao.cs" />
     <Compile Include="TransferModels\PasswordProfile.cs" />
+    <Compile Include="TransferModels\RegraAcesso.cs" />
     <Compile Include="TransferModels\UserInfo.cs" />
     <Compile Include="Uf.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="UsuarioAdmin.cs" />
+    <Compile Include="UsuarioVendedor.cs" />
     <Compile Include="UsuarioCliente.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

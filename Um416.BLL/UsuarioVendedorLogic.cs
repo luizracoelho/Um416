@@ -10,39 +10,44 @@ using Um416.TransferModels;
 
 namespace Um416.BLL
 {
-    public class UsuarioAdminLogic : BaseLogic<UsuarioAdmin, UsuarioAdminRepository>, IUsuarioLogic
+    public class UsuarioVendedorLogic : BaseLogic<UsuarioVendedor, UsuarioVendedorRepository>, IUsuarioLogic
     {
         Crypt _crypt;
 
-        public UsuarioAdminLogic()
+        public UsuarioVendedorLogic()
         {
             _crypt = new Crypt();
         }
-        public override IEnumerable<UsuarioAdmin> List()
+
+        public override IEnumerable<UsuarioVendedor> List()
         {
             return base.List().OrderBy(x => x.Nome);
         }
 
-        public override IEnumerable<UsuarioAdmin> List(Expression<Func<UsuarioAdmin, bool>> predicate)
+        public override IEnumerable<UsuarioVendedor> List(Expression<Func<UsuarioVendedor, bool>> predicate)
         {
-            return base.List(predicate).OrderBy(x=>x.Nome);
+            return base.List(predicate).OrderBy(x => x.Nome);
         }
 
-        protected override void Insert(UsuarioAdmin entity)
+        protected override void Insert(UsuarioVendedor entity)
         {
+            entity.DataCadastro = DateTime.Today;
             entity.Senha = _crypt.Encrypt(entity.Senha);
 
             base.Insert(entity);
         }
 
-        protected override void Update(UsuarioAdmin entity)
+        protected override void Update(UsuarioVendedor entity)
         {
-            entity.Senha = Get(entity.Id).Senha;
+            var usuario = Get(entity.Id);
+
+            entity.DataCadastro = usuario.DataCadastro;
+            entity.Senha = usuario.Senha;
 
             base.Update(entity);
         }
 
-        public override void Save(UsuarioAdmin entity)
+        public override void Save(UsuarioVendedor entity)
         {
             var usuario = Get(x => x.Login == entity.Login);
 
@@ -50,6 +55,24 @@ namespace Um416.BLL
                 throw new Exception("Já existe um usuário cadastrado com este login.");
 
             base.Save(entity);
+        }
+
+        public UsuarioVendedor GetAuthenticatedUser(string login, string senha)
+        {
+            if (login == null || senha == null)
+                return null;
+
+            var usuario = Get(x => x.Login == login);
+
+            if (usuario == null)
+                return null;
+
+            var senhaCrypt = _crypt.Encrypt(senha);
+
+            if (usuario.Senha != senhaCrypt)
+                return null;
+
+            return usuario;
         }
 
         public void ChangePassword(PasswordProfile profile)
