@@ -6,14 +6,14 @@ namespace Um416.BLL
 {
     public class UsuarioLogic
     {
-                Crypt _crypt;
+        Crypt _crypt;
 
         public UsuarioLogic()
         {
             _crypt = new Crypt();
         }
 
-        public Usuario GetUser(string login, string regraAcesso)
+        public Pessoa GetUser(string login, string regraAcesso)
         {
             if (login == null)
                 return null;
@@ -26,13 +26,15 @@ namespace Um416.BLL
                 logic = new UsuarioClienteLogic();
             else if (regraAcesso == RegraAcesso.Vendedor)
                 logic = new UsuarioVendedorLogic();
+            else if (regraAcesso == RegraAcesso.Empresa)
+                logic = new UsuarioEmpresaLogic();
             else
                 return null;
 
             return logic.Get(login);
         }
 
-        public Usuario GetAuthenticatedUser(string login, string senha, string regraAcesso)
+        public Pessoa GetAuthenticatedUser(string login, string senha, string regraAcesso)
         {
             if (login == null || senha == null)
                 return null;

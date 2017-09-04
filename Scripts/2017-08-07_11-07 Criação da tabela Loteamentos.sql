@@ -11,5 +11,6 @@ CREATE TABLE Loteamentos
 	Cidade varchar(100),
 	Uf varchar(2),
 	Cep varchar(10),
-	MapaId bigint CONSTRAINT FK_Imagens_Loteamentos FOREIGN KEY REFERENCES Imagens(Id)
+	MapaId bigint CONSTRAINT FK_Loteamentos_Imagens FOREIGN KEY REFERENCES Imagens(Id),
+	EmpresaId bigint CONSTRAINT FK_Loteamentos_Emrpesas FOREIGN KEY REFERENCES Empresas(Id) NOT NULL
 );

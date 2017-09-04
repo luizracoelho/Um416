@@ -1,0 +1,157 @@
+﻿<div ng-controller="chamadosController as vm" ng-init="vm.list();">
+    <div class="alert alert-danger" ng-show="vm.error != null">
+        {{vm.error}}
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <button type="button" ng-click="vm.add();" class="btn btn-sm btn-success pull-right"><i class="fa fa-plus"></i> Adicionar</button>
+            <h4><i class="fa fa-life-ring"></i> Chamados</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6" ng-show="vm.showGrid()">
+                    <span class="input-group">
+                        <input type="text" ng-model="filtro" placeholder="Pesquisar" class="form-control" />
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12" ng-show="!vm.showGrid()">
+                    <h5>
+                        Nenhum registro encontrado!
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-condensed table-hover" ng-show="vm.showGrid()">
+                <thead>
+                    <tr class="active">
+                        <th>No.</th>
+                        <th>Título</th>
+                        <th>Data/Hora</th>
+                        <th>Status</th>
+                        <th>Data/Hora Enc.</th>
+                        <th>Encerrado Por</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="chamado in vm.chamados | filter: filtro" class="text-nowrap">
+                        <td>{{chamado.id}}</td>
+                        <td>{{chamado.titulo}}</td>
+                        <td>{{chamado.dataHoraCriacao | date : "dd/MM/yyyy HH:mm"}}</td>
+                        <td><i class="fa" ng-class="chamado.encerrado ? 'fa-check-circle text-success' : 'fa-ban text-danger'"></i> {{chamado.encerrado ? "Encerrado" : "Aberto"}}</td>
+                        <td>{{chamado.dataHoraEncerramento | date : "dd/MM/yyyy HH:mm"}}</td>
+                        <td>{{chamado.encerrado && chamado.adminEncerramentoId == null ? 'Você' : chamado.adminEncerramento.nome}}</td>
+                        <td class="text-nowrap" style="width: 1%;">
+                            <button ng-show="!chamado.encerrado" class="btn btn-sm btn-primary" ng-click="vm.find(chamado.id)"><i class="fa fa-refresh"></i> Atualizar</button>
+                            <button ng-show="chamado.encerrado" class="btn btn-sm btn-info" ng-click="vm.find(chamado.id, 'visualizar')"><i class="fa fa-search"></i> Visualizar</button>
+                            <button ng-show="!chamado.encerrado" class="btn btn-sm btn-success" ng-click="vm.find(chamado.id, 'encerrar')"><i class="fa fa-check"></i> Encerrar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modalDetails" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form name="chamadoForm" ng-submit="vm.save()">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-life-ring"></i> {{vm.modalTitle}} Chamado</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger" ng-show="vm.errorDetail != null">
+                            {{vm.errorDetail}}
+                        </div>
+
+                        <blockquote ng-if="vm.chamado.id == 0">
+                            Informações
+                        </blockquote>
+
+                        <div class="row">
+                            <div class="form-group col-sm-8 col-md-9">
+                                <label>Assunto <span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="Problema financeiro" name="titulo" ng-model="vm.chamado.titulo" required ng-disabled="vm.chamado.id > 0" />
+                                <p class="text-danger" ng-show="chamadoForm.titulo.$invalid && !chamadoForm.titulo.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                            </div>
+
+                            <div class="form-group col-sm-4 col-md-3">
+                                <label>Data/Hora<span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="00/00/0000 00:00" ng-model="vm.chamado._dataHoraCriacao" disabled />
+                            </div>
+                        </div>
+
+                        <div class="row" ng-if="vm.chamado.id == 0">
+                            <div class="form-group col-xs-12">
+                                <label>Mensagem<span class="text-primary">*</span></label>
+                                <textarea class="form-control" placeholder="Informe sua Mensagem" name="conteudo" ng-model="vm.iteracao.conteudo" rows="3" required>
+                                </textarea>
+                                <p class="text-danger" ng-show="chamadoForm.conteudo.$error.required && !chamadoForm.conteudo.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="iteracoes" style="overflow-y: auto; overflow-x: hidden;">
+                            <div class="row" ng-if="vm.chamado.id > 0">
+                                <div class="form-group col-xs-12">
+                                    <div class="alert col-xs-10 col-sm-9 col-md-8 col-lg-7" ng-repeat="iteracao in vm.chamado.iteracoesChamados" ng-class="iteracao.adminId == null ? 'alert-info text-right pull-right' : 'alert-secondary text-left'">
+                                        <small ng-class="iteracao.adminId == null ? 'pull-right': 'pull-left'">{{iteracao.dataHora | date : "dd/MM/yyyy HH:mm"}} - {{iteracao.admin.nome != null ? iteracao.admin.nome : "Você"}}</small>
+                                        <hr />
+                                        <p>{{iteracao.conteudo}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="row" ng-if="vm.chamado.id > 0 && vm.modalTitle != 'Visualizar'">
+                            <div class="form-group col-xs-12">
+                                <textarea class="form-control" placeholder="Informe sua Mensagem *" name="conteudo" ng-model="vm.iteracao.conteudo" rows="3" required>
+                                </textarea>
+                                <p class="text-danger" ng-show="chamadoForm.conteudo.$error.required && !chamadoForm.conteudo.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-primary" ng-disabled="chamadoForm.$invalid || vm.areSubmitting" ng-if="vm.modalTitle != 'Visualizar'"><i class="fa fa-check"></i> Salvar</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalClose" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-life-ring"></i> Encerrar Chamado</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" ng-show="vm.errorDetail != null">
+                        {{vm.errorDetail}}
+                    </div>
+
+                    <p>Confirma o encerramento do chamado <strong>#{{vm.chamado.id}} {{vm.chamado.titulo}}</strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-success" data-dismiss="modal" ng-click="vm.close();" ng-disabled="vm.areSubmitting"><i class="fa fa-check"></i> Encerrar</button>
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

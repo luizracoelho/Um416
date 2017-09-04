@@ -1,5 +1,4 @@
 ﻿using Dapper.FluentMap.Dommel.Mapping;
-using Dapper.FluentMap.Mapping;
 
 namespace Um416.DAL.Mappings
 {
@@ -20,7 +19,9 @@ namespace Um416.DAL.Mappings
             Map(x => x.Uf).ToColumn("Uf");
             Map(x => x.Cep).ToColumn("Cep");
             Map(x => x.MapaId).ToColumn("MapaId");
+            Map(x => x.EmpresaId).ToColumn("EmpresaId");
             Map(x => x.Mapa).Ignore();
+            Map(x => x.Empresa).Ignore();
         }
     }
 }

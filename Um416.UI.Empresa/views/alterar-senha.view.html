@@ -1,0 +1,63 @@
+﻿<div ng-controller="usuariosController as vm" ng-init="vm.find();">
+    <div class="alert alert-danger" ng-show="vm.error != null">
+        {{vm.error}}
+    </div>
+
+    <form name="usuarioForm" ng-submit="vm.changePassword()">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="modal-title"><i class="fa fa-key"></i> Alterar Senha</h4>
+            </div>
+            <div class="panel-body">
+                <blockquote>
+                    Dados de acesso
+                </blockquote>
+
+                <div class="row">
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>Nome de Usuário<span class="text-primary">*</span></label>
+                        <input type="text" class="form-control" placeholder="Seu Login" name="login" ng-model="vm.usuario.login" required ng-pattern="/^[a-zA-Z0-9_.]*$/" ng-trim="false" disabled />
+                        <p class="text-danger" ng-show="usuarioForm.login.$error.required && !usuarioForm.login.$pristine">
+                            Campo obrigatório.
+                        </p>
+                        <p class="text-danger" ng-show="usuarioForm.login.$error.pattern && !usuarioForm.login.$pristine">
+                            Este campo não pode conter espaços e caracteres especiais.
+                        </p>
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>Senha Atual <span class="text-primary">*</span></label>
+                        <input type="password" class="form-control" placeholder="Sua Senha" name="senhaAtual" ng-model="vm.profile.senhaAtual" required />
+                        <p class="text-danger" ng-show="usuarioForm.senhaAtual.$invalid && !usuarioForm.senhaAtual.$pristine">
+                            Campo obrigatório.
+                        </p>
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>Nova Senha <span class="text-primary">*</span></label>
+                        <input type="password" class="form-control" placeholder="Sua Senha" name="senhaNova" ng-model="vm.profile.senhaNova" required />
+                        <p class="text-danger" ng-show="usuarioForm.senhaNova.$invalid && !usuarioForm.senhaNova.$pristine">
+                            Campo obrigatório.
+                        </p>
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-3">
+                        <label>Confirme sua Senha<span class="text-primary">*</span></label>
+                        <input type="password" class="form-control" placeholder="Confirme sua Senha" name="confirmarSenha" ng-model="vm.profile.confirmarSenha" required ng-match="vm.profile.senhaNova" />
+                        <p class="text-danger" ng-show="usuarioForm.confirmarSenha.$error.match">
+                            As senhas não coincidem.
+                        </p>
+
+                        <p class="text-danger" ng-show="usuarioForm.confirmarSenha.$error.required && !usuarioForm.confirmarSenha.$pristine">
+                            Campo obrigatório.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer text-right">
+                <button type="submit" class="btn btn-sm btn-primary" ng-disabled="usuarioForm.$invalid || vm.areSubmitting"><i class="fa fa-check"></i> Salvar</button>
+                <a ui-sref="home" class="btn btn-sm btn-default"><i class="fa fa-ban"></i> Cancelar</a>
+            </div>
+        </div>
+    </form>
+</div>

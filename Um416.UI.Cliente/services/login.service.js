@@ -5,7 +5,7 @@
         .module('ngApp')
         .service('loginService', loginService);
 
-    function loginService($rootScope, $http, $q, $location, baseUrl, tokenUrl) {
+    function loginService($rootScope, $http, $q, $state, baseUrl, tokenUrl) {
         // Retorno
         var Service = function () {
             this.login = login;
@@ -50,7 +50,7 @@
                     getLoginInfo(token)
                         .then(function (login) {
                             setLogin(login);
-                            $location.url('/', true);
+                            $state.go('painel.home');
                         }, function (error) {
                             def.reject('Não foi possível obter o usuário.');
                         });
@@ -93,7 +93,7 @@
         }
 
         function logout() {
-            $location.url('/login', true);
+            $state.go('login.entrar');
             localStorage.removeItem('token');
             localStorage.removeItem('login');
         }

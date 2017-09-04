@@ -89,7 +89,7 @@ namespace Um416.BLL
             _dao.Update(usuarioDB);
         }
 
-        public Usuario Get(string login)
+        public Pessoa Get(string login)
         {
             return Get(x => x.Login == login);
         }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.8
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01 - Um416", "Um416\01 - Um416.csproj", "{1CE7B609-70C5-4FF9-9C9E-D18797852795}"
 EndProject
@@ -13,9 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04 - Um416.API", "Um416.API
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05 - Um416.UI.Admin", "Um416.UI.Admin\05 - Um416.UI.Admin.csproj", "{7DA000F6-ECC1-4DE3-BBED-012F13D15854}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "07 - Um416.UI.Cliente", "Um416.UI.Cliente\07 - Um416.UI.Cliente.csproj", "{F94B70DC-3CA0-4270-BB2D-F5399D9C9F16}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "08 - Um416.UI.Cliente", "Um416.UI.Cliente\08 - Um416.UI.Cliente.csproj", "{F94B70DC-3CA0-4270-BB2D-F5399D9C9F16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06 - Um416.UI.Vendedor", "Um416.UI.Vendedor\06 - Um416.UI.Vendedor.csproj", "{F2B8EA74-11B1-4228-BC3C-83CA15FFDE9B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "07 - Um416.UI.Vendedor", "Um416.UI.Vendedor\07 - Um416.UI.Vendedor.csproj", "{F2B8EA74-11B1-4228-BC3C-83CA15FFDE9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06 - Um416.UI.Empresa", "Um416.UI.Empresa\06 - Um416.UI.Empresa.csproj", "{63A5B2C6-7820-400D-A3EF-21D094EBF5FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{F2B8EA74-11B1-4228-BC3C-83CA15FFDE9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2B8EA74-11B1-4228-BC3C-83CA15FFDE9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2B8EA74-11B1-4228-BC3C-83CA15FFDE9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63A5B2C6-7820-400D-A3EF-21D094EBF5FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63A5B2C6-7820-400D-A3EF-21D094EBF5FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63A5B2C6-7820-400D-A3EF-21D094EBF5FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63A5B2C6-7820-400D-A3EF-21D094EBF5FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

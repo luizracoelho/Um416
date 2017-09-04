@@ -62,6 +62,7 @@
     <Compile Include="Tools\Area.cs" />
     <Compile Include="Tools\Crypt.cs" />
     <Compile Include="UfLogic.cs" />
+    <Compile Include="UsuarioEmpresaLogic.cs" />
     <Compile Include="UsuarioLogic.cs" />
     <Compile Include="UsuarioVendedorLogic.cs" />
     <Compile Include="UsuarioClienteLogic.cs" />

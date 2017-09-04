@@ -29,72 +29,8 @@
     <script src="./js/custom.js"></script>
 </head>
 <body ng-app="ngApp">
-    <div ng-controller="homeController as vm" ng-init="vm.init(); isNavCollapsed = true;">
-        <nav class="navbar navbar-fixed-top navbar-inverse" ng-show="login != null">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header" style="position: relative;">
-                            <button type="button" class="navbar-toggle" ng-click="isNavCollapsed = !isNavCollapsed">
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <a ng-click="isNavCollapsed = true;" class="navbar-brand" ui-sref="home"><img src="./images/Logo.svg" style="max-height: 24px" class="img-responsive" /></a>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
-                            <ul class="nav navbar-nav" ng-show="!isNavCollapsed">
-                                <li><strong>Navegação</strong></li>
-                                <li ng-click="isNavCollapsed = true;"><a ui-sref="home"><i class="fa fa-home"></i> Home</a></li>
-                                <li><strong>Menu</strong></li>
-                            </ul>
-                        </div>
-
-                        <div class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
-                            <ul class="nav navbar-nav navbar-right">
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
-                                        <i class="fa fa-user-circle-o"></i> {{login.nome}}
-                                        <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li ng-click="isNavCollapsed = true;"><a ui-sref="perfil"><i class="fa fa-id-card-o"></i> Alterar Perfil</a></li>
-                                        <li ng-click="isNavCollapsed = true;"><a ui-sref="alterar-senha"><i class="fa fa-key"></i> Alterar Senha</a></li>
-                                    </ul>
-                                </li>
-                                <li ng-click="isNavCollapsed = true;"><a ui-sref="logout" ng-click="vm.logout();"><i class="fa fa-sign-out"></i> Logout</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar" ng-controller="homeController as vm" ng-show="login != null">
-                <ul class="nav nav-sidebar" style="padding: 0 10px;">
-                    <li>
-                        <img src="././images/Logo.svg" class="img-responsive" />
-                        <br />
-                    </li>
-                    <li><strong>Navegação</strong></li>
-                    <li ng-click="isNavCollapsed = true;" class="active" ui-sref-active="active">
-                        <a ui-sref="home"><i class="fa fa-home"></i> Home</a>
-                    </li>
-                    <li><strong>Menu</strong></li>
-                </ul>
-            </div>
-            <div ng-class="{'col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main': login != null}">
-                <ui-view></ui-view>
-            </div>
-        </div>
-    </div>
+    <div ui-view="login"></div>
+    <div ui-view="painel"></div>
 
     <on-loading>
         <on-content>

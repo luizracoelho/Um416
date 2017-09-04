@@ -2,7 +2,7 @@
 
 namespace Um416
 {
-    public abstract class Usuario : BaseClass
+    public abstract class Pessoa : BaseClass
     {
         public string Nome { get; set; }
         public string Cpf { get; set; }

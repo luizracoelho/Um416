@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Um416 - Contas</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!--Estilos-->
+    <link href="./css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./css/lumen.min.css" rel="stylesheet" />
+    <link href="./css/on-loading.css" rel="stylesheet" />
+    <link href="./css/custom.css" rel="stylesheet" />
+    <link href="./css/dashboard.css" rel="stylesheet" />
+    <link href="./css/ionicons.min.css" rel="stylesheet" />
+    <link href="./css/font-awesome.min.css" rel="stylesheet" />
+
+    <!--Scripts-->
+    <script src="./js/angular.min.js"></script>
+    <script src="./js/angular-locale_pt-br.js"></script>
+    <script src="./js/angular-ui-router.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/moment.js"></script>
+    <script src="./js/moment-timezone.js"></script>
+    <script src="./js/moment-pt-br.js"></script>
+    <script src="./js/angular-moment.min.js"></script>
+    <script src="./js/angular-input-masks-standalone.min.js"></script>
+    <script src="./js/angular-br-filters.min.js"></script>
+    <script src="./js/ui-bootstrap.js"></script>
+    <script src="./js/custom.js"></script>
+</head>
+<body ng-app="ngApp">
+    <div ui-view="login"></div>
+    <div ui-view="painel"></div>
+
+    <on-loading>
+        <on-content>
+            <div class="panel panel-default">
+                <div class="panel-body text-center" style="padding: 10px;">
+                    <i class="ion-load-c fa fa-5x fa-spin"></i>
+                    <br />
+                    Carregando...
+                </div>
+            </div>
+        </on-content>
+    </on-loading>
+
+    <!--Scripts App-->
+    <script src="./configs/app.config.js"></script>
+    <script src="./configs/route.config.js"></script>
+
+    <script src="./directives/ngMatch.directive.js"></script>
+    <script src="./directives/on-loading.directive.js"></script>
+    <script src="./directives/filereader.directive.js"></script>
+
+    <script src="./controllers/login.controller.js"></script>
+    <script src="./controllers/home.controller.js"></script>
+    <script src="./controllers/usuarios.controller.js"></script>
+    <script src="./controllers/notificacoes.controller.js"></script>
+    <script src="./controllers/chamados.controller.js"></script>
+    <script src="./controllers/loteamentos.controller.js"></script>
+    <script src="./controllers/lotes.controller.js"></script>
+
+    <script src="./services/login.service.js"></script>
+    <script src="./services/usuarios.service.js"></script>
+    <script src="./services/ufs.service.js"></script>
+    <script src="./services/notificacoes.service.js"></script>
+    <script src="./services/chamados.service.js"></script>
+    <script src="./services/loteamentos.service.js"></script>
+    <script src="./services/lotes.service.js"></script>
+</body>
+</html>

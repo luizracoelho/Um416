@@ -15,8 +15,10 @@ namespace Um416
         public string Cidade { get; set; }
         public string Uf { get; set; }
         public string Cep { get; set; }
-        public virtual Imagem Mapa { get; set; }
+        public Imagem Mapa { get; set; }
         public long? MapaId { get; set; }
         public IList<Lote> Lotes { get; set; }
+        public UsuarioEmpresa Empresa { get; set; }
+        public long EmpresaId { get; set; }
     }
 }

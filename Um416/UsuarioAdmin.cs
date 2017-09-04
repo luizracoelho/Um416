@@ -1,6 +1,6 @@
 ﻿namespace Um416
 {
-    public class UsuarioAdmin : Usuario
+    public class UsuarioAdmin : Pessoa
     {
 
     }

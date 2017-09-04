@@ -19,6 +19,7 @@ namespace Um416.DAL.Mappings.Register
                 config.AddMap(new ImagemMap());
                 config.AddMap(new LoteamentoMap());
                 config.AddMap(new LoteMap());
+                config.AddMap(new UsuarioEmpresaMap());
 
                 config.ForDommel();
             });

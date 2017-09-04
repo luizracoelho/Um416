@@ -30,107 +30,8 @@
     <script src="./js/custom.js"></script>
 </head>
 <body ng-app="ngApp">
-    <div ng-controller="homeController as vm" ng-init="vm.init(); isNavCollapsed = true;">
-        <nav class="navbar navbar-fixed-top navbar-inverse" ng-show="login != null">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" ng-click="isNavCollapsed = !isNavCollapsed">
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <a ng-click="isNavCollapsed = true;" class="navbar-brand" ui-sref="home"><img src="./images/Logo.svg" style="max-height: 24px" class="img-responsive" /></a>
-                            <a ui-sref="chamados" class="navbar-brand pull-right" style="position: relative;">
-                                <i class="fa fa-life-ring"></i>
-                                <i ng-show="chamados != 0" class="fa fa-circle text-danger" style="position: absolute; right: 12px; bottom: 12px; font-size: 12px;"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
-                            <ul class="nav navbar-nav" ng-show="!isNavCollapsed">
-                                <li><strong>Navegação</strong></li>
-                                <li ng-click="isNavCollapsed = true;"><a ui-sref="home"><i class="fa fa-home"></i> Home</a></li>
-                                <li ng-click="isNavCollapsed = true;"><a ui-sref="notificacoes"><i class="fa fa-bell-o"></i> Notificações</a></li>
-                                <li ng-click="isNavCollapsed = true;"><a ui-sref="chamados"><i class="fa fa-life-ring"></i> Chamados</a></li>
-                                <li><strong>Menu</strong></li>
-                                <li ng-click="isNavCollapsed = true;"><a ui-sref="usuarios"><i class="fa fa-user"></i> Usuários</a></li>
-                                <li ng-click="isNavCollapsed = true;"><a ui-sref="vendedores"><i class="fa fa-briefcase"></i> Vendedores</a></li>
-                                <li ng-click="isNavCollapsed = true;"><a ui-sref="clientes"><i class="fa fa-address-card"></i> Clientes</a></li>
-                                <li ng-click="isNavCollapsed = true;"><a ui-sref="loteamentos"><i class="fa fa-cube"></i> Loteamentos</a></li>
-                                <li ng-click="isNavCollapsed = true;"><a ui-sref="lotes"><i class="fa fa-cubes"></i> Lotes</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
-                            <ul class="nav navbar-nav navbar-right">
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
-                                        <i class="fa fa-user-circle-o"></i> {{login.nome}}
-                                        <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li ng-click="isNavCollapsed = true;"><a ui-sref="perfil"><i class="fa fa-id-card-o"></i> Alterar Perfil</a></li>
-                                        <li ng-click="isNavCollapsed = true;"><a ui-sref="alterar-senha"><i class="fa fa-key"></i> Alterar Senha</a></li>
-                                    </ul>
-                                </li>
-                                <li ng-click="isNavCollapsed = true;"><a ui-sref="logout" ng-click="vm.logout();"><i class="fa fa-sign-out"></i> Logout</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar" ng-controller="homeController as vm" ng-show="login != null">
-                <ul class="nav nav-sidebar" style="padding: 0 10px;">
-                    <li>
-                        <img src="././images/Logo.svg" class="img-responsive" />
-                        <br />
-                    </li>
-                    <li><strong>Navegação</strong></li>
-                    <li ng-click="isNavCollapsed = true;" class="active" ui-sref-active="active">
-                        <a ui-sref="home"><i class="fa fa-home"></i> Home</a>
-                    </li>
-                    <li ng-click="isNavCollapsed = true;" class="active" ui-sref-active="active">
-                        <a ui-sref="notificacoes"><i class="fa fa-bell-o"></i> Notificações</a>
-                    </li>
-                    <li ng-click="isNavCollapsed = true;" class="active" ui-sref-active="active">
-                        <a ui-sref="chamados">
-                            <i class="fa fa-life-ring"></i> Chamados
-                            <span ng-show="chamados != 0" class="badge progress-bar-danger pull-right">{{chamados}}</span>
-                        </a>
-                    </li>
-                    <li><strong>Menu</strong></li>
-                    <li ng-click="isNavCollapsed = true;" ui-sref-active="active">
-                        <a ui-sref="usuarios"><i class="fa fa-user"></i> Usuários</a>
-                    </li>
-                    <li ng-click="isNavCollapsed = true;" ui-sref-active="active">
-                        <a ui-sref="vendedores"><i class="fa fa-briefcase"></i> Vendedores</a>
-                    </li>
-                    <li ng-click="isNavCollapsed = true;" ui-sref-active="active">
-                        <a ui-sref="clientes"><i class="fa fa-address-card"></i> Clientes</a>
-                    </li>
-                    <li ng-click="isNavCollapsed = true;" ui-sref-active="active">
-                        <a ui-sref="loteamentos"><i class="fa fa-cube"></i> Loteamentos</a>
-                    </li>
-                    <li ng-click="isNavCollapsed = true;" ui-sref-active="active">
-                        <a ui-sref="lotes"><i class="fa fa-cubes"></i> Lotes</a>
-                    </li>
-                </ul>
-            </div>
-            <div ng-class="{'col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main': login != null}">
-                <ui-view></ui-view>
-            </div>
-        </div>
-    </div>
+    <div ui-view="login"></div>
+    <div ui-view="painel"></div>
 
     <on-loading>
         <on-content>
@@ -158,9 +59,8 @@
     <script src="./controllers/clientes.controller.js"></script>
     <script src="./controllers/notificacoes.controller.js"></script>
     <script src="./controllers/chamados.controller.js"></script>
-    <script src="./controllers/loteamentos.controller.js"></script>
-    <script src="./controllers/lotes.controller.js"></script>
     <script src="./controllers/vendedores.controller.js"></script>
+    <script src="./controllers/empresas.controller.js"></script>
 
     <script src="./services/login.service.js"></script>
     <script src="./services/usuarios.service.js"></script>
@@ -168,8 +68,7 @@
     <script src="./services/ufs.service.js"></script>
     <script src="./services/notificacoes.service.js"></script>
     <script src="./services/chamados.service.js"></script>
-    <script src="./services/loteamentos.service.js"></script>
-    <script src="./services/lotes.service.js"></script>
     <script src="./services/vendedores.service.js"></script>
+    <script src="./services/empresas.service.js"></script>
 </body>
 </html>

@@ -1,0 +1,293 @@
+﻿<div ng-controller="empresasController as vm" ng-init="vm.list();">
+    <div class="alert alert-danger" ng-show="vm.error != null">
+        {{vm.error}}
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <button type="button" ng-click="vm.add();" class="btn btn-sm btn-success pull-right"><i class="fa fa-plus"></i> Adicionar</button>
+            <h4><i class="fa fa-building"></i> Empresas</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6" ng-show="vm.showGrid()">
+                    <span class="input-group">
+                        <input type="text" ng-model="filtro" placeholder="Pesquisar" class="form-control" />
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12" ng-show="!vm.showGrid()">
+                    <h5>
+                        Nenhum registro encontrado!
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-condensed table-hover" ng-show="vm.showGrid()">
+                <thead>
+                    <tr class="active">
+                        <th></th>
+                        <th>Id</th>
+                        <th>Nome/Razão Social</th>
+                        <th>Login</th>
+                        <th>E-Mail</th>
+                        <th>Tel. Fixo</th>
+                        <th>Tel. Móvel</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="empresa in vm.empresas | filter: filtro" class="text-nowrap">
+                        <td><i class="fa fa-{{empresa.ativa ? 'check-circle text-success' : 'ban text-danger'}}"></i></td>
+                        <td>{{empresa.id}}</td>
+                        <td>{{empresa.nome}}</td>
+                        <td>{{empresa.login}}</td>
+                        <td>{{empresa.email}}</td>
+                        <td>{{empresa.telFixo | brPhoneNumber}}</td>
+                        <td>{{empresa.telMovel | brPhoneNumber}}</td>
+                        <td class="text-nowrap" style="width: 1%;">
+                            <button class="btn btn-sm btn-primary" ng-click="vm.find(empresa.id)"><i class="fa fa-refresh"></i> Atualizar</button>
+                            <button class="btn btn-sm btn-danger" ng-click="vm.find(empresa.id, true)"><i class="fa fa-remove"></i> Remover</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modalDetails" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form name="empresaForm" ng-submit="vm.save()">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-building"></i> {{vm.modalTitle}} Empresa</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger" ng-show="vm.errorDetail != null">
+                            {{vm.errorDetail}}
+                        </div>
+
+                        <blockquote>
+                            Informações
+                        </blockquote>
+
+                        <div class="row">
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Tipo de Pessoa<span class="text-primary">*</span></label>
+                                <select class="form-control" ng-model="vm.empresa.tipoPessoa" required>
+                                    <option ng-value="{{vm.tipoPessoa.fisica}}">Física</option>
+                                    <option ng-value="{{vm.tipoPessoa.juridica}}">Jurídica</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>{{vm.empresa.tipoPessoa == vm.tipoPessoa.fisica ? 'Nome' : 'Razão Social'}}<span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="{{vm.empresa.tipoPessoa == vm.tipoPessoa.fisica ? 'João da Silva' : 'Sua Empresa Ltda'}}" name="nome" ng-model="vm.empresa.nome" required />
+                                <p class="text-danger" ng-show="empresaForm.nome.$invalid && !empresaForm.nome.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3" ng-if="vm.empresa.tipoPessoa == vm.tipoPessoa.fisica">
+                                <label>CPF<span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="000.000.000-00" name="cpf" ng-model="vm.empresa.cpf" required ui-br-cpf-mask />
+                                <p class="text-danger" ng-show="empresaForm.cpf.$error.required && !empresaForm.cpf.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                                <p class="text-danger" ng-show="empresaForm.cpf.$error.cpf && !empresaForm.cpf.$pristine">
+                                    CPF Inválido.
+                                </p>
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3" ng-if="vm.empresa.tipoPessoa == vm.tipoPessoa.juridica">
+                                <label>CNPJ<span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="00.000.000/0000-00" name="cpf" ng-model="vm.empresa.cpf" required ui-br-cnpj-mask />
+                                <p class="text-danger" ng-show="empresaForm.cpf.$error.required && !empresaForm.cpf.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                                <p class="text-danger" ng-show="empresaForm.cpf.$error.cnpj && !empresaForm.cpf.$pristine">
+                                    CNPJ Inválido.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>{{vm.empresa.tipoPessoa == vm.tipoPessoa.fisica ? 'RG' : 'Incr. Estadual'}}</label>
+                                <input type="text" class="form-control" placeholder="{{vm.empresa.tipoPessoa == vm.tipoPessoa.fisica ? '00.000.000-0' : '000.000.000.000'}}" name="rg" ng-model="vm.empresa.rg" />
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Data Cadastro<span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="00/00/0000" ng-model="vm.empresa._dataCadastro" disabled />
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label>E-Mail<span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="seuemail@seudominio.com" name="email" ng-model="vm.empresa.email" required ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/" />
+                                <p class="text-danger" ng-show="empresaForm.email.$error.required && !empresaForm.email.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                                <p class="text-danger" ng-show="empresaForm.email.$error.pattern && !empresaForm.email.$pristine">
+                                    Informe um endereço de e-mail válido.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Telefone Fixo</label>
+                                <input type="text" class="form-control" placeholder="(00) 0000-0000" name="telFixo" ng-model="vm.empresa.telFixo" ui-br-phone-number />
+                                <p class="text-danger" ng-show="empresaForm.telFixo.$error.brPhoneNumber && !empresaForm.telFixo.$pristine">
+                                    Número Inválido.
+                                </p>
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Telefone Móvel</label>
+                                <input type="text" class="form-control" placeholder="(00) 00000-0000" name="telMovel" ng-model="vm.empresa.telMovel" ui-br-phone-number />
+                                <p class="text-danger" ng-show="empresaForm.telMovel.$error.brPhoneNumber && !empresaForm.telMovel.$pristine">
+                                    Número Inválido.
+                                </p>
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Ativa<span class="text-primary">*</span></label>
+                                <div class="material-switch">
+                                    <input type="checkbox" id="ativo" name="ativo" ng-model="vm.empresa.ativa" />
+                                    <label for="ativo" class="label-primary"></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <label>Observações</label>
+                                <textarea class="form-control" name="observacoes" ng-model="vm.empresa.observacoes" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <blockquote>
+                            Endereço
+                        </blockquote>
+
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label>Logradouro</label>
+                                <input type="text" class="form-control" placeholder="Rua Um" name="logradouro" ng-model="vm.empresa.logradouro" />
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Número</label>
+                                <input type="text" class="form-control" placeholder="100" name="numero" ng-model="vm.empresa.numero" />
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Complemento</label>
+                                <input type="text" class="form-control" placeholder="Térreo" name="complemento" ng-model="vm.empresa.complemento" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Bairro</label>
+                                <input type="text" class="form-control" placeholder="Centro" name="bairro" ng-model="vm.empresa.bairro" />
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Cidade</label>
+                                <input type="text" class="form-control" placeholder="São Paulo" name="cidade" ng-model="vm.empresa.cidade" />
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>UF</label>
+                                <select class="form-control" ng-model="vm.empresa.uf">
+                                    <option value="">Selecione</option>
+                                    <option ng-selected="vm.empresa.uf == uf.sigla" ng-repeat="uf in vm.ufs" ng-value="{{uf.sigla}}" selected>{{uf.nome}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>CEP</label>
+                                <input type="text" class="form-control" placeholder="00000-000" name="cep" ng-model="vm.empresa.cep" ui-br-cep-mask />
+                                <p class="text-danger" ng-show="empresaForm.cep.$error.cep && !empresaForm.cep.$pristine">
+                                    CEP inválido.
+                                </p>
+                            </div>
+                        </div>
+
+                        <blockquote>
+                            Dados de acesso
+                        </blockquote>
+
+                        <div class="row">
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Nome de Usuário<span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="Seu Login" name="login" ng-model="vm.empresa.login" required ng-pattern="/^[a-zA-Z0-9_.]*$/" ng-trim="false" ng-disabled="vm.empresa.id != 0" />
+                                <p class="text-danger" ng-show="empresaForm.login.$error.required && !empresaForm.login.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                                <p class="text-danger" ng-show="empresaForm.login.$error.pattern && !empresaForm.login.$pristine">
+                                    Este campo não pode conter espaços e caracteres especiais.
+                                </p>
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3" ng-if="vm.empresa.id == 0">
+                                <label>Senha <span class="text-primary">*</span></label>
+                                <input type="password" class="form-control" placeholder="Sua Senha" name="senha" ng-model="vm.empresa.senha" required />
+                                <p class="text-danger" ng-show="empresaForm.senha.$invalid && !empresaForm.senha.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3" ng-if="vm.empresa.id == 0">
+                                <label>Confirme sua Senha<span class="text-primary">*</span></label>
+                                <input type="password" class="form-control" placeholder="Confirme sua Senha" name="confirmarSenha" ng-model="vm.empresa.confirmarSenha" required ng-match="vm.empresa.senha" />
+                                <p class="text-danger" ng-show="empresaForm.confirmarSenha.$error.match">
+                                    As senhas não coincidem.
+                                </p>
+
+                                <p class="text-danger" ng-show="empresaForm.confirmarSenha.$error.required && !empresaForm.confirmarSenha.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-primary" ng-disabled="empresaForm.$invalid || vm.areSubmitting"><i class="fa fa-check"></i> Salvar</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalRemove" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-building"></i> Remover Empresa</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" ng-show="vm.errorDetail != null">
+                        {{vm.errorDetail}}
+                    </div>
+
+                    <p>Confirma a remoção do empresa <strong>#{{vm.empresa.id}} {{vm.empresa.nome}}</strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" ng-click="vm.remove();" ng-disabled="vm.areSubmitting"><i class="fa fa-remove"></i> Remover</button>
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
