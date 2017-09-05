@@ -25,29 +25,34 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="table-responsive">
-            <table class="table table-bordered table-condensed table-hover" ng-show="vm.showGrid()">
-                <thead>
-                    <tr class="active">
-                        <th>Id</th>
-                        <th>Nome</th>
-                        <th>Data Cadastro</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="loteamento in vm.loteamentos | filter: filtro" class="text-nowrap">
-                        <td>{{loteamento.id}}</td>
-                        <td>{{loteamento.nome}}</td>
-                        <td>{{loteamento.dataCadastro | date : "dd/MM/yyyy"}}</td>
-                        <td class="text-nowrap" style="width: 1%;">
-                            <button class="btn btn-sm btn-primary" ng-click="vm.find(loteamento.id)"><i class="fa fa-refresh"></i> Atualizar</button>
-                            <button class="btn btn-sm btn-danger" ng-click="vm.find(loteamento.id, true)"><i class="fa fa-remove"></i> Remover</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="row" ng-init="url = 'http://onsoft.eti.br/';">
+        <div class="col-sm-6" ng-repeat="loteamento in vm.loteamentos | filter: filtro" ng-show="vm.showGrid()">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <span class="h4"><span class="text-muted">#{{loteamento.id}}</span> {{loteamento.nome}}</span>
+                    <br />
+                    <small>Inserido em {{loteamento.dataCadastro | date : "dd/MM/yyyy"}}</small>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="loteamento.url" disabled />
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Compartilhar"><i class="fa fa-share-alt"></i></button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a ng-href="mailto:?subject={{loteamento.nome}}&body=Adquira seu lote {{url | encode}}"><i class="fa fa-envelope-o text-muted" style="width: 24px"></i> E-mail</a></li>
+                                <li><a onclick="window.open(this.href, 'whatsapp-share','width=560, height=300');return false;" ng-href=" https://api.whatsapp.com/send?text={{loteamento.nome}}, adquira seu lote {{url | encode}}"><i class="fa fa-whatsapp text-success" style="width: 24px"></i> WhatsApp</a></li>
+                                <li><a onclick="window.open(this.href, 'facebook-share','width=560, height=300');return false;" ng-href="https://www.facebook.com/sharer/sharer.php?u={{url}}"><i class="fa fa-facebook text-primary" style="width: 24px"></i> Facebook</a></li>
+                                <li><a onclick="window.open(this.href, 'twitter-share', 'width=550, height=300');return false;" ng-href="https://twitter.com/intent/tweet?text=Adquira seu lote&hashtags={{loteamento.nome}} {{url}}"><i class="fa fa-twitter text-info" style="width: 24px"></i> Twitter</a></li>
+                                <li><a onclick="window.open(this.href, 'google-plus-share', 'width=400, height=530');return false;" ng-href="https://plus.google.com/share?url={{url}}"><i class="fa fa-google-plus text-danger" style="width: 24px"></i> Google Plus</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-sm btn-primary" ng-click="vm.find(loteamento.id)"><i class="fa fa-refresh"></i> Atualizar</button>
+                    <button class="btn btn-sm btn-danger" ng-click="vm.find(loteamento.id, true)"><i class="fa fa-remove"></i> Remover</button>
+                </div>
+            </div>
         </div>
     </div>
 

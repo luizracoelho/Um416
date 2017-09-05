@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    let dev = 'http://localhost/Um416/api/';
+    let dev = 'http://192.168.15.14/Um416/api/';
     let dist = 'http://um416.onsoft.ddns.net:8081/api/';
 
     let baseUrl = dev;
