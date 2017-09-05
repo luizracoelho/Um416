@@ -54,12 +54,13 @@
     <Compile Include="Lote.cs" />
     <Compile Include="Loteamento.cs" />
     <Compile Include="Notificacao.cs" />
+    <Compile Include="Parametro.cs" />
     <Compile Include="PessoaEndereco.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NotificacaoLeitura.cs" />
     <Compile Include="TransferModels\ChamadoIteracao.cs" />
     <Compile Include="TransferModels\PasswordProfile.cs" />
-    <Compile Include="TransferModels\RegraAcesso.cs" />
+    <Compile Include="TransferModels\Autorizacao.cs" />
     <Compile Include="TransferModels\UserInfo.cs" />
     <Compile Include="Uf.cs" />
     <Compile Include="Pessoa.cs" />

@@ -1,0 +1,35 @@
+﻿<div ng-controller="parametrosController as vm" ng-init="vm.find();">
+    <div class="alert alert-danger" ng-show="vm.error != null">
+        {{vm.error}}
+    </div>
+
+    <form name="parametroForm" ng-submit="vm.save()">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="modal-title"><i class="fa fa-key"></i> Alterar Senha</h4>
+            </div>
+            <div class="panel-body">
+                <blockquote>
+                    Dados de acesso
+                </blockquote>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label>URL Venda<span class="text-primary">*</span></label>
+                        <input type="url" class="form-control" placeholder="http://www.vendas.com" name="urlVenda" ng-model="vm.parametro.urlVenda" required />
+                        <p class="text-danger" ng-show="parametroForm.urlVenda.$error.required && !parametroForm.urlVenda.$pristine">
+                            Campo obrigatório.
+                        </p>
+                        <p class="text-danger" ng-show="parametroForm.urlVenda.$error.url && !parametroForm.urlVenda.$pristine">
+                            URL inválida, tente utlizar os formatos "http://vendas.com" ou "http://www.vendas.com".
+                        </p>
+                    </div>
+                </div>
+                <div class="panel-footer text-right">
+                    <button type="submit" class="btn btn-sm btn-primary" ng-disabled="parametroForm.$invalid || vm.areSubmitting"><i class="fa fa-check"></i> Salvar</button>
+                    <a ui-sref="painel.home" class="btn btn-sm btn-default"><i class="fa fa-ban"></i> Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

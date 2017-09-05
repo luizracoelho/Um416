@@ -45,6 +45,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="controllers\chamados.controller.js" />
+    <Content Include="controllers\parametros.controller.js" />
     <Content Include="controllers\empresas.controller.js" />
     <Content Include="controllers\vendedores.controller.js" />
     <Content Include="controllers\notificacoes.controller.js" />
@@ -97,6 +98,7 @@
     <Content Include="js\moment.js" />
     <Content Include="js\ui-bootstrap.js" />
     <Content Include="services\chamados.service.js" />
+    <Content Include="services\parametros.service.js" />
     <Content Include="services\empresas.service.js" />
     <Content Include="services\vendedores.service.js" />
     <Content Include="services\notificacoes.service.js" />
@@ -104,6 +106,7 @@
     <Content Include="services\clientes.service.js" />
     <Content Include="services\ufs.service.js" />
     <Content Include="services\usuarios.service.js" />
+    <Content Include="views\parametros.view.html" />
     <Content Include="views\chamados.view.html" />
     <Content Include="views\empresas.view.html" />
     <Content Include="views\painel.layout.html" />

@@ -6,7 +6,7 @@ using Um416.TransferModels;
 
 namespace Um416.API.Controllers
 {
-    [Authorize(Roles = RegraAcesso.Empresa)]
+    [Authorize(Roles = Autorizacao.Empresa)]
     public class LoteamentosController : BaseController<Loteamento, LoteamentoLogic>
     {
         [Route("api/empresas/{empresaId}/loteamentos")]

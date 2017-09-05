@@ -144,6 +144,18 @@
                 }
             };
 
+            var parametrosState = {
+                url: '/parametros',
+                templateUrl: 'views/parametros.view.html',
+                controller: 'parametrosController',
+                controllerAs: 'vm',
+                resolve: {
+                    auth: function (loginService) {
+                        loginService.authorize();
+                    }
+                }
+            };
+
             $stateProvider.state("login", loginState);
             $stateProvider.state("login.entrar", entrarState);
             $stateProvider.state("painel", painelState);
@@ -156,6 +168,7 @@
             $stateProvider.state("painel.empresas", empresasState);
             $stateProvider.state("painel.notificacoes", notificacoesState);
             $stateProvider.state("painel.chamados", chamadosState);
+            $stateProvider.state("painel.parametros", parametrosState);
 
             //Outras rotas
             $urlRouterProvider.otherwise('/');

@@ -20,13 +20,13 @@ namespace Um416.BLL
 
             IUsuarioLogic logic;
 
-            if (regraAcesso == RegraAcesso.Admin)
+            if (regraAcesso == Autorizacao.Admin)
                 logic = new UsuarioAdminLogic();
-            else if (regraAcesso == RegraAcesso.Cliente)
+            else if (regraAcesso == Autorizacao.Cliente)
                 logic = new UsuarioClienteLogic();
-            else if (regraAcesso == RegraAcesso.Vendedor)
+            else if (regraAcesso == Autorizacao.Vendedor)
                 logic = new UsuarioVendedorLogic();
-            else if (regraAcesso == RegraAcesso.Empresa)
+            else if (regraAcesso == Autorizacao.Empresa)
                 logic = new UsuarioEmpresaLogic();
             else
                 return null;
