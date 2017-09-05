@@ -20,5 +20,7 @@ namespace Um416
         public IList<Lote> Lotes { get; set; }
         public UsuarioEmpresa Empresa { get; set; }
         public long EmpresaId { get; set; }
+        public string Url { get; set; }
+        public string NomeHashtag { get; set; }
     }
 }

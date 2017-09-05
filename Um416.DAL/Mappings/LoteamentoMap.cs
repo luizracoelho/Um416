@@ -22,6 +22,8 @@ namespace Um416.DAL.Mappings
             Map(x => x.EmpresaId).ToColumn("EmpresaId");
             Map(x => x.Mapa).Ignore();
             Map(x => x.Empresa).Ignore();
+            Map(x => x.Url).Ignore();
+            Map(x => x.NomeHashtag).Ignore();
         }
     }
 }

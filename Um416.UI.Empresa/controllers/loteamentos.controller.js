@@ -92,7 +92,7 @@
             vm.areSubmitting = true;
 
             vm.loteamento.mapa = {
-                source : vm.mapa
+                source: vm.mapa
             };
 
             loteamentosService
@@ -122,5 +122,17 @@
                     $('#modalRemove').animate({ scrollTop: '0px' }, 300);
                 });
         };
+
+        vm.copy = function () {
+            var value = $('#url').val();
+
+            $('#url').select();
+            document.execCommand('copy');
+            $('#url').val('Copiado!');
+
+            setTimeout(function () {
+                $('#url').val(value);
+            }, 1000);
+        }
     }
 })();
