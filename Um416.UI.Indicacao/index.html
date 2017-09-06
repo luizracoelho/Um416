@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Um416 - Indicação</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!--Estilos-->
+    <link href="./css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./css/lumen.min.css" rel="stylesheet" />
+    <link href="./css/on-loading.css" rel="stylesheet" />
+    <link href="./css/custom.css" rel="stylesheet" />
+    <link href="./css/font-awesome.min.css" rel="stylesheet" />
+
+    <!--Scripts-->
+    <script src="./js/angular.min.js"></script>
+    <script src="./js/angular-locale_pt-br.js"></script>
+    <script src="./js/angular-ui-router.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/moment.js"></script>
+    <script src="./js/moment-timezone.js"></script>
+    <script src="./js/moment-pt-br.js"></script>
+    <script src="./js/angular-moment.min.js"></script>
+    <script src="./js/angular-input-masks-standalone.min.js"></script>
+    <script src="./js/angular-br-filters.min.js"></script>
+    <script src="./js/ui-bootstrap.js"></script>
+    <script src="./js/custom.js"></script>
+
+    <script>
+        $(".modal").on("shown.bs.modal", function () { // any time a modal is shown
+            var urlReplace = "#" + $(this).attr('id'); // make the hash the id of the modal shown
+            history.pushState(null, null, urlReplace); // push state that hash into the url
+        });
+
+        // If a pushstate has previously happened and the back button is clicked, hide any modals.
+        $(window).on('popstate', function () {
+            $(".modal").modal('hide');
+        });
+    </script>
+</head>
+<body ng-app="ngApp">
+    <nav class="navbar navbar-fixed-top navbar-inverse">
+        <div class="container">
+            <a ui-sref="mapa" class="navbar-brand"><img src="./images/Logo.svg" style="width: 140px" class="img-responsive" /></a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div ui-view></div>
+    </div>
+
+    <on-loading>
+        <on-content>
+            <div class="panel panel-default">
+                <div class="panel-body text-center" style="padding: 10px;">
+                    <i class="fa fa-spinner fa-5x fa-spin"></i>
+                    <br />
+                    Carregando...
+                </div>
+            </div>
+        </on-content>
+    </on-loading>
+
+    <!--Scripts App-->
+    <script src="./configs/app.config.js"></script>
+    <script src="./configs/route.config.js"></script>
+
+    <script src="./directives/on-loading.directive.js"></script>
+
+    <script src="./controllers/erro.controller.js"></script>
+    <script src="./controllers/mapa.controller.js"></script>
+
+    <script src="./services/loteamentos.service.js"></script>
+</body>
+</html>

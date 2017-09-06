@@ -17,7 +17,7 @@ namespace Um416.BLL
 
             foreach (var loteamento in loteamentos)
             {
-                loteamento.Url = $"{parametro.UrlVenda}loteamentos/{loteamento.Id}/adquira";
+                loteamento.Url = $"{parametro.UrlVenda ?? ""}#!/loteamentos/{loteamento.Id}";
                 loteamento.NomeHashtag = loteamento.Nome.ToHashtag();
             }
 

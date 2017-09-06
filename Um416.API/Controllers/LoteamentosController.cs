@@ -14,5 +14,11 @@ namespace Um416.API.Controllers
         {
             return _bo.List(empresaId);
         }
+
+        [AllowAnonymous, Route("api/loteamentos/{id}/indicacao")]
+        public Loteamento GetIndicacao(long id)
+        {
+            return base.Get(id);
+        }
     }
 }

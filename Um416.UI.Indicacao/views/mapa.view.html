@@ -1,0 +1,46 @@
+﻿<div class="text-center" ng-init="vm.init();">
+    <div class="alert alert-danger" ng-show="vm.error">
+        {{vm.error}}
+    </div>
+
+    <div class="row" style="position: relative;">
+        <hr style="width: 96%; position: absolute; left: 0; right: 0; top: 7px;" />
+        <hr style="width: 30%; position: absolute; left: 2%; top: 7px; border-color: #158cba;" />
+        <div class="col-xs-4">
+            <span class="fa-stack fa-2x">
+                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                <i class="fa fa-map fa-stack-1x fa-inverse"></i>
+            </span>
+            <br/>
+            <small class="text-primary">Seleção de Lote</small>
+        </div>
+        <div class="col-xs-4">
+            <span class="fa-stack fa-2x">
+                <i class="fa fa-circle fa-stack-2x text-muted"></i>
+                <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+            </span>
+            <br />
+            <small class="text-muted">Dados Cadastrais</small>
+        </div>
+        <div class="col-xs-4">
+            <span class="fa-stack fa-2x">
+                <i class="fa fa-circle fa-stack-2x text-muted"></i>
+                <i class="fa fa-check fa-stack-1x fa-inverse"></i>
+            </span>
+            <br />
+            <small class="text-muted">Finalizar Compra</small>
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <span class="h1">Seja Bem Vindo!</span>
+    <hr />
+    <p class="lead">
+        Parabéns! Você foi um dos primeiros indicados para desfrutar de uma incrível vantagem, poder adquirir um lote no <strong>{{vm.loteamento.nome}}</strong>.
+        Selecione no mapa o lote que lhe interessa antes de prosseguir.
+    </p>
+    <br />
+    <img ng-src="{{vm.loteamento.mapa.source}}" class="img-responsive" />
+</div>
