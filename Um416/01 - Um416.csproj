@@ -68,6 +68,7 @@
     <Compile Include="UsuarioEmpresa.cs" />
     <Compile Include="UsuarioVendedor.cs" />
     <Compile Include="UsuarioCliente.cs" />
+    <Compile Include="Venda.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
