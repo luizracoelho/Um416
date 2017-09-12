@@ -17,7 +17,7 @@ namespace Um416.BLL
 
             foreach (var loteamento in loteamentos)
             {
-                loteamento.Url = $"{parametro.UrlVenda ?? ""}#!/loteamentos/{loteamento.Id}";
+                loteamento.Url = $"{parametro?.UrlVenda ?? ""}#!/loteamentos/{loteamento.Id}";
                 loteamento.NomeHashtag = loteamento.Nome.ToHashtag();
             }
 
@@ -32,14 +32,36 @@ namespace Um416.BLL
 
         public override void Save(Loteamento entity)
         {
-            if (entity.Mapa != null)
+            try
             {
-                var imagemBo = new ImagemLogic();
-                imagemBo.Save(entity.Mapa);
-                entity.MapaId = entity.Mapa.Id;
-            }
+                Validar(entity);
 
-            base.Save(entity);
+                if (entity.Mapa?.Source != null)
+                {
+                    var imagemBo = new ImagemLogic();
+                    imagemBo.Save(entity.Mapa);
+                    entity.MapaId = entity.Mapa.Id;
+                }
+
+                base.Save(entity);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private static void Validar(Loteamento entity)
+        {
+            if (string.IsNullOrEmpty(entity.Nome))
+                throw new Exception("O campo Nome deve ser preenchido corretamente.");
+
+            if (string.IsNullOrEmpty(entity.Descricao))
+                throw new Exception("O campo Descrição deve ser preenchido corretamente.");
+
+            if (entity.IndicadorMultinivel < 0)
+                throw new Exception("O campo Indicador MMN deve ser maior que 0 (zero).");
         }
     }
 }

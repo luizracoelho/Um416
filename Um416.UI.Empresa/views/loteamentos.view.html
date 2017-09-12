@@ -93,9 +93,22 @@
                             <div class="form-group col-sm-6 col-md-9">
                                 <label>Nome <span class="text-primary">*</span></label>
                                 <input type="text" class="form-control" placeholder="Residencial Moriá" name="nome" ng-model="vm.loteamento.nome" required />
-                                <p class="text-danger" ng-show="loteamentoForm.nome.$invalid && !loteamentoForm.nome.$pristine">
+                                <p class="text-danger" ng-show="loteamentoForm.nome.$error.required && !loteamentoForm.nome.$pristine">
                                     Campo obrigatório.
                                 </p>
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-3">
+                                <label>Indicador MMN <span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="4" name="indicador" ng-model="vm.loteamento.indicadorMultinivel" required />
+                                <p class="text-danger" ng-show="loteamentoForm.indicador.$error.required && !loteamentoForm.indicador.$pristine">
+                                    Campo obrigatório.
+                                </p>
+                            </div>
+
+                            <div class="form-group col-sm-6 col-md-9">
+                                <label>Site</label>
+                                <input type="text" class="form-control" placeholder="www.loteamento.com.br" name="site" ng-model="vm.loteamento.site" />
                             </div>
 
                             <div class="form-group col-sm-6 col-md-3">

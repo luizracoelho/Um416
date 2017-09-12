@@ -46,7 +46,9 @@
                 bairro: null,
                 cidade: null,
                 uf: null,
-                cep: null
+                cep: null,
+                site: null,
+                indicadorMultinivel: 0
             };
             $scope.loteamentoForm.$setPristine();
             $('input[type=file]').val(null);
