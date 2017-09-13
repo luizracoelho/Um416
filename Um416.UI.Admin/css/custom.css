@@ -19,15 +19,15 @@ blockquote {
     background-color: #fff;
 }
 
-.panel-default > .panel-heading {
-    background-color: #fff !important;
-    border-bottom: 1px solid #f0f0f0 !important;
-}
+    .panel-default > .panel-heading {
+        background-color: #fff !important;
+        border-bottom: 1px solid #f0f0f0 !important;
+    }
 
-.panel-default > .panel-heading, .panel-default > .panel-footer {
-    background-color: #fff !important;
-    border-top: 1px solid #f0f0f0 !important;
-}
+    .panel-default > .panel-heading, .panel-default > .panel-footer {
+        background-color: #fff !important;
+        border-top: 1px solid #f0f0f0 !important;
+    }
 
 .panel-secondary {
     border-color: #ddd
@@ -80,7 +80,7 @@ blockquote {
         color: #333;
     }
 
-.page-header{
+.page-header {
     margin-right: 20px !important;
 }
 

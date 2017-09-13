@@ -38,8 +38,8 @@
 
             var homeState = {
                 url: '/',
-                templateUrl: 'views/home.view.html',
-                controller: 'homeController',
+                templateUrl: 'views/vendas.view.html',
+                controller: 'vendasController',
                 controllerAs: 'vm',
                 resolve: {
                     auth: function (loginService) {

@@ -1,0 +1,3 @@
+USE Um416;
+ALTER TABLE Vendas 
+ADD ValorParcela decimal(18,2) NOT NULL DEFAULT 0;

@@ -14,5 +14,6 @@ namespace Um416
         public UsuarioCliente Cliente { get; set; }
         public long LoteId { get; set; }
         public Lote Lote { get; set; }
+        public decimal ValorParcela { get; set; }
     }
 }
