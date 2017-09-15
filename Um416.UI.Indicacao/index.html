@@ -13,10 +13,11 @@
     <link href="./css/font-awesome.min.css" rel="stylesheet" />
 
     <!--Scripts-->
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/jquery.svg.min.js"></script>
     <script src="./js/angular.min.js"></script>
     <script src="./js/angular-locale_pt-br.js"></script>
     <script src="./js/angular-ui-router.js"></script>
-    <script src="./js/jquery.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script src="./js/moment.js"></script>
     <script src="./js/moment-timezone.js"></script>
@@ -41,8 +42,8 @@
 </head>
 <body ng-app="ngApp">
     <nav class="navbar navbar-fixed-top navbar-inverse">
-        <div class="container">
-            <a ui-sref="mapa" class="navbar-brand"><img src="./images/Logo.svg" style="width: 140px" class="img-responsive" /></a>
+        <div class="container" style="position: relative;">
+            <a ui-sref="mapa"><img src="./images/Logo.svg" style="width: 120px; position: absolute; left: calc(50% - 60px);" /></a>
         </div>
     </nav>
 
@@ -67,10 +68,15 @@
     <script src="./configs/route.config.js"></script>
 
     <script src="./directives/on-loading.directive.js"></script>
+    <script src="./directives/steps.directive.js"></script>
 
     <script src="./controllers/erro.controller.js"></script>
     <script src="./controllers/mapa.controller.js"></script>
+    <script src="./controllers/cadastro.controller.js"></script>
+    <script src="./controllers/finalizar.controller.js"></script>
 
     <script src="./services/loteamentos.service.js"></script>
+    <script src="./services/lotes.service.js"></script>
+    <script src="./services/clientes.service.js"></script>
 </body>
 </html>

@@ -2,19 +2,26 @@
 using System.Web.Http;
 using Um416.API.Controllers.Base;
 using Um416.BLL;
+using Um416.TransferModels;
 
 namespace Um416.API.Controllers
 {
     [Authorize]
     public class LotesController : BaseController<Lote, LoteLogic>
     {
-        [HttpGet, Route("api/loteamentos/{id}/lotes")]
+        [HttpGet, AllowAnonymous, Route("api/loteamentos/{id}/lotes")]
         public IEnumerable<Lote> GetByLoteamento(long? id)
         {
             return _bo.List(id);
         }
 
-        [HttpGet, Route("api/loteamentos/{id}/generate")]
+        [AllowAnonymous]
+        public override Lote Get(long id)
+        {
+            return base.Get(id);
+        }
+
+        [HttpGet, Authorize(Roles = Autorizacao.Empresa), Route("api/loteamentos/{id}/generate")]
         public IEnumerable<Lote> GenerateLotes(long? id)
         {
             if (id == null)
@@ -23,13 +30,13 @@ namespace Um416.API.Controllers
             return _bo.Generate((long)id);
         }
 
-        [HttpPost, Route("api/lotes/multiple")]
+        [HttpPost, Authorize(Roles = Autorizacao.Empresa), Route("api/lotes/multiple")]
         public void PostMultiple(IList<Lote> lotes)
         {
             _bo.Save(lotes);
         }
 
-        [HttpDelete, Route("api/lotes/multiple")]
+        [HttpDelete, Authorize(Roles = Autorizacao.Empresa), Route("api/lotes/multiple")]
         public void DeleteMultiple(long[] ids)
         {
             _bo.Delete(ids);

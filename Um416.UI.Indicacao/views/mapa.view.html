@@ -1,46 +1,191 @@
-﻿<div class="text-center" ng-init="vm.init();">
+﻿<steps step="1"></steps>
+
+<div id="mapaCtrl" class="text-center" ng-init="vm.init();">
     <div class="alert alert-danger" ng-show="vm.error">
         {{vm.error}}
     </div>
 
-    <div class="row" style="position: relative;">
-        <hr style="width: 96%; position: absolute; left: 0; right: 0; top: 7px;" />
-        <hr style="width: 30%; position: absolute; left: 2%; top: 7px; border-color: #158cba;" />
-        <div class="col-xs-4">
-            <span class="fa-stack fa-2x">
-                <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                <i class="fa fa-map fa-stack-1x fa-inverse"></i>
-            </span>
-            <br/>
-            <small class="text-primary">Seleção de Lote</small>
+    <fieldset ng-if="!vm.loteSelecionado">
+        <legend class="h1 text-center">Seja Bem Vindo!</legend>
+        <p class="lead">
+            Parabéns! Você foi um dos primeiros indicados para desfrutar de uma incrível vantagem, poder adquirir um lote no <strong><a href="javascript:;" data-toggle="modal" data-target="#modalLoteamento">{{vm.loteamento.nome}}</a></strong>.
+            Selecione no mapa o lote que lhe interessa antes de avançar.
+        </p>
+    </fieldset>
+
+    <fieldset ng-if="vm.loteSelecionado">
+        <legend class="h1 text-center">Você selecionou o lote {{vm.loteSelecionado.codigo}}!</legend>
+        <p class="lead">
+            Se você desejar escolher outro lote do <strong><a href="javascript:;" data-toggle="modal" data-target="#modalLoteamento">{{vm.loteamento.nome}}</a></strong>, selecione-o no mapa o para poder avançar, porém se você deseja permanecer com o lote atualmente selecionado clique no botão avançar logo abaixo.
+        </p>
+        <p>
+            <button type="button" class="btn btn-sm btn-primary" ng-click="vm.avancar()"><i class="fa fa-arrow-right"></i> Avançar</button>
+        </p>
+    </fieldset>
+
+    <br />
+
+    <div style="position: relative;">
+        <p class="text-left">
+            <i class="fa fa-circle" style="color:{{vm.corIndisponivel}};"></i> Lote Indisponível
+        </p>
+        <div class="row" style="position: absolute; top: 30px;">
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 pull-right">
+                <div class="input-group">
+                    <span class="input-group-btn"><button class="btn btn-default" type="button" id="zoomInButton"><i class="fa fa-plus"></i></button></span>
+                    <input type="text" class="form-control text-center" id="zoom" value="100%" disabled>
+                    <span class="input-group-btn"><button class="btn btn-default" type="button" id="zoomOutButton"><i class="fa fa-minus"></i></button></span>
+                </div>
+            </div>
         </div>
-        <div class="col-xs-4">
-            <span class="fa-stack fa-2x">
-                <i class="fa fa-circle fa-stack-2x text-muted"></i>
-                <i class="fa fa-user fa-stack-1x fa-inverse"></i>
-            </span>
-            <br />
-            <small class="text-muted">Dados Cadastrais</small>
-        </div>
-        <div class="col-xs-4">
-            <span class="fa-stack fa-2x">
-                <i class="fa fa-circle fa-stack-2x text-muted"></i>
-                <i class="fa fa-check fa-stack-1x fa-inverse"></i>
-            </span>
-            <br />
-            <small class="text-muted">Finalizar Compra</small>
+        <div id="wrapper" class="well well-sm" style="width: 100%; height: 500px; overflow:auto;">
+            <div id="mapa" style="width: 97%; height: 97%;"></div>
         </div>
     </div>
-
-    <br />
-    <br />
-
-    <span class="h1">Seja Bem Vindo!</span>
-    <hr />
-    <p class="lead">
-        Parabéns! Você foi um dos primeiros indicados para desfrutar de uma incrível vantagem, poder adquirir um lote no <strong>{{vm.loteamento.nome}}</strong>.
-        Selecione no mapa o lote que lhe interessa antes de prosseguir.
-    </p>
-    <br />
-    <img ng-src="{{vm.loteamento.mapa.source}}" class="img-responsive" />
 </div>
+
+<div id="modalLoteamento" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content text-center">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <span class="h3 text-center text-uppercase">{{vm.loteamento.nome}}</span>
+                <br />
+                <a ng-href="{{vm.loteamento.site}}" target="_blank">{{vm.loteamento.site}}</a>
+
+                <div class="row">
+                    <hr />
+                </div>
+
+                <blockquote>Descrição</blockquote>
+                <p class="lead">{{vm.loteamento.descricao}}</p>
+
+                <address ng-if="vm.loteamento.logradouro">
+                    <blockquote>Endereço</blockquote>
+                    <p class="lead">
+                        {{vm.loteamento.logradouro}}, {{vm.loteamento.numero}} {{vm.loteamento.bairro}}
+                    <br />                        
+                        {{vm.loteamento.cidade}}/{{vm.loteamento.uf}} {{vm.loteamento.cep}}
+                    </p>
+                </address>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-remove"></i> Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalDetails" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content text-center" style="border-left: 10px solid {{vm.lote.cor}};">
+            <div class="modal-body">
+
+                <span class="h3 text-center text-uppercase">Lote {{vm.lote.codigo}}</span>
+
+                <hr />
+
+                <p class="lead text-center">{{vm.lote.descricao}}</p>
+
+                <div class="row">
+                    <div class="col-md-offset-1 col-sm-6 col-md-5">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Área</div>
+                            <div class="panel-body">
+                                <span class="h4">{{vm.lote.area}}m2</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-5">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Valor</div>
+                            <div class="panel-body">
+                                <span class="h4">{{vm.lote.valor | currency}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-sm btn-primary" ng-disabled="vm.areSubmitting" ng-click="vm.save();"><i class="fa fa-arrow-right"></i> Avançar</button>
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        //Obter o escopo do angular
+        var vm = angular.element($('#mapaCtrl')).scope().vm;
+
+        //Carregar o SVG na div
+        var interval = setInterval(function () {
+            if (vm.loteamento != null) {
+                clearInterval(interval);
+
+                $('#mapa').svg();
+                var svg = $('#mapa').svg('get');
+                svg.load(vm.loteamento.mapa.source, {
+                    addTo: false,
+                    changeSize: false,
+                    onLoad: onLoad
+                });
+            }
+        }, 1);
+
+        //Click no SVG
+        function onLoad(svg, error) {
+            var intervalLoad = setInterval(function () {
+                if (vm.lotes != null) {
+                    clearInterval(intervalLoad);
+                    vm.carregarLotes($('rect, path'), vm.lotes);
+                }
+            });
+        }
+
+        //Controle de Zoom do Mapa
+        var zoom = 1;
+        var incr = 0.5;
+
+        //Rolagem do mouse
+        $('#mapa').bind('mousewheel DOMMouseScroll', function (event) {
+            if (event.ctrlKey == true) {
+                if (event.originalEvent.detail > 0 || event.originalEvent.wheelDelta < 0)
+                    zoomOut();
+                else
+                    zoomIn();
+
+                return false;
+            }
+        });
+
+        //Clique dos botões
+        $('#zoomInButton').on('click', function () {
+            zoomIn();
+        });
+
+        $('#zoomOutButton').on('click', function () {
+            zoomOut();
+        });
+
+        function zoomIn() {
+            zoom += incr;
+
+            zoomRefresh();
+        }
+
+        function zoomOut() {
+            if (zoom > 1)
+                zoom -= incr;
+
+            zoomRefresh();
+        }
+
+        function zoomRefresh() {
+            $('#mapa').animate({ 'zoom': zoom }, 1);
+            $('#zoom').val(zoom * 100 + '%');
+        }
+    });
+
+</script>

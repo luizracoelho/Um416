@@ -89,7 +89,7 @@
     <div id="modalDetails" class="modal fade" role="dialog" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form name="loteForm" ng-submit="vm.saveImport()">
+                <form name="loteForm" ng-submit="vm.save()">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title"><i class="fa fa-cubes"></i> {{vm.modalTitle}} Lote</h4>
@@ -355,7 +355,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" ng-click="vm.remove();" ng-disabled="vm.areSubmitting || vm.lotesToRemove == null"><i class="fa fa-remove"></i> Remover</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" ng-click="vm.remove();" ng-disabled="vm.areSubmitting" ng-if="vm.lote != null"><i class="fa fa-remove"></i> Remover</button>
+
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" ng-click="vm.remove();" ng-disabled="vm.areSubmitting || vm.lotesToRemove == null" ng-if="vm.lote == null"><i class="fa fa-remove"></i> Remover</button>
+
                     <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
                 </div>
             </div>
