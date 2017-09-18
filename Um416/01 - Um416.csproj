@@ -60,6 +60,7 @@
     <Compile Include="NotificacaoLeitura.cs" />
     <Compile Include="Titulo.cs" />
     <Compile Include="TransferModels\ChamadoIteracao.cs" />
+    <Compile Include="TransferModels\Login.cs" />
     <Compile Include="TransferModels\PasswordProfile.cs" />
     <Compile Include="TransferModels\Autorizacao.cs" />
     <Compile Include="TransferModels\UserInfo.cs" />

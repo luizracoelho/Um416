@@ -44,7 +44,7 @@
             $http.post(tokenUrl, login, config)
                 .then(function success(resp) {
                     var token = 'Bearer ' + resp.data.access_token;
-                    localStorage.setItem('token', token);
+                    sessionStorage.setItem('token', token);
                     def.resolve('Login bem sucedido.');
 
                     getLoginInfo(token)
@@ -80,22 +80,22 @@
         };
 
         function getToken() {
-            return localStorage.getItem('token');
+            return sessionStorage.getItem('token');
         };
 
         function getLogin() {
-            var login = localStorage.getItem('login');
+            var login = sessionStorage.getItem('login');
             return JSON.parse(login);
         };
 
         function setLogin(login) {
-            localStorage.setItem('login', JSON.stringify(login));
+            sessionStorage.setItem('login', JSON.stringify(login));
         }
 
         function logout() {
             $state.go('login.entrar');
-            localStorage.removeItem('token');
-            localStorage.removeItem('login');
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('login');
         }
 
         function authorize() {

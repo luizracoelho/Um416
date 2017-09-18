@@ -13,6 +13,22 @@
                 controllerAs: 'vm'
             });
 
+            //Cadastro
+            $stateProvider.state("cadastro", {
+                url: '/loteamentos/:id/cadastro',
+                templateUrl: 'views/cadastro.view.html',
+                controller: 'cadastroController',
+                controllerAs: 'vm'
+            });
+
+            //Finalizar
+            $stateProvider.state("finalizar", {
+                url: '/loteamentos/:id/finalizar',
+                templateUrl: 'views/finalizar.view.html',
+                controller: 'finalizarController',
+                controllerAs: 'vm'
+            });
+
             //Error
             $stateProvider.state("erro", {
                 url: '/erro',

@@ -53,13 +53,16 @@
   <ItemGroup>
     <Content Include="configs\app.config.js" />
     <Content Include="configs\route.config.js" />
+    <Content Include="controllers\finalizar.controller.js" />
     <Content Include="controllers\erro.controller.js" />
+    <Content Include="controllers\cadastro.controller.js" />
     <Content Include="controllers\mapa.controller.js" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\custom.css" />
     <Content Include="css\font-awesome.min.css" />
     <Content Include="css\lumen.min.css" />
     <Content Include="css\on-loading.css" />
+    <Content Include="directives\steps.directive.js" />
     <Content Include="directives\on-loading.directive.js" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -74,11 +77,17 @@
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\custom.js" />
     <Content Include="js\jquery.min.js" />
+    <Content Include="js\jquery.svg.min.js" />
     <Content Include="js\moment-pt-br.js" />
     <Content Include="js\moment-timezone.js" />
     <Content Include="js\moment.js" />
     <Content Include="js\ui-bootstrap.js" />
+    <Content Include="services\clientes.service.js" />
     <Content Include="services\loteamentos.service.js" />
+    <Content Include="services\lotes.service.js" />
+    <Content Include="views\cadastro.view.html" />
+    <Content Include="views\finalizar.view.html" />
+    <Content Include="views\steps.component.html" />
     <Content Include="views\erro.view.html" />
     <Content Include="views\mapa.view.html" />
   </ItemGroup>

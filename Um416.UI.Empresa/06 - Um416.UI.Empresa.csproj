@@ -15,7 +15,7 @@
     <RootNamespace>Um416.UI.Empresa</RootNamespace>
     <AssemblyName>Um416.UI.Empresa</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -143,7 +143,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59196</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/Um416.UI.Empresa</IISUrl>
+          <IISUrl>http://localhost:59196/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

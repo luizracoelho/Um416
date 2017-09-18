@@ -1,0 +1,289 @@
+﻿<steps step="2"></steps>
+
+<div class="text-center" ng-init="vm.init()">
+    <fieldset ng-if="!vm.clienteLogado">
+        <legend class="h1 text-center">Entre ou Cadastre-se</legend>
+        <p class="lead">
+            Para dar continuidade à aquisição do seu lote nós precisamos identificá-lo, caso você já possua cadastro faça o login, caso contrário efetue o seu cadastro.
+        </p>
+    </fieldset>
+
+    <fieldset ng-if="vm.clienteLogado">
+        <legend class="h1 text-center">Olá, {{vm.clienteLogado.nome}}!</legend>
+        <p class="lead">
+            Caso você deseje entrar ou cadastrar outra conta selecione uma das opções abaixo, agora se você já está logado com a conta desejada clique no botão avançar para finalizar sua aquisição.
+        </p>
+        <p>
+            <button type="button" class="btn btn-sm btn-primary" ng-click="vm.avancar()"><i class="fa fa-arrow-right"></i> Avançar</button>
+        </p>
+    </fieldset>
+
+    <br />
+
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">Entrar em uma conta</div>
+                <div class="panel-body">
+                    <p class="lead">
+                        Clique no botão abaixo para entrar em sua conta e finalizar sua aquisição.
+                    </p>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-sm btn-default" ng-click="vm.showLogin()"><i class="fa fa-sign-in"></i> Entrar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Cadastrar uma nova conta</div>
+                <div class="panel-body">
+                    <p class="lead">
+                        Clique no botão abaixo para efetuar o seu cadastro e finalizar sua aquisição.
+                    </p>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="vm.showCadastro()"><i class="fa fa-user"></i> Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalLogin" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content modal-sm">
+            <form name="loginForm" ng-submit="vm.logar()">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-sign-in"></i> Entrar em uma conta</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" ng-show="vm.errorLogin != null">
+                        {{vm.errorLogin}}
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            <label>Login <span class="text-primary">*</span></label>
+                            <input type="text" class="form-control" placeholder="Seu Login" name="login" ng-model="vm.login.login" required />
+                            <p class="text-danger" ng-show="loginForm.login.$invalid && !loginForm.login.$pristine">
+                                Campo obrigatório.
+                            </p>
+                        </div>
+
+                        <div class="form-group col-xs-12">
+                            <label>Senha <span class="text-primary">*</span></label>
+                            <input type="password" class="form-control" placeholder="Sua Senha" name="senha" ng-model="vm.login.senha" required />
+                            <p class="text-danger" ng-show="loginForm.senha.$invalid && !loginForm.senha.$pristine">
+                                Campo obrigatório.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-primary" ng-disabled="loginForm.$invalid || vm.areSubmitting"><i class="fa fa-sign-in"></i> Entrar</button>
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalCadastro" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form name="clienteForm" ng-submit="vm.save()">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-user"></i> Cadastrar uma nova conta</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" ng-show="vm.errorCadastro != null">
+                        {{vm.errorCadastro}}
+                    </div>
+
+                    <blockquote>
+                        Dados pessoais
+                    </blockquote>
+
+                    <div class="row">
+                        <div class="form-group col-sm-6 col-md-9">
+                            <label>Nome Completo <span class="text-primary">*</span></label>
+                            <input type="text" class="form-control" placeholder="João da Silva" name="nome" ng-model="vm.cliente.nome" required />
+                            <p class="text-danger" ng-show="clienteForm.nome.$invalid && !clienteForm.nome.$pristine">
+                                Campo obrigatório.
+                            </p>
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-3">
+                            <label>CPF<span class="text-primary">*</span></label>
+                            <input type="text" class="form-control" placeholder="000.000.000-00" name="cpf" ng-model="vm.cliente.cpf" required ui-br-cpf-mask />
+                            <p class="text-danger" ng-show="clienteForm.cpf.$error.required && !clienteForm.cpf.$pristine">
+                                Campo obrigatório.
+                            </p>
+                            <p class="text-danger" ng-show="clienteForm.cpf.$error.cpf && !clienteForm.cpf.$pristine">
+                                CPF Inválido.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-sm-6 col-md-3">
+                            <label>RG</label>
+                            <input type="text" class="form-control" placeholder="00.000.000-0" name="rg" ng-model="vm.cliente.rg" />
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-3">
+                            <label>Sexo<span class="text-primary">*</span></label>
+                            <select class="form-control" name="sexo" ng-model="vm.cliente.sexo" required>
+                                <option value="" disabled>Selecione</option>
+                                <option ng-selected="vm.cliente.sexo == sexo.id" ng-repeat="sexo in vm.sexos" value="{{sexo.id}}" selected>{{sexo.nome}}</option>
+                            </select>
+                            <p class="text-danger" ng-show="clienteForm.sexo.$error.required && !clienteForm.sexo.$pristine">
+                                Campo obrigatório.
+                            </p>
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-3">
+                            <label>Data Nascimento<span class="text-primary">*</span></label>
+                            <input type="text" class="form-control" placeholder="00/00/0000" name="dataNascimento" ng-model="vm.cliente._dataNascimento" required ui-date-mask="DD/MM/YYYY" parse="false" />
+                            <p class="text-danger" ng-show="clienteForm.dataNascimento.$error.required && !clienteForm.dataNascimento.$pristine">
+                                Campo obrigatório.
+                            </p>
+                            <p class="text-danger" ng-show="clienteForm.dataNascimento.$error.date && !clienteForm.dataNascimento.$pristine">
+                                Informe uma data válida.
+                            </p>
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-3">
+                            <label>Data Cadastro<span class="text-primary">*</span></label>
+                            <input type="text" class="form-control" placeholder="00/00/0000" ng-model="vm.cliente._dataCadastro" disabled />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label>E-Mail<span class="text-primary">*</span></label>
+                            <input type="text" class="form-control" placeholder="seuemail@seudominio.com" name="email" ng-model="vm.cliente.email" required ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/" />
+                            <p class="text-danger" ng-show="clienteForm.email.$error.required && !clienteForm.email.$pristine">
+                                Campo obrigatório.
+                            </p>
+                            <p class="text-danger" ng-show="clienteForm.email.$error.pattern && !clienteForm.email.$pristine">
+                                Informe um endereço de e-mail válido.
+                            </p>
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-3">
+                            <label>Telefone Fixo</label>
+                            <input type="text" class="form-control" placeholder="(00) 0000-0000" name="telFixo" ng-model="vm.cliente.telFixo" ui-br-phone-number />
+                            <p class="text-danger" ng-show="clienteForm.telFixo.$error.brPhoneNumber && !clienteForm.telFixo.$pristine">
+                                Número Inválido.
+                            </p>
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-3">
+                            <label>Telefone Móvel</label>
+                            <input type="text" class="form-control" placeholder="(00) 00000-0000" name="telMovel" ng-model="vm.cliente.telMovel" ui-br-phone-number />
+                            <p class="text-danger" ng-show="clienteForm.telMovel.$error.brPhoneNumber && !clienteForm.telMovel.$pristine">
+                                Número Inválido.
+                            </p>
+                        </div>
+                    </div>
+
+                    <blockquote>
+                        Endereço
+                    </blockquote>
+
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label>Logradouro</label>
+                            <input type="text" class="form-control" placeholder="Rua Um" name="logradouro" ng-model="vm.cliente.logradouro" />
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-3">
+                            <label>Número</label>
+                            <input type="text" class="form-control" placeholder="100" name="numero" ng-model="vm.cliente.numero" />
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-3">
+                            <label>Complemento</label>
+                            <input type="text" class="form-control" placeholder="Térreo" name="complemento" ng-model="vm.cliente.complemento" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-sm-6 col-md-3">
+                            <label>Bairro</label>
+                            <input type="text" class="form-control" placeholder="Centro" name="bairro" ng-model="vm.cliente.bairro" />
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-3">
+                            <label>Cidade</label>
+                            <input type="text" class="form-control" placeholder="São Paulo" name="cidade" ng-model="vm.cliente.cidade" />
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-3">
+                            <label>UF</label>
+                            <select class="form-control" name="sexo" ng-model="vm.cliente.uf">
+                                <option value="">Selecione</option>
+                                <option ng-selected="vm.cliente.uf == uf.sigla" ng-repeat="uf in vm.ufs" value="{{uf.sigla}}" selected>{{uf.nome}}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-3">
+                            <label>CEP</label>
+                            <input type="text" class="form-control" placeholder="00000-000" name="cep" ng-model="vm.cliente.cep" ui-br-cep-mask />
+                            <p class="text-danger" ng-show="clienteForm.cep.$error.cep && !clienteForm.cep.$pristine">
+                                CEP inválido.
+                            </p>
+                        </div>
+                    </div>
+
+                    <blockquote>
+                        Dados de acesso
+                    </blockquote>
+
+                    <div class="row">
+                        <div class="form-group col-sm-6 col-md-3">
+                            <label>Nome de Usuário<span class="text-primary">*</span></label>
+                            <input type="text" class="form-control" placeholder="Seu Login" name="login" ng-model="vm.cliente.login" required ng-pattern="/^[a-zA-Z0-9_.]*$/" ng-trim="false" ng-disabled="vm.cliente.id != 0" />
+                            <p class="text-danger" ng-show="clienteForm.login.$error.required && !clienteForm.login.$pristine">
+                                Campo obrigatório.
+                            </p>
+                            <p class="text-danger" ng-show="clienteForm.login.$error.pattern && !clienteForm.login.$pristine">
+                                Este campo não pode conter espaços e caracteres especiais.
+                            </p>
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-3" ng-if="vm.cliente.id == 0">
+                            <label>Senha <span class="text-primary">*</span></label>
+                            <input type="password" class="form-control" placeholder="Sua Senha" name="senha" ng-model="vm.cliente.senha" required />
+                            <p class="text-danger" ng-show="clienteForm.senha.$invalid && !clienteForm.senha.$pristine">
+                                Campo obrigatório.
+                            </p>
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-3" ng-if="vm.cliente.id == 0">
+                            <label>Confirme sua Senha<span class="text-primary">*</span></label>
+                            <input type="password" class="form-control" placeholder="Confirme sua Senha" name="confirmarSenha" ng-model="vm.cliente.confirmarSenha" required ng-match="vm.cliente.senha" />
+                            <p class="text-danger" ng-show="clienteForm.confirmarSenha.$error.match">
+                                As senhas não coincidem.
+                            </p>
+
+                            <p class="text-danger" ng-show="clienteForm.confirmarSenha.$error.required && !clienteForm.confirmarSenha.$pristine">
+                                Campo obrigatório.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-primary" ng-disabled="clienteForm.$invalid || vm.areSubmitting"><i class="fa fa-check"></i> Salvar e Avançar</button>
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
