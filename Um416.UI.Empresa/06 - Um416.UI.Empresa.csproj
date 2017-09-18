@@ -65,6 +65,7 @@
     <Content Include="css\lumen.min.css" />
     <Content Include="css\on-loading.css" />
     <Content Include="directives\filereader.directive.js" />
+    <Content Include="directives\input.directive.js" />
     <Content Include="directives\ngMatch.directive.js" />
     <Content Include="directives\on-loading.directive.js" />
     <Content Include="filters\encode.filter.js" />

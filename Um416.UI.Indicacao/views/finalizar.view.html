@@ -1,9 +1,131 @@
 ﻿<steps step="3"></steps>
 
 <div class="text-center" ng-init="vm.init();">
-    <span class="h1 text-center">Finalizar!</span>
+    <span class="h1 text-center">Finalize sua Aquisição</span>
     <hr />
     <p class="lead">
-        Vou finalizar a compra.
+        Confira abaixo seus dados cadastrais e as informações do lote selecionado. Preencha as informações de pagamento antes de finalizar sua aquisição.
     </p>
+
+    <section>
+        <div class="panel panel-default">
+            <div class="panel-heading">Dados cadastrais</div>
+            <div class="panel-body">
+
+                <span class="h4 text-center text-uppercase">Lote {{vm.clienteLogado.nome}}</span>
+                <br />
+                <p class="lead text-center" title="Nome de usuário">@{{vm.clienteLogado.login}}</p>
+
+                <div class="col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Dados pessoais</div>
+                        <div class="panel-body">
+                            <dl class="dl-horizontal text-left">
+                                <dt>CPF</dt>
+                                <dd>{{vm.clienteLogado.cpf | brCpf}}</dd>
+
+                                <dt>RG</dt>
+                                <dd>{{vm.clienteLogado.rg || '-'}}</dd>
+
+                                <dt>Sexo</dt>
+                                <dd>{{vm.clienteLogado.sexo == '0' ? 'Masculino' : 'Feminino'}}</dd>
+
+                                <dt>Data Nascimento</dt>
+                                <dd>{{(vm.clienteLogado.dataNascimento | date: 'dd/MM/yyyy') || '-'}}</dd>
+
+                                <dt>Data Cadastro</dt>
+                                <dd>{{(vm.clienteLogado.dataCadastro | date: 'dd/MM/yyyy') || '-'}}</dd>
+
+                                <dt>Telefone Fixo</dt>
+                                <dd>{{(vm.clienteLogado.telFixo | brPhoneNumber) || '-'}}</dd>
+
+                                <dt>Telefone Móvel</dt>
+                                <dd>{{(vm.clienteLogado.telMovel | brPhoneNumber) || '-'}}</dd>
+
+                                <dt>E-mail</dt>
+                                <dd>{{vm.clienteLogado.email || '-'}}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Endereço</div>
+                        <div class="panel-body">
+                            <dl class="dl-horizontal text-left">
+                                <dt>Logradouro</dt>
+                                <dd>{{vm.clienteLogado.logradouro || '-'}}</dd>
+
+                                <dt>Número</dt>
+                                <dd>{{vm.clienteLogado.numero || '-'}}</dd>
+
+                                <dt>Complemento</dt>
+                                <dd>{{vm.clienteLogado.complemento || '-'}}</dd>
+
+                                <dt>Bairro</dt>
+                                <dd>{{vm.clienteLogado.bairro || '-'}}</dd>
+
+                                <dt>Cidade</dt>
+                                <dd>{{vm.clienteLogado.cidade || '-'}}</dd>
+
+                                <dt>UF</dt>
+                                <dd>{{vm.clienteLogado.uf || '-'}}</dd>
+
+                                <dt>CEP</dt>
+                                <dd>{{(vm.clienteLogado.cep | brCep) || '-'}}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <a ui-sref="cadastro({id : vm.loteSelecionado.loteamentoId})" class="btn btn-sm btn-default"><i class="fa fa-user"></i> Alterar usuário</a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="panel panel-default" style="border-left: 10px solid {{vm.loteSelecionado.cor}};">
+            <div class="panel-heading">Lote selecionado</div>
+            <div class="panel-body">
+                <span class="h4 text-center text-uppercase">Lote {{vm.loteSelecionado.codigo}}</span>
+
+                <p class="lead text-center">{{vm.loteSelecionado.descricao}}</p>
+
+                <div class="row">
+                    <div class="col-md-offset-1 col-sm-6 col-md-5">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Área</div>
+                            <div class="panel-body">
+                                <span class="h4">{{vm.loteSelecionado.area}}m2</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-5">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Valor</div>
+                            <div class="panel-body">
+                                <span class="h4">{{vm.loteSelecionado.valor | currency}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <a ui-sref="mapa({id : vm.loteSelecionado.loteamentoId})" class="btn btn-sm btn-default"><i class="fa fa-map"></i> Alterar lote</a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="panel panel-default">
+            <div class="panel-heading">Informações de pagamento</div>
+            <div class="panel-body">
+                <p class="lead">
+                    Clique no botão abaixo para entrar em sua conta e finalizar sua aquisição.
+                </p>
+            </div>
+        </div>
+    </section>
 </div>
