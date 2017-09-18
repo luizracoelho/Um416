@@ -25,11 +25,13 @@ namespace Um416.DAL
         {
             using (var db = new SqlConnection(ConnectionString))
             {
-                var query = "SELECT v.*, c.Nome FROM Vendas v LEFT JOIN UsuariosClientes c ON v.ClienteId = c.Id WHERE v.Id = @id;";
-                return db.Query<Venda, UsuarioCliente, Venda>(query, (venda, cli) => {
+                var query = "SELECT v.*, c.Nome, l.Codigo, l.LoteamentoId, lo.Nome FROM Vendas v LEFT JOIN UsuariosClientes c ON v.ClienteId = c.Id LEFT JOIN Lotes l ON v.LoteId = l.Id LEFT JOIN Loteamentos lo ON l.LoteamentoId = lo.Id;";
+                return db.Query<Venda, UsuarioCliente, Lote, Loteamento, Venda>(query, (venda, cli, lote, loteamento) => {
                     venda.Cliente = cli;
+                    lote.Loteamento = loteamento;
+                    venda.Lote = lote;
                     return venda;
-                }, new { id = id }, splitOn: "Nome").FirstOrDefault();
+                }, new { id = id }, splitOn: "Nome, Codigo, Nome").FirstOrDefault();
             }
         }
 

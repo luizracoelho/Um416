@@ -26,6 +26,7 @@ namespace Um416.DAL.Mappings
             Map(x => x.NomeHashtag).Ignore();
             Map(x => x.Site).ToColumn("Site");
             Map(x => x.IndicadorMultinivel).ToColumn("IndicadorMultinivel");
+            Map(x => x.QuantParcelas).ToColumn("QuantParcelas");
         }
     }
 }

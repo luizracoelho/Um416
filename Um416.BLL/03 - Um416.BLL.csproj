@@ -60,6 +60,7 @@
     <Compile Include="LoteLogic.cs" />
     <Compile Include="NotificacaoLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TituloLogic.cs" />
     <Compile Include="Tools\Area.cs" />
     <Compile Include="Tools\Crypt.cs" />
     <Compile Include="Tools\StringExtensions.cs" />

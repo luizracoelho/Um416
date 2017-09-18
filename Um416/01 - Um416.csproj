@@ -58,6 +58,7 @@
     <Compile Include="PessoaEndereco.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NotificacaoLeitura.cs" />
+    <Compile Include="Titulo.cs" />
     <Compile Include="TransferModels\ChamadoIteracao.cs" />
     <Compile Include="TransferModels\PasswordProfile.cs" />
     <Compile Include="TransferModels\Autorizacao.cs" />

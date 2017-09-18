@@ -21,6 +21,7 @@ namespace Um416
         public virtual Loteamento Loteamento { get; set; }
         public long? LoteamentoId { get; set; }
         public string Cor { get; set; }
+        public bool Comprado { get; set; }
         //Propriedade Visual
         public StatusAdicao StatusAdicao { get; set; }
     }

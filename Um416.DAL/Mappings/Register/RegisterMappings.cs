@@ -22,6 +22,7 @@ namespace Um416.DAL.Mappings.Register
                 config.AddMap(new UsuarioEmpresaMap());
                 config.AddMap(new ParametroMap());
                 config.AddMap(new VendaMap());
+                config.AddMap(new TituloMap());
 
                 config.ForDommel();
             });

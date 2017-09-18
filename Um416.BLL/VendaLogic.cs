@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Transactions;
 using Um416.BLL.Base;
 using Um416.BLL.Tools;
 using Um416.DAL;
@@ -12,23 +13,13 @@ namespace Um416.BLL
         {
             try
             {
-                if (entity.Id == 0)
-                {
-                    var loteBo = new LoteLogic();
-                    var lote = loteBo.Get(entity.LoteId);
-
-                    entity.Valor = lote.Valor;
-                }
-
                 if (entity.DiaVencimento == 0)
                     throw new Exception("A data de vencimento deve ser informada corretamente.");
 
-                if (entity.QuantParcelas > 0)
-                    entity.ValorParcela = entity.Valor / entity.QuantParcelas;
-                else
+                if (entity.QuantParcelas < 1)
                     throw new Exception("A quantidade de parcelas deve ser maior que 0 (zero).");
 
-                base.Save(entity);
+                Insert(entity);
             }
             catch (Exception)
             {
@@ -39,19 +30,24 @@ namespace Um416.BLL
 
         protected override void Insert(Venda entity)
         {
-            entity.DataHora = DateTime.Now;
+            using (var scope = new TransactionScope())
+            {
+                var loteBo = new LoteLogic();
+                var lote = loteBo.Get(entity.LoteId);
+                lote.Comprado = true;
+                loteBo.Save(lote);
 
-            base.Insert(entity);
-        }
+                entity.Valor = lote.Valor;
+                entity.ValorParcela = entity.Valor / entity.QuantParcelas;
+                entity.DataHora = DateTime.Now;
 
-        protected override void Update(Venda entity)
-        {
-            var vendaBd = Get(entity.Id);
+                base.Insert(entity);
 
-            entity.Valor = vendaBd.Valor;
-            entity.DataHora = vendaBd.DataHora;
+                var tituloBo = new TituloLogic();
+                tituloBo.GerarTitulos(entity.Id);
 
-            base.Update(entity);
+                scope.Complete();
+            }
         }
 
         public IEnumerable<Venda> List(long id)
@@ -68,6 +64,19 @@ namespace Um416.BLL
             }
 
             return vendas;
+        }
+
+        public override bool Delete(long id)
+        {
+            var venda = Get(id);
+            var loteBo = new LoteLogic();
+            var lote = loteBo.Get(venda.LoteId);
+
+            lote.Comprado = false;
+
+            loteBo.Save(lote);
+
+            return base.Delete(id);
         }
     }
 }

@@ -136,6 +136,7 @@
     <Compile Include="Controllers\ParametrosController.cs" />
     <Compile Include="Controllers\LotesController.cs" />
     <Compile Include="Controllers\NotificacoesController.cs" />
+    <Compile Include="Controllers\TitulosController.cs" />
     <Compile Include="Controllers\UfsController.cs" />
     <Compile Include="Controllers\UsuariosAdminsController.cs" />
     <Compile Include="Controllers\UsuariosEmpresasController.cs" />

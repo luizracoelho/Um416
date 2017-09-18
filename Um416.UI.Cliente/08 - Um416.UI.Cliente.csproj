@@ -51,6 +51,7 @@
     <Content Include="configs\app.config.js" />
     <Content Include="configs\route.config.js" />
     <Content Include="controllers\usuarios.controller.js" />
+    <Content Include="controllers\titulos.controller.js" />
     <Content Include="controllers\vendas.controller.js" />
     <Content Include="controllers\chamados.controller.js" />
     <Content Include="controllers\login.controller.js" />
@@ -83,12 +84,15 @@
     <Content Include="js\moment-timezone.js" />
     <Content Include="js\moment.js" />
     <Content Include="js\ui-bootstrap.js" />
+    <Content Include="services\titulos.service.js" />
+    <Content Include="services\usuarios.service.js" />
     <Content Include="services\vendas.service.js" />
     <Content Include="services\chamados.service.js" />
     <Content Include="services\login.service.js" />
     <Content Include="services\notificacoes.service.js" />
     <Content Include="services\ufs.service.js" />
     <Content Include="views\alterar-senha.view.html" />
+    <Content Include="views\titulos.view.html" />
     <Content Include="views\vendas.view.html" />
     <Content Include="views\chamados.view.html" />
     <Content Include="views\login.layout.html" />
