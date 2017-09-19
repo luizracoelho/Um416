@@ -1,0 +1,68 @@
+﻿<div ng-controller="titulosController as vm" ng-init="vm.list();">
+    <div class="alert alert-danger" ng-show="vm.error != null">
+        {{vm.error}}
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4><i class="fa fa-file"></i> Títulos</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6" ng-show="vm.showGrid()">
+                    <span class="input-group">
+                        <input type="text" ng-model="filtro" placeholder="Pesquisar" class="form-control" />
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12" ng-show="!vm.showGrid()">
+                    <h5>
+                        Nenhum registro encontrado!
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-6" ng-repeat="titulo in vm.titulos | filter: filtro" ng-show="vm.showGrid()">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <!--<div class="dropdown pull-right visible-xs">
+                        <button type="button" class="btn btn-sm btn-link" dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Compartilhar"><i class="fa fa-ellipsis-v fa-lg text-primary"></i></button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li></li>
+                        </ul>
+                    </div>-->
+                    <div class="dropdown pull-right">
+                        <p class="label label-{{titulo.corStatus}}">{{titulo.status}}</p>
+                    </div>
+                    <span class="h4">
+                        <span class="text-muted">#{{titulo.numero}}</span> Lote {{titulo.venda.lote.codigo}}
+                        <br />
+                        <small>{{titulo.venda.lote.loteamento.nome}}</small>
+                    </span>
+                    <div class="row">
+                        <hr style="margin-top: 5px; margin-bottom: 5px;" />
+                    </div>
+                    <table class="table table-condensed" style="margin-bottom: auto;">
+                        <tr>
+                            <th><i class="fa fa-money"></i> Valor da Parcela</th>
+                            <td class="text-right">{{titulo.valor | currency}}</td>
+                        </tr>
+
+                        <tr>
+                            <th><i class="fa fa-calendar"></i> Vencimento</th>
+                            <td class="text-right"> {{titulo.dataVencimento | date: "dd/MM/yyyy"}}</td>
+                        </tr>
+                        <tr>
+                            <th><i class="fa fa-bookmark-o"></i> Parcela nº   </th>
+                            <td class="text-right">{{titulo.numero}}/{{titulo.venda.quantParcelas}}<td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

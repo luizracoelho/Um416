@@ -58,6 +58,7 @@
     <Compile Include="PessoaEndereco.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NotificacaoLeitura.cs" />
+    <Compile Include="Titulo.cs" />
     <Compile Include="TransferModels\ChamadoIteracao.cs" />
     <Compile Include="TransferModels\Login.cs" />
     <Compile Include="TransferModels\PasswordProfile.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="UsuarioEmpresa.cs" />
     <Compile Include="UsuarioVendedor.cs" />
     <Compile Include="UsuarioCliente.cs" />
+    <Compile Include="Venda.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

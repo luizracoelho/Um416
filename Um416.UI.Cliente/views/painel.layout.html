@@ -1,4 +1,4 @@
-﻿<div ng-controller="homeController as vm" ng-init="vm.init(); isNavCollapsed = true;">
+﻿<div ng-controller="vendasController as vm" ng-init="vm.init(); isNavCollapsed = true;">
     <nav class="navbar navbar-fixed-top navbar-inverse">
         <div class="container-fluid">
             <div class="row">
@@ -11,14 +11,14 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a ng-click="isNavCollapsed = true;" class="navbar-brand" ui-sref="painel.home"><img src="./images/Logo.svg" style="max-height: 24px" class="img-responsive" /></a>
-                        <a ui-sref="painel.notificacoes" class="navbar-brand" style="position: absolute; right: 60px;">
+                        <!--<a ui-sref="painel.notificacoes" class="navbar-brand" style="position: absolute; right: 60px;">
                             <i class="fa fa-bell-o"></i>
                             <i ng-show="notificacoes != 0" class="fa fa-circle text-danger" style="position: absolute; right: 12px; bottom: 12px; font-size: 12px;"></i>
                         </a>
                         <a ui-sref="painel.chamados" class="navbar-brand" style="position: absolute; right: 95px;">
                             <i class="fa fa-life-ring"></i>
                             <i ng-show="chamados != 0" class="fa fa-circle text-danger" style="position: absolute; right: 12px; bottom: 12px; font-size: 12px;"></i>
-                        </a>
+                        </a>-->
                     </div>
                 </div>
 
@@ -28,8 +28,8 @@
                         <ul class="nav navbar-nav" ng-show="!isNavCollapsed">
                             <li><strong>Navegação</strong></li>
                             <li ng-click="isNavCollapsed = true;"><a ui-sref="painel.home"><i class="fa fa-home"></i> Home</a></li>
-                            <li ng-click="isNavCollapsed = true;"><a ui-sref="painel.notificacoes"><i class="fa fa-bell-o"></i> Notificações</a></li>
-                            <li ng-click="isNavCollapsed = true;"><a ui-sref="painel.chamados"><i class="fa fa-life-ring"></i> Chamados</a></li>
+                            <!--<li ng-click="isNavCollapsed = true;"><a ui-sref="painel.notificacoes"><i class="fa fa-bell-o"></i> Notificações</a></li>
+                            <li ng-click="isNavCollapsed = true;"><a ui-sref="painel.chamados"><i class="fa fa-life-ring"></i> Chamados</a></li>-->
                             <li><strong>Menu</strong></li>
                         </ul>
                     </div>
@@ -56,7 +56,7 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar" ng-controller="homeController as vm">
+        <div class="col-sm-3 col-md-2 sidebar" ng-controller="vendasController as vm">
             <ul class="nav nav-sidebar" style="padding: 0 10px;">
                 <li>
                     <img src="././images/Logo.svg" class="img-responsive" />
@@ -66,7 +66,7 @@
                 <li ng-click="isNavCollapsed = true;" class="active" ui-sref-active="active">
                     <a ui-sref="painel.home"><i class="fa fa-home"></i> Home</a>
                 </li>
-                <li ng-click="isNavCollapsed = true;" class="active" ui-sref-active="active">
+                <!--<li ng-click="isNavCollapsed = true;" class="active" ui-sref-active="active">
                     <a ui-sref="painel.notificacoes">
                         <i class="fa fa-bell-o"></i> Notificações
                         <span ng-show="notificacoes != 0" class="badge progress-bar-danger pull-right">{{notificacoes}}</span>
@@ -78,7 +78,7 @@
                         <span ng-show="chamados != 0" class="badge progress-bar-danger pull-right">{{chamados}}</span>
                     </a>
                 </li>
-                <li><strong>Menu</strong></li>
+                <li><strong>Menu</strong></li>-->
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

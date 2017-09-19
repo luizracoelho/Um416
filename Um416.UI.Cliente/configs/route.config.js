@@ -38,8 +38,8 @@
 
             var homeState = {
                 url: '/',
-                templateUrl: 'views/home.view.html',
-                controller: 'homeController',
+                templateUrl: 'views/vendas.view.html',
+                controller: 'vendasController',
                 controllerAs: 'vm',
                 resolve: {
                     auth: function (loginService) {
@@ -96,6 +96,18 @@
                 }
             };
 
+            var titulosState = {
+                url: '/titulos/compra/:vendaId',
+                templateUrl: 'views/titulos.view.html',
+                controller: 'titulosController',
+                controllerAs: 'vm',
+                resolve: {
+                    auth: function (loginService) {
+                        loginService.authorize();
+                    }
+                }
+            };
+
             $stateProvider.state("login", loginState);
             $stateProvider.state("login.entrar", entrarState);
             $stateProvider.state("painel", painelState);
@@ -104,6 +116,7 @@
             $stateProvider.state("painel.alterar-senha", alterarSenhaState);
             $stateProvider.state("painel.notificacoes", notificacoesState);
             $stateProvider.state("painel.chamados", chamadosState);
+            $stateProvider.state("painel.titulos", titulosState);
 
             //Outras rotas
             $urlRouterProvider.otherwise('/');

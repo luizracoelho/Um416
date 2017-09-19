@@ -53,6 +53,7 @@
     <Content Include="controllers\chamados.controller.js" />
     <Content Include="controllers\home.controller.js" />
     <Content Include="controllers\login.controller.js" />
+    <Content Include="controllers\vendas.controller.js" />
     <Content Include="controllers\loteamentos.controller.js" />
     <Content Include="controllers\lotes.controller.js" />
     <Content Include="controllers\notificacoes.controller.js" />
@@ -94,6 +95,7 @@
     <Content Include="services\notificacoes.service.js" />
     <Content Include="services\ufs.service.js" />
     <Content Include="services\usuarios.service.js" />
+    <Content Include="services\vendas.service.js" />
     <Content Include="views\alterar-senha.view.html" />
     <Content Include="views\chamados.view.html" />
     <Content Include="views\home.view.html" />
@@ -123,6 +125,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="views\vendas.view.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -154,13 +157,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

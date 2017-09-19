@@ -22,5 +22,8 @@ namespace Um416
         public long EmpresaId { get; set; }
         public string Url { get; set; }
         public string NomeHashtag { get; set; }
+        public string Site { get; set; }
+        public int IndicadorMultinivel { get; set; }
+        public int QuantParcelas { get; set; }
     }
 }

@@ -1,0 +1,3 @@
+USE Um416;
+ALTER TABLE Lotes
+ADD Comprado bit NOT NULL DEFAULT 'FALSE';

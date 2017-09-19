@@ -161,5 +161,12 @@ namespace Um416.BLL
                 return true;
             }
         }
+
+        protected override void Insert(Lote entity)
+        {
+            entity.Comprado = false;
+
+            base.Insert(entity);
+        }
     }
 }

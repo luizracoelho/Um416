@@ -50,11 +50,12 @@
   <ItemGroup>
     <Content Include="configs\app.config.js" />
     <Content Include="configs\route.config.js" />
+    <Content Include="controllers\usuarios.controller.js" />
+    <Content Include="controllers\titulos.controller.js" />
+    <Content Include="controllers\vendas.controller.js" />
     <Content Include="controllers\chamados.controller.js" />
-    <Content Include="controllers\home.controller.js" />
     <Content Include="controllers\login.controller.js" />
     <Content Include="controllers\notificacoes.controller.js" />
-    <Content Include="controllers\usuarios.controller.js" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\custom.css" />
     <Content Include="css\dashboard.css" />
@@ -65,6 +66,7 @@
     <Content Include="directives\input.directive.js" />
     <Content Include="directives\ngMatch.directive.js" />
     <Content Include="directives\on-loading.directive.js" />
+    <Content Include="filter\encode.filter.js" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\ionicons.svg" />
@@ -72,6 +74,7 @@
     <Content Include="index.html" />
     <Content Include="js\angular-br-filters.min.js" />
     <Content Include="js\angular-input-masks-standalone.min.js" />
+    <Content Include="js\angular-locale_pt-br.js" />
     <Content Include="js\angular-moment.min.js" />
     <Content Include="js\angular-ui-router.js" />
     <Content Include="js\angular.min.js" />
@@ -82,14 +85,17 @@
     <Content Include="js\moment-timezone.js" />
     <Content Include="js\moment.js" />
     <Content Include="js\ui-bootstrap.js" />
+    <Content Include="services\titulos.service.js" />
+    <Content Include="services\usuarios.service.js" />
+    <Content Include="services\vendas.service.js" />
     <Content Include="services\chamados.service.js" />
     <Content Include="services\login.service.js" />
     <Content Include="services\notificacoes.service.js" />
     <Content Include="services\ufs.service.js" />
-    <Content Include="services\usuarios.service.js" />
     <Content Include="views\alterar-senha.view.html" />
+    <Content Include="views\titulos.view.html" />
+    <Content Include="views\vendas.view.html" />
     <Content Include="views\chamados.view.html" />
-    <Content Include="views\home.view.html" />
     <Content Include="views\login.layout.html" />
     <Content Include="views\login.view.html" />
     <Content Include="views\notificacoes.view.html" />
@@ -134,13 +140,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
