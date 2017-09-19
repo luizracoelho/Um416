@@ -5,7 +5,7 @@
         .module('ngApp')
         .controller('vendasController', vendasController);
 
-    function vendasController($rootScope, $scope, loginService, vendasService, notificacoesService, chamadosService) {
+    function vendasController($rootScope, $scope, loginService, vendasService, notificacoesService, chamadosService, titulosService) {
         var vm = this;
 
         vm.areSubmitting = false;
@@ -67,16 +67,12 @@
             loginService.logout();
         };
 
-        vm.copy = function () {
-            var value = $('#url').val();
-
-            $('#url').select();
+        vm.copy = function (url) {
+            var temp = $('<input>');
+            $('body').append(temp);
+            temp.val(url).select();
             document.execCommand('copy');
-            $('#url').val('Copiado!');
-
-            setTimeout(function () {
-                $('#url').val(value);
-            }, 1000);
+            temp.remove();
         }
     }
 })();

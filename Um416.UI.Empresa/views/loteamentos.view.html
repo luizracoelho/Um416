@@ -90,7 +90,7 @@
                         </blockquote>
 
                         <div class="row">
-                            <div class="form-group col-sm-6 col-md-9">
+                            <div class="form-group col-sm-8 col-md-9">
                                 <label>Nome <span class="text-primary">*</span></label>
                                 <input type="text" class="form-control" placeholder="Residencial Moriá" name="nome" ng-model="vm.loteamento.nome" required />
                                 <p class="text-danger" ng-show="loteamentoForm.nome.$error.required && !loteamentoForm.nome.$pristine">
@@ -98,7 +98,7 @@
                                 </p>
                             </div>
 
-                            <div class="form-group col-sm-6 col-md-3">
+                            <div class="form-group col-sm-4 col-md-3">
                                 <label>Indicador MMN <span class="text-primary">*</span></label>
                                 <input type="text" class="form-control" placeholder="4" name="indicador" ng-model="vm.loteamento.indicadorMultinivel" required />
                                 <p class="text-danger" ng-show="loteamentoForm.indicador.$error.required && !loteamentoForm.indicador.$pristine">
@@ -106,13 +106,21 @@
                                 </p>
                             </div>
 
-                            <div class="form-group col-sm-6 col-md-9">
+                            <div class="form-group col-sm-8 col-md-6">
                                 <label>Site</label>
-                                <input type="text" class="form-control" placeholder="www.loteamento.com.br" name="site" ng-model="vm.loteamento.site" />
+                                <input type="text" class="form-control" placeholder="www.loteamento.com.br" ng-model="vm.loteamento.site" />
+                            </div>
+
+                            <div class="form-group col-sm-4 col-md-3">
+                                <label>Quant. Parcelas <span class="text-primary">*</span></label>
+                                <input type="text" class="form-control" placeholder="36" name="quantParcelas" ng-model="vm.loteamento.quantParcelas" required />
+                                <p class="text-danger" ng-show="loteamentoForm.quantParcelas.$error.required && !loteamentoForm.quantParcelas.$pristine">
+                                    Campo obrigatório.
+                                </p>
                             </div>
 
                             <div class="form-group col-sm-6 col-md-3">
-                                <label>Data Cadastro<span class="text-primary">*</span></label>
+                                <label>Data Cadastro <span class="text-primary">*</span></label>
                                 <input type="text" class="form-control" placeholder="00/00/0000" ng-model="vm.loteamento._dataCadastro" disabled />
                             </div>
 

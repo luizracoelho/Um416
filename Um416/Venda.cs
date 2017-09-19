@@ -15,5 +15,6 @@ namespace Um416
         public long LoteId { get; set; }
         public Lote Lote { get; set; }
         public decimal ValorParcela { get; set; }
+        public int Pagas { get; set; }
     }
 }

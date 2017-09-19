@@ -15,11 +15,27 @@
         }
 
         vm.list = function () {
-            console.log($stateParams.vendaId);
             titulosService
                 .list($stateParams.vendaId)
                 .then(function (titulos) {
                     vm.titulos = titulos;
+
+                    vm.titulos.forEach(function (titulo) {
+                        if (titulo.pago == true) {
+                            titulo.status = "Pago";
+                            titulo.corStatus = 'success';
+                        }
+                        else {
+                            if (new Date(titulo.dataVencimento) < new Date()) {
+                                titulo.status = "Vencido";
+                                titulo.corStatus = 'danger';
+                            }
+                            else {
+                                titulo.status = "Em Aberto";
+                                titulo.corStatus = 'warning';
+                            }
+                        }
+                    });
                 }, function (error) {
                     vm.error = error;
                 });

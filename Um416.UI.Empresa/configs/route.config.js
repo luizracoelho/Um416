@@ -120,6 +120,18 @@
                 }
             };
 
+            var vendasState = {
+                url: '/vendas',
+                templateUrl: 'views/vendas.view.html',
+                controller: 'vendasController',
+                controllerAs: 'vm',
+                resolve: {
+                    auth: function (loginService) {
+                        loginService.authorize();
+                    }
+                }
+            };
+
             $stateProvider.state("login", loginState);
             $stateProvider.state("painel", painelState);
             $stateProvider.state("login.entrar", entrarState);
@@ -130,6 +142,7 @@
             $stateProvider.state("painel.chamados", chamadosState);
             $stateProvider.state("painel.loteamentos", loteamentosState);
             $stateProvider.state("painel.lotes", lotesState);
+            $stateProvider.state("painel.vendas", vendasState);
 
             //Outras rotas
             $urlRouterProvider.otherwise('/');

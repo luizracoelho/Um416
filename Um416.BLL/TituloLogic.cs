@@ -47,5 +47,16 @@ namespace Um416.BLL
                 Save(titulo);
             }
         }
+
+        public void BaixarTitulo(long id)
+        {
+            var titulo = Get(id);
+
+            titulo.DataPgto = DateTime.Today;
+            titulo.ValorPgto = titulo.Valor;
+            titulo.Pago = true;
+
+            Save(titulo);
+        }
     }
 }
