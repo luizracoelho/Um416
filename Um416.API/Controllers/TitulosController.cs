@@ -12,5 +12,17 @@ namespace Um416.API.Controllers
         {
             return _bo.List(vendaId);
         }
+
+        [HttpGet, Route("api/titulos/baixar/{tituloId}")]
+        public void BaixarTitulo(int tituloId)
+        {
+            _bo.BaixarTitulo(tituloId);
+        }
+
+        [HttpGet, Route("api/titulos/estornar/{tituloId}")]
+        public void EstornarTitulo(int tituloId)
+        {
+            _bo.EstornarTitulo(tituloId);
+        }
     }
 }

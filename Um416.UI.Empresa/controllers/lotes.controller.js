@@ -5,7 +5,7 @@
         .module('ngApp')
         .controller('lotesController', lotesController)
 
-    function lotesController($scope, lotesService, loteamentosService, ufsService) {
+    function lotesController($scope, lotesService, loteamentosService, ufsService, vendasService, titulosService) {
         var vm = this;
 
         //Definir tipos de loteamento
@@ -300,6 +300,146 @@
                 vm.todosSelected = false;
             else
                 vm.todosSelected = true;
+        }
+
+        vm.findVenda = function (loteId) {
+            vendasService
+                .findByLote(loteId)
+                .then(function (venda) {
+                    vm.venda = venda;
+
+                    titulosService
+                        .list(vm.venda.id)
+                        .then(function (titulos) {
+                            vm.venda.titulos = titulos;
+
+                            vm.venda.titulos.forEach(function (titulo) {
+                                if (titulo.pago == true) {
+                                    titulo.icon = "check-circle";
+                                    titulo.cor = 'success';
+                                    titulo.title = "Paga"
+                                }
+                                else {
+                                    if (new Date(titulo.dataVencimento) < new Date()) {
+                                        titulo.icon = "exclamation-triangle";
+                                        titulo.cor = 'danger';
+                                        titulo.title = "Vencida"
+                                    }
+                                    else {
+                                        titulo.icon = "asterisk";
+                                        titulo.cor = 'warning';
+                                        titulo.title = "Em Aberto"
+                                    }
+                                }
+                            }, function (error) {
+                                vm.error = error;
+                            });
+                        });
+
+                    $('#modalVenda').modal('show');
+                }, function (error) {
+                    vm.error = error;
+                });
+        }
+
+        vm.findTitulo = function (tituloId, estorna = false) {
+            vm.areSubmitting = false;
+            titulosService
+                .find(tituloId)
+                .then(function (titulo) {
+                    vm.titulo = titulo;
+
+                    if (!estorna) {
+                        vm.titulo.dataPgto = moment().format("DD/MM/YYYY");
+                        $('#modalBaixaTitulo').modal('show');
+                    }
+                    else {
+                        $('#modalEstornaTitulo').modal('show');
+                    }
+                }, function (error) {
+                    vm.areSubmitting = false;
+                    vm.error = error;
+                });
+        }
+
+        vm.baixarTitulo = function (tituloId) {
+            vm.areSubmitting = true;
+
+            titulosService
+                .baixar(tituloId)
+                .then(function () {
+                    $('#modalBaixaTitulo').modal('hide');
+
+                    titulosService
+                        .list(vm.venda.id)
+                        .then(function (titulos) {
+                            vm.venda.titulos = titulos;
+
+                            vm.venda.titulos.forEach(function (titulo) {
+                                if (titulo.pago == true) {
+                                    titulo.icon = "check-circle";
+                                    titulo.cor = 'success';
+                                    titulo.title = "Paga"
+                                }
+                                else {
+                                    if (new Date(titulo.dataVencimento) < new Date()) {
+                                        titulo.icon = "exclamation-triangle";
+                                        titulo.cor = 'danger';
+                                        titulo.title = "Vencida"
+                                    }
+                                    else {
+                                        titulo.icon = "asterisk";
+                                        titulo.cor = 'warning';
+                                        titulo.title = "Em Aberto"
+                                    }
+                                }
+                            }, function (error) {
+                                vm.error = error;
+                            });
+                        });
+                }, function (error) {
+                    vm.error = error;
+                });
+        }
+
+        vm.estornarTitulo = function (tituloId) {
+            vm.areSubmitting = true;
+
+            titulosService
+                .estornar(tituloId)
+                .then(function () {
+                    $('#modalEstornaTitulo').modal('hide');
+
+                    titulosService
+                        .list(vm.venda.id)
+                        .then(function (titulos) {
+                            vm.venda.titulos = titulos;
+
+                            vm.venda.titulos.forEach(function (titulo) {
+                                if (titulo.pago == true) {
+                                    titulo.icon = "check-circle";
+                                    titulo.cor = 'success';
+                                    titulo.title = "Paga"
+                                }
+                                else {
+                                    if (new Date(titulo.dataVencimento) < new Date()) {
+                                        titulo.icon = "exclamation-triangle";
+                                        titulo.cor = 'danger';
+                                        titulo.title = "Vencida"
+                                    }
+                                    else {
+                                        titulo.icon = "asterisk";
+                                        titulo.cor = 'warning';
+                                        titulo.title = "Em Aberto"
+                                    }
+                                }
+                            }, function (error) {
+                                vm.error = error;
+                            });
+                        });
+                }, function (error) {
+                    vm.error = error;
+                });
         }
     }
 })();

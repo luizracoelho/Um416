@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using Um416.DAL.Base;
 
 namespace Um416.DAL
@@ -19,6 +20,18 @@ namespace Um416.DAL
                     titulo.Venda = venda;
                     return titulo;
                 }, new { id = id }, splitOn: "QuantParcelas, Nome, Codigo, Nome");
+            }
+        }
+
+        public override Titulo Get(long id)
+        {
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var query = "SELECT t.*, v.QuantParcelas, v.Numero, v.DiaVencimento, v.ClienteId, v.LoteId, v.ValorParcela FROM Titulos t LEFT JOIN Vendas v ON t.VendaId = v.Id WHERE t.Id = @id;";
+                return db.Query<Titulo, Venda, Titulo>(query, (titulo, venda) => {
+                    titulo.Venda = venda;
+                    return titulo;
+                }, new { id = id }, splitOn: "QuantParcelas").FirstOrDefault();
             }
         }
     }

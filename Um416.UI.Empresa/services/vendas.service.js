@@ -8,34 +8,28 @@
     function vendasService($http, $q, baseUrl, loginService) {
         // Retorno
         var Service = function () {
-            this.list = list;
             this.find = find;
+            this.findByLote = findByLote;
         };
 
         return new Service();
 
         // Implementação
-        function list() {
+        function findByLote(loteId) {
             var def = $q.defer();
+            $http({
+                method: "get",
+                url: baseUrl +  `vendas/lotes/${loteId}`,
+                headers: { 'Authorization': loginService.getToken() }
+            })
+                .then(function success(resp) {
+                    def.resolve(resp.data);
+                }, function error(err) {
+                    def.reject("Não foi possível obter a venda.");
 
-            var login = loginService.getLogin();
-
-            if (login != null) {
-                $http({
-                    method: "get",
-                    url: baseUrl + `clientes/${login.id}/vendas`,
-                    headers: { 'Authorization': loginService.getToken() }
-                })
-                    .then(function success(resp) {
-                        def.resolve(resp.data);
-                    }, function error(err) {
-                        def.reject(err);
-                        //def.reject("Não foi possível obter as vendas.");
-
-                        if (err.status == 401)
-                            loginService.logout();
-                    });
-            }
+                    if (err.status == 401)
+                        loginService.logout();
+                });
 
             return def.promise;
         };
