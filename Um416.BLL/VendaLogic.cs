@@ -45,15 +45,15 @@ namespace Um416.BLL
             }
         }
 
-        public IEnumerable<Venda> List(long id)
+        public IEnumerable<Venda> ListPorCliente(long clienteId)
         {
-            var vendas = _dao.List(id);
+            var vendas = _dao.ListPorCliente(clienteId);
 
             var parametroBo = new ParametroLogic();
             var parametro = parametroBo.Get(1);
 
             var tituloBo = new TituloLogic();
-            
+
 
             foreach (var venda in vendas)
             {
@@ -64,6 +64,26 @@ namespace Um416.BLL
 
                 titulos = tituloBo.List(venda.Id).ToList();
 
+                venda.Pagas = titulos.Where(x => x.Pago == true).Count();
+            }
+
+            return vendas;
+        }
+
+        public IEnumerable<Venda> ListPorEmpresa(long empresaId)
+        {
+            var vendas = _dao.ListPorCliente(empresaId);
+
+            var parametroBo = new ParametroLogic();
+            var parametro = parametroBo.Get(1);
+
+            var tituloBo = new TituloLogic();
+
+
+            foreach (var venda in vendas)
+            {
+                var titulos = new List<Titulo>();
+                titulos = tituloBo.List(venda.Id).ToList();
                 venda.Pagas = titulos.Where(x => x.Pago == true).Count();
             }
 
@@ -81,6 +101,11 @@ namespace Um416.BLL
             loteBo.Save(lote);
 
             return base.Delete(id);
+        }
+
+        public Venda GetPorLote(long loteId)
+        {
+            return _dao.GetPorLote(loteId);
         }
     }
 }
