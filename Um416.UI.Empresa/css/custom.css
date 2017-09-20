@@ -106,3 +106,8 @@ blockquote {
 .navbar {
     z-index: 999 !important;
 }
+
+/*Permitir que o scroll do modal funcione quando fecha o outo modal*/
+.modal {
+    overflow: auto !important;
+}

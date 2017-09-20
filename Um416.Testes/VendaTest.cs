@@ -23,9 +23,9 @@ namespace Um416.Testes
             var venda = new Venda
             {
                 QuantParcelas = 36,
-                DiaVencimento = 18,
+                DiaVencimento = 22,
                 ClienteId = 1,
-                LoteId = 12,
+                LoteId = 14,
             };
 
             vendaBo.Save(venda);
@@ -34,7 +34,7 @@ namespace Um416.Testes
         [TestMethod]
         public void Delete()
         {
-            vendaBo.Delete(11);
+            vendaBo.Delete(20);
         }
     }
 }
