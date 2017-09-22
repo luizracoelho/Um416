@@ -21,16 +21,17 @@ namespace Um416.BLL
                 var loteamentoBo = new LoteamentoLogic();
                 var lote = loteBo.Get(entity.LoteId);
 
+                if (lote.Comprado)
+                    throw new Exception("Este lote já foi comprado.");
+
                 lote.Comprado = true;
                 loteBo.Save(lote);
 
                 if (lote.LoteamentoId != null)
                     lote.Loteamento = loteamentoBo.Get((long)lote.LoteamentoId);
 
-                entity.QuantParcelas = lote.Loteamento.QuantParcelas;
-
-                if (entity.QuantParcelas < 1)
-                    throw new Exception("A quantidade de parcelas deve ser maior que 0 (zero).");
+                if (entity.QuantParcelas < 1 || entity.QuantParcelas > lote.Loteamento.QuantParcelas)
+                    throw new Exception($"A quantidade de parcelas deve estar entre 1 e {lote.Loteamento.QuantParcelas}.");
 
                 entity.Valor = lote.Valor;
                 entity.ValorParcela = entity.Valor / entity.QuantParcelas;

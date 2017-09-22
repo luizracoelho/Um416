@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Um416.BLL.Base;
 using Um416.BLL.Tools;
 using Um416.DAL;
@@ -62,6 +63,16 @@ namespace Um416.BLL
 
             if (entity.IndicadorMultinivel < 0)
                 throw new Exception("O campo Indicador MMN deve ser maior que 0 (zero).");
+        }
+
+        public override bool Delete(long id)
+        {
+            var loteamento = Get(id);
+
+            if (loteamento.Lotes.Where(x => x.Comprado == true).Count() > 0)
+                throw new Exception("Não é possível remover o loteamento pois há lotes vendidos.");
+
+            return base.Delete(id);
         }
     }
 }

@@ -52,10 +52,16 @@
                 if (vm.lotes != null) {
                     var lote = vm.lotes.find(x => x.codigo == $(element).attr('id'));
                     if (lote != null) {
-                        $(element).attr('ng-click', `vm.selecionarLote(${lote.id});`);
-                        $compile($(element))($scope);
+                        if (!lote.comprado) {
+                            $(element).attr('ng-click', `vm.selecionarLote(${lote.id});`);
+                            $compile($(element))($scope);
 
-                        $(element).css('cursor', 'pointer');
+                            $(element).css('cursor', 'pointer');
+                        }
+                        else {
+                            $(element).css({ fill: vm.corIndisponivel });
+                            $(element).css('cursor', 'not-allowed');
+                        }
                     }
                     else {
                         $(element).css({ fill: vm.corIndisponivel });

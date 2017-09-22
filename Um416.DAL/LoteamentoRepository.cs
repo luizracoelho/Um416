@@ -21,12 +21,17 @@ namespace Um416.DAL
         {
             using (var db = new SqlConnection(ConnectionString))
             {
-                var sql = "Select * From Loteamentos Left Join Imagens on Imagens.Id = Loteamentos.MapaId Where Loteamentos.Id = @Id";
-                return db.Query<Loteamento, Imagem, Loteamento>(sql, (lot, img) =>
+                var query = "Select * From Loteamentos Left Join Imagens on Imagens.Id = Loteamentos.MapaId Where Loteamentos.Id = @LoteamentoId";
+                var loteamento = db.Query<Loteamento, Imagem, Loteamento>(query, (loteam, img) =>
                 {
-                    lot.Mapa = img;
-                    return lot;
-                }, new { Id = id }).FirstOrDefault();
+                    loteam.Mapa = img;
+                    return loteam;
+                }, new { LoteamentoId = id }).FirstOrDefault();
+
+                var queryLotes = "Select * From Lotes Where Lotes.LoteamentoId = @LoteamentoId;";
+                loteamento.Lotes = db.Query<Lote>(queryLotes, new { LoteamentoId = id }).ToList();
+
+                return loteamento;
             }
         }
     }

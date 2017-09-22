@@ -99,7 +99,6 @@
             clientesService
                 .getLogin(vm.login)
                 .then(function (cliente) {
-                    console.log(cliente);
                     vm.areSubmitting = false;
                     sessionStorage.setItem('login', JSON.stringify(cliente));
                     vm.usuarioLogado = true;

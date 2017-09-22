@@ -121,11 +121,63 @@
     <section>
         <div class="panel panel-default">
             <div class="panel-heading">Informações de pagamento</div>
-            <div class="panel-body">
-                <p class="lead">
-                    Clique no botão abaixo para entrar em sua conta e finalizar sua aquisição.
-                </p>
-            </div>
+            <form name="vendaForm" ng-submit="vm.save()">
+                <div class="panel-body">
+                    <div class="alert alert-danger" ng-show="vm.errorDetail != null">
+                        {{vm.errorDetail}}
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-sm-6 col-md-3">
+                            <label>Valor do Lote</label>
+                            <input type="text" class="form-control" placeholder="0,00" ng-model="vm.venda.valor" disabled="disabled" ui-money-mask />
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-3">
+                            <label>Data da Compra</label>
+                            <input type="text" class="form-control" placeholder="00/00/0000" ng-model="vm.venda._dataHora" disabled="disabled" />
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-2">
+                            <label>Quant. Parcelas <span class="text-primary">*</span></label>
+                            <input type="text" class="form-control" placeholder="36" name="quantParcelas" ng-model="vm.venda.quantParcelas" ng-change="vm.calculaParcela()" required ui-number-mask="0" />
+                            <p class="text-danger" ng-show="vendaForm.quantParcelas.$error.required && !vendaForm.quantParcelas.$pristine">
+                                Campo obrigatório.
+                            </p>
+                            <p class="text-danger" ng-show="(vm.venda.quantParcelas < 1 || vm.venda.quantParcelas > vm.lote.loteamento.quantParcelas) && !vendaForm.quantParcelas.$pristine">
+                                A quant. de parcelas deve estar entre 1 e {{vm.lote.loteamento.quantParcelas}}.
+                            </p>
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-2">
+                            <label>Dia de Vencimento<span class="text-primary">*</span></label>
+                            <select class="form-control" name="diaVcto" ng-model="vm.venda.diaVencimento" required>
+                                <option value="">Selecione</option>
+                                <option value="1">1</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                            </select>
+                            <p class="text-danger" ng-show="vendaForm.diaVcto.$error.required && !vendaForm.diaVcto.$pristine">
+                                Campo obrigatório.
+                            </p>
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-2">
+                            <label>Valor Médio Parcela</label>
+                            <input type="text" class="form-control" placeholder="0,00" ng-model="vm.venda.valorParcela" ui-money-mask disabled="disabled" />
+                        </div>
+                    </div>
+                    <p>
+                        Clique no botão abaixo para finalizar sua aquisição.
+                    </p>
+                </div>
+                <div class="panel-footer">
+                    <button type="submit" class="btn btn-sm btn-primary" ng-disabled="vendaForm.$invalid || vm.areSubmitting"><i class="fa fa-check"></i> Finalizar</button>
+                </div>
+            </form>
         </div>
     </section>
 </div>

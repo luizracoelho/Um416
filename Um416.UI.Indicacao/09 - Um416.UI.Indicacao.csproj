@@ -86,6 +86,7 @@
     <Content Include="services\clientes.service.js" />
     <Content Include="services\loteamentos.service.js" />
     <Content Include="services\lotes.service.js" />
+    <Content Include="services\vendas.service.js" />
     <Content Include="views\cadastro.view.html" />
     <Content Include="views\finalizar.view.html" />
     <Content Include="views\steps.component.html" />
