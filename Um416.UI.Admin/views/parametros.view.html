@@ -25,6 +25,18 @@
                         </p>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label>URL Cliente<span class="text-primary">*</span></label>
+                        <input type="url" class="form-control" placeholder="http://www.vendas.com" name="urlCliente" ng-model="vm.parametro.urlCliente" required />
+                        <p class="text-danger" ng-show="parametroForm.urlCliente.$error.required && !parametroForm.urlCliente.$pristine">
+                            Campo obrigatório.
+                        </p>
+                        <p class="text-danger" ng-show="parametroForm.urlCliente.$error.url && !parametroForm.urlCliente.$pristine">
+                            URL inválida, tente utlizar os formatos "http://clientes.com" ou "http://www.clientes.com".
+                        </p>
+                    </div>
+                </div>
                 <div class="panel-footer text-right">
                     <button type="submit" class="btn btn-sm btn-primary" ng-disabled="parametroForm.$invalid || vm.areSubmitting"><i class="fa fa-check"></i> Salvar</button>
                     <a ui-sref="painel.home" class="btn btn-sm btn-default"><i class="fa fa-ban"></i> Cancelar</a>

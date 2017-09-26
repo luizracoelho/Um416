@@ -16,6 +16,14 @@ namespace Um416.BLL
             if (!entity.UrlVenda.EndsWith("/"))
                 entity.UrlVenda += "/";
 
+            //Verificar se a Url de Clientes foi preenchida
+            if (string.IsNullOrEmpty(entity.UrlCliente))
+                throw new Exception("Url de cliente inválida!");
+
+            //Verificar se não termina com '/', caso não, insere a '/'
+            if (!entity.UrlCliente.EndsWith("/"))
+                entity.UrlCliente += "/";
+
             //Salva o parâmetro
             base.Save(entity);
         }

@@ -10,6 +10,7 @@ namespace Um416.DAL.Mappings
 
             Map(x => x.Id).ToColumn("Id").IsKey().IsIdentity();
             Map(x => x.UrlVenda).ToColumn("UrlVenda");
+            Map(x => x.UrlCliente).ToColumn("UrlCliente");
         }
     }
 }
