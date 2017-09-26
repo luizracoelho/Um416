@@ -22,7 +22,7 @@ namespace Um416.BLL
                 var lote = loteBo.Get(entity.LoteId);
 
                 if (lote.Comprado)
-                    throw new Exception("Este lote já foi comprado.");
+                    throw new Exception("O lote selecionado foi comprado por outra pessoa enquanto você concluía sua aquisição.\nPor favor, selecione outro lote.");
 
                 lote.Comprado = true;
                 loteBo.Save(lote);

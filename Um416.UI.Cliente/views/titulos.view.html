@@ -5,7 +5,7 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h4><i class="fa fa-file"></i> Títulos</h4>
+            <h4><i class="fa fa-file"></i> Parcelas do Lote {{vm.titulos[0].venda.lote.codigo}}</h4>
         </div>
         <div class="panel-body">
             <div class="row">
@@ -26,22 +26,14 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12 col-md-6" ng-repeat="titulo in vm.titulos | filter: filtro" ng-show="vm.showGrid()">
+        <div class="col-sm-6 col-md-4" ng-repeat="titulo in vm.titulos | filter: filtro" ng-show="vm.showGrid()">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <!--<div class="dropdown pull-right visible-xs">
-                        <button type="button" class="btn btn-sm btn-link" dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Compartilhar"><i class="fa fa-ellipsis-v fa-lg text-primary"></i></button>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li></li>
-                        </ul>
-                    </div>-->
                     <div class="dropdown pull-right">
                         <p class="label label-{{titulo.corStatus}}">{{titulo.status}}</p>
                     </div>
                     <span class="h4">
-                        <span class="text-muted">#{{titulo.numero}}</span> Lote {{titulo.venda.lote.codigo}}
-                        <br />
-                        <small>{{titulo.venda.lote.loteamento.nome}}</small>
+                        Parcela {{titulo.numero}}/{{titulo.venda.quantParcelas}}
                     </span>
                     <div class="row">
                         <hr style="margin-top: 5px; margin-bottom: 5px;" />
@@ -51,14 +43,17 @@
                             <th><i class="fa fa-money"></i> Valor da Parcela</th>
                             <td class="text-right">{{titulo.valor | currency}}</td>
                         </tr>
-
                         <tr>
                             <th><i class="fa fa-calendar"></i> Vencimento</th>
                             <td class="text-right"> {{titulo.dataVencimento | date: "dd/MM/yyyy"}}</td>
                         </tr>
-                        <tr>
-                            <th><i class="fa fa-bookmark-o"></i> Parcela nº   </th>
-                            <td class="text-right">{{titulo.numero}}/{{titulo.venda.quantParcelas}}<td>
+                        <tr ng-if="titulo.pago">
+                            <th><i class="fa fa-money"></i> Valor Pago</th>
+                            <td class="text-right">{{titulo.valorPago | currency}}</td>
+                        </tr>
+                        <tr ng-if="titulo.pago">
+                            <th><i class="fa fa-calendar"></i> Pagamento</th>
+                            <td class="text-right"> {{titulo.dataPagamento | date: "dd/MM/yyyy"}}</td>
                         </tr>
                     </table>
                 </div>

@@ -12,7 +12,7 @@
             <div class="panel-heading">Dados cadastrais</div>
             <div class="panel-body">
 
-                <span class="h4 text-center text-uppercase">Lote {{vm.clienteLogado.nome}}</span>
+                <span class="h4 text-center text-uppercase">{{vm.clienteLogado.nome}}</span>
                 <br />
                 <p class="lead text-center" title="Nome de usuário">@{{vm.clienteLogado.login}}</p>
 
@@ -123,24 +123,23 @@
             <div class="panel-heading">Informações de pagamento</div>
             <form name="vendaForm" ng-submit="vm.save()">
                 <div class="panel-body">
-                    <div class="alert alert-danger" ng-show="vm.errorDetail != null">
-                        {{vm.errorDetail}}
-                    </div>
+                    <p class="alert alert-danger text-center col-xs-12" ng-show="vm.errorDetail != null" ng-bind-html="vm.errorDetail | br">
+                    </p>
 
                     <div class="row">
-                        <div class="form-group col-sm-6 col-md-3">
+                        <div class="form-group col-sm-6 col-md-2 col-md-offset-1">
                             <label>Valor do Lote</label>
-                            <input type="text" class="form-control" placeholder="0,00" ng-model="vm.venda.valor" disabled="disabled" ui-money-mask />
+                            <input type="text" class="form-control text-center" placeholder="0,00" ng-model="vm.venda.valor" disabled="disabled" ui-money-mask />
                         </div>
 
-                        <div class="form-group col-sm-6 col-md-3">
+                        <div class="form-group col-sm-6 col-md-2">
                             <label>Data da Compra</label>
-                            <input type="text" class="form-control" placeholder="00/00/0000" ng-model="vm.venda._dataHora" disabled="disabled" />
+                            <input type="text" class="form-control text-center" placeholder="00/00/0000" ng-model="vm.venda._dataHora" disabled="disabled" />
                         </div>
 
                         <div class="form-group col-sm-6 col-md-2">
                             <label>Quant. Parcelas <span class="text-primary">*</span></label>
-                            <input type="text" class="form-control" placeholder="36" name="quantParcelas" ng-model="vm.venda.quantParcelas" ng-change="vm.calculaParcela()" required ui-number-mask="0" />
+                            <input type="text" class="form-control text-center" placeholder="36" name="quantParcelas" ng-model="vm.venda.quantParcelas" ng-change="vm.calculaParcela()" required ui-number-mask="0" />
                             <p class="text-danger" ng-show="vendaForm.quantParcelas.$error.required && !vendaForm.quantParcelas.$pristine">
                                 Campo obrigatório.
                             </p>
@@ -151,7 +150,7 @@
 
                         <div class="form-group col-sm-6 col-md-2">
                             <label>Dia de Vencimento<span class="text-primary">*</span></label>
-                            <select class="form-control" name="diaVcto" ng-model="vm.venda.diaVencimento" required>
+                            <select class="form-control text-center" name="diaVcto" ng-model="vm.venda.diaVencimento" required>
                                 <option value="">Selecione</option>
                                 <option value="1">1</option>
                                 <option value="5">5</option>
@@ -167,7 +166,7 @@
 
                         <div class="form-group col-sm-6 col-md-2">
                             <label>Valor Médio Parcela</label>
-                            <input type="text" class="form-control" placeholder="0,00" ng-model="vm.venda.valorParcela" ui-money-mask disabled="disabled" />
+                            <input type="text" class="form-control text-center" placeholder="0,00" ng-model="vm.venda.valorParcela" ui-money-mask disabled="disabled" />
                         </div>
                     </div>
                     <p>
