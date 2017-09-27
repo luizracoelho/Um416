@@ -183,7 +183,8 @@
         }
 
         function zoomRefresh() {
-            $('#mapa').animate({ 'zoom': zoom }, 1);
+            $('#mapa').css('transform', `scale(${zoom})`);
+            $('#mapa').css('-webkit-transform', `scale(${zoom})`);
             $('#mapa').css('-moz-transform', `scale(${zoom})`);
             $('#zoom').val(zoom * 100 + '%');
         }
