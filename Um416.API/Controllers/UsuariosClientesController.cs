@@ -38,5 +38,11 @@ namespace Um416.API.Controllers
 
             return cliente;
         }
+
+        [AllowAnonymous, Route("api/usuariosClientes/login/{login}")]
+        public UsuarioCliente GetByLogin(string login)
+        {
+            return _bo.GetByLogin(login);
+        }
     }
 }

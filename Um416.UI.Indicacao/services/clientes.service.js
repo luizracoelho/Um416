@@ -11,6 +11,7 @@
             this.find = find;
             this.save = save;
             this.getLogin = getLogin;
+            this.findByLogin = findByLogin;
         };
 
         return new Service();
@@ -58,10 +59,24 @@
                 data: login
             })
                 .then(function success(resp) {
-                    console.log(resp);
                     def.resolve(resp.data);
                 }, function error(err) {
                     def.reject(err.data.exceptionMessage);
+                });
+
+            return def.promise;
+        };
+
+        function findByLogin(login) {
+            var def = $q.defer();
+            $http({
+                method: "get",
+                url: baseUrl + `usuariosClientes/login/${login}`,
+            })
+                .then(function success(resp) {
+                    def.resolve(resp.data);
+                }, function error(err) {
+                    def.reject("Não foi possível obter o usuário.");
                 });
 
             return def.promise;

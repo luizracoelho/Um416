@@ -11,6 +11,8 @@
         vm.areSubmitting = false;
 
         vm.init = function () {
+            vm.indicador = $stateParams.login;
+
             vm.loteSelecionado = JSON.parse(sessionStorage.getItem('lote'));
 
             //Verificar se trocou de loteamento
@@ -42,7 +44,10 @@
         }
 
         vm.avancar = function () {
-            $state.go('cadastro', { id: $stateParams.id });
+            if ($stateParams.login)
+                $state.go('cadastro.indicador', { id: $stateParams.id, login: $stateParams.login });
+            else
+                $state.go('cadastro.default', { id: $stateParams.id });
         }
 
         vm.corIndisponivel = '#aaa';

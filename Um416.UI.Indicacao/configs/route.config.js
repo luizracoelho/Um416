@@ -8,27 +8,68 @@
 
     function registerRoutes($locationProvider, $stateProvider, $urlRouterProvider) {
 
+        $stateProvider.state('mapa', {
+            abstract: true,
+        });
+
+        $stateProvider.state('cadastro', {
+            abstract: true,
+        });
+
+        $stateProvider.state('finalizar', {
+            abstract: true,
+        });
+
         //Mapa
-        $stateProvider.state("mapa", {
+        $stateProvider.state("mapa.default", {
             url: '/loteamentos/:id',
             templateUrl: 'views/mapa.view.html',
             controller: 'mapaController',
             controllerAs: 'vm'
         });
 
+        $stateProvider.state("mapa.indicador", {
+            url: '/loteamentos/:id/indicador/:login',
+            templateUrl: 'views/mapa.view.html',
+            controller: 'mapaController',
+            controllerAs: 'vm'
+        });
+
         //Cadastro
-        $stateProvider.state("cadastro", {
+        $stateProvider.state("cadastro.default", {
             url: '/loteamentos/:id/cadastro',
             templateUrl: 'views/cadastro.view.html',
             controller: 'cadastroController',
             controllerAs: 'vm'
         });
 
+        $stateProvider.state("cadastro.indicador", {
+            url: '/loteamentos/:id/indicador/:login/cadastro',
+            templateUrl: 'views/cadastro.view.html',
+            controller: 'cadastroController',
+            controllerAs: 'vm'
+        });
+
         //Finalizar
-        $stateProvider.state("finalizar", {
+        $stateProvider.state("finalizar.default", {
             url: '/loteamentos/:id/finalizar',
             templateUrl: 'views/finalizar.view.html',
             controller: 'finalizarController',
+            controllerAs: 'vm'
+        });
+
+        $stateProvider.state("finalizar.indicador", {
+            url: '/loteamentos/:id/indicador/:login/finalizar',
+            templateUrl: 'views/finalizar.view.html',
+            controller: 'finalizarController',
+            controllerAs: 'vm'
+        });
+
+        //Concluído
+        $stateProvider.state("concluido", {
+            url: '/concluido',
+            templateUrl: 'views/concluido.view.html',
+            controller: 'concluidoController',
             controllerAs: 'vm'
         });
 

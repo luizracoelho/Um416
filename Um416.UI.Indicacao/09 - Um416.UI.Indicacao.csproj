@@ -53,6 +53,7 @@
   <ItemGroup>
     <Content Include="configs\app.config.js" />
     <Content Include="configs\route.config.js" />
+    <Content Include="controllers\concluido.controller.js" />
     <Content Include="controllers\finalizar.controller.js" />
     <Content Include="controllers\erro.controller.js" />
     <Content Include="controllers\cadastro.controller.js" />
@@ -84,11 +85,13 @@
     <Content Include="js\moment-timezone.js" />
     <Content Include="js\moment.js" />
     <Content Include="js\ui-bootstrap.js" />
+    <Content Include="services\parametros.service.js" />
     <Content Include="services\clientes.service.js" />
     <Content Include="services\loteamentos.service.js" />
     <Content Include="services\lotes.service.js" />
     <Content Include="services\vendas.service.js" />
     <Content Include="views\cadastro.view.html" />
+    <Content Include="views\concluido.view.html" />
     <Content Include="views\finalizar.view.html" />
     <Content Include="views\steps.component.html" />
     <Content Include="views\erro.view.html" />

@@ -17,6 +17,7 @@ namespace Um416.DAL.Mappings
             Map(x => x.ClienteId).ToColumn("ClienteId");
             Map(x => x.LoteId).ToColumn("LoteId");
             Map(x => x.ValorParcela).ToColumn("ValorParcela");
+            Map(x => x.IndicadorId).ToColumn("IndicadorId");
 
             Map(x => x.Pagas).Ignore();
         }
