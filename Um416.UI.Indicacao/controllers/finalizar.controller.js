@@ -5,12 +5,14 @@
         .module('ngApp')
         .controller('finalizarController', finalizarController);
 
-    function finalizarController($scope, $state, $stateParams, lotesService, vendasService) {
+    function finalizarController($scope, $state, $stateParams, lotesService, vendasService, clientesService) {
         var vm = this;
 
         vm.areSubmitting = false;
 
         vm.init = function () {
+            vm.indicador = $stateParams.login;
+
             vm.clienteLogado = JSON.parse(sessionStorage.getItem('login'));
             vm.loteSelecionado = JSON.parse(sessionStorage.getItem('lote'));
 
@@ -19,8 +21,20 @@
                 sessionStorage.removeItem('lote');
                 sessionStorage.removeItem('login');
 
-                $state.go('mapa', { id: $stateParams.id });
+                if (vm.indicador == null)
+                    $state.go('mapa.default', { id: $stateParams.id });
+                else
+                    $state.go('mapa.indicador', { id: $stateParams.id, login: vm.indicador });
             }
+
+            if (vm.indicador != null)
+                clientesService
+                    .findByLogin(vm.indicador)
+                    .then(function (indicador) {
+                        vm.indicadorSelecionado = indicador;
+                    }, function (error) {
+                        vm.error = error;
+                    });
 
             vm.limparCampos(vm.clienteLogado.id, vm.loteSelecionado.id)
         };
@@ -45,7 +59,8 @@
                         diaVencimento: null,
                         clienteId: clienteId,
                         loteId: loteId,
-                        valorParcela: valorParcela
+                        valorParcela: valorParcela,
+                        indicadorId: null
                     };
 
                     $scope.vendaForm.$setPristine();
@@ -56,19 +71,35 @@
 
         vm.save = function () {
             vm.areSubmitting = true;
+
+            if (vm.indicador != null)
+                clientesService
+                    .findByLogin(vm.indicador)
+                    .then(function (indicador) {
+                        vm.venda.indicadorId = indicador.id;
+
+                        vm.salvarVenda(vm.venda);
+                    }, function (error) {
+                        vm.errorDetail = error;
+                    });
+            else
+                vm.salvarVenda(vm.venda);
+        };
+
+        vm.calculaParcela = function () {
+            vm.venda.valorParcela = vm.venda.valor / vm.venda.quantParcelas;
+        }
+
+        vm.salvarVenda = function (venda) {
             vendasService
-                .save(vm.venda)
+                .save(venda)
                 .then(function () {
-                    window.alert("Salvou!")
+                    $state.go("concluido");
                     vm.areSubmitting = false;
                 }, function (error) {
                     vm.areSubmitting = false;
                     vm.errorDetail = error;
                 });
-        };
-
-        vm.calculaParcela = function () {
-            vm.venda.valorParcela = vm.venda.valor / vm.venda.quantParcelas;
         }
     }
 })();

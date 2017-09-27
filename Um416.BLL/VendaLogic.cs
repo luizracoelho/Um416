@@ -60,7 +60,7 @@ namespace Um416.BLL
             {
                 var titulos = new List<Titulo>();
 
-                venda.Lote.Loteamento.Url = $"{parametro?.UrlVenda ?? ""}#!/loteamentos/{venda.Lote.LoteamentoId}/indicador/{venda.ClienteId}";
+                venda.Lote.Loteamento.Url = $"{parametro?.UrlVenda ?? ""}#!/loteamentos/{venda.Lote.LoteamentoId}/indicador/{venda.Cliente.Login}";
                 venda.Lote.Loteamento.NomeHashtag = venda.Lote.Loteamento.Nome.ToHashtag();
 
                 titulos = tituloBo.List(venda.Id).ToList();

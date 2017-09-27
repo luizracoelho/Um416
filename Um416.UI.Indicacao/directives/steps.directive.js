@@ -10,6 +10,7 @@
             restrict: 'E',
             scope: {
                 step: '=?step',
+                indicador: '=?indicador',
             },
             templateUrl: 'views/steps.component.html',
             link: function (scope, element, attrs) {

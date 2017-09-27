@@ -93,5 +93,10 @@ namespace Um416.BLL
         {
             return Get(x => x.Login == login);
         }
+
+        public UsuarioCliente GetByLogin(string login)
+        {
+            return _dao.GetByLogin(login);
+        }
     }
 }

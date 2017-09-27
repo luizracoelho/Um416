@@ -8,6 +8,10 @@
     function cadastroController($scope, $state, $stateParams, clientesService) {
         var vm = this;
 
+        $(document).on('shown.bs.modal', '.modal', function () {
+            $('input:visible:first').focus();
+        })
+
         vm.areSubmitting = false;
 
         vm.sexos = [
@@ -16,20 +20,28 @@
         ];
 
         vm.init = function () {
+            vm.indicador = $stateParams.login;
+
             vm.clienteLogado = JSON.parse(sessionStorage.getItem('login'));
             vm.loteSelecionado = JSON.parse(sessionStorage.getItem('lote'));
 
             //Verificar se trocou de loteamento
-            if (!vm.loteSelecionado ||$stateParams.id != vm.loteSelecionado.loteamentoId) {
+            if (!vm.loteSelecionado || $stateParams.id != vm.loteSelecionado.loteamentoId) {
                 sessionStorage.removeItem('lote');
                 sessionStorage.removeItem('login');
 
-                $state.go('mapa', { id: $stateParams.id });
+                if (vm.indicador == null)
+                    $state.go('mapa.default', { id: $stateParams.id });
+                else
+                    $state.go('mapa.indicador', { id: $stateParams.id, login: vm.indicador });
             }
         }
 
         vm.avancar = function () {
-            $state.go('finalizar', { id: $stateParams.id });
+            if ($stateParams.login)
+                $state.go('finalizar.indicador', { id: $stateParams.id, login: $stateParams.login });
+            else
+                $state.go('finalizar.default', { id: $stateParams.id });
         }
 
         vm.showCadastro = function () {

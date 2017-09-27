@@ -5,6 +5,7 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
+            <a class="btn btn-default pull-right" ui-sref="painel.home"><i class="fa fa-arrow-left"></i> Voltar</a>
             <h4><i class="fa fa-file"></i> Parcelas do Lote {{vm.titulos[0].venda.lote.codigo}}</h4>
         </div>
         <div class="panel-body">
@@ -47,13 +48,15 @@
                             <th><i class="fa fa-calendar"></i> Vencimento</th>
                             <td class="text-right"> {{titulo.dataVencimento | date: "dd/MM/yyyy"}}</td>
                         </tr>
-                        <tr ng-if="titulo.pago">
+                        <tr>
                             <th><i class="fa fa-money"></i> Valor Pago</th>
-                            <td class="text-right">{{titulo.valorPago | currency}}</td>
+                            <td ng-if="titulo.pago" class="text-right">{{titulo.valorPgto | currency}}</td>
+                            <td ng-if="!titulo.pago" class="text-right">-</td>
                         </tr>
-                        <tr ng-if="titulo.pago">
+                        <tr>
                             <th><i class="fa fa-calendar"></i> Pagamento</th>
-                            <td class="text-right"> {{titulo.dataPagamento | date: "dd/MM/yyyy"}}</td>
+                            <td ng-if="titulo.pago" class="text-right">{{titulo.dataPgto | date: "dd/MM/yyyy"}}</td>
+                            <td ng-if="!titulo.pago" class="text-right">-</td>
                         </tr>
                     </table>
                 </div>

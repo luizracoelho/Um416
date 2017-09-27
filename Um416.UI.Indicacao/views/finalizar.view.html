@@ -1,4 +1,4 @@
-﻿<steps step="3"></steps>
+﻿<steps step="3" indicador="vm.indicador"></steps>
 
 <div class="text-center" ng-init="vm.init();">
     <span class="h1 text-center">Finalize sua Aquisição</span>
@@ -80,7 +80,36 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <a ui-sref="cadastro({id : vm.loteSelecionado.loteamentoId})" class="btn btn-sm btn-default"><i class="fa fa-user"></i> Alterar usuário</a>
+                <a ng-if="vm.indicador == null" ui-sref="cadastro.default({id : vm.loteSelecionado.loteamentoId})" class="btn btn-sm btn-default"><i class="fa fa-user"></i> Alterar usuário</a>
+                <a ng-if="vm.indicador != null" ui-sref="cadastro.indicador({id : vm.loteSelecionado.loteamentoId , login: vm.indicador})" class="btn btn-sm btn-default"><i class="fa fa-user"></i> Alterar usuário</a>
+            </div>
+        </div>
+    </section>
+
+    <section ng-if="vm.indicador != null">
+        <div class="panel panel-default">
+            <div class="panel-heading">Dados do indicador</div>
+            <div class="panel-body">
+
+                <p class="h4 text-center text-uppercase">{{vm.indicadorSelecionado.nome}}</p>
+                <br />
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Contato</div>
+                        <div class="panel-body">
+                            <dl class="dl-horizontal text-center">
+                                <dt>E-mail</dt>
+                                <dd>{{vm.indicadorSelecionado.email || '-'}}</dd>
+
+                                <dt>Telefone Fixo</dt>
+                                <dd>{{(vm.indicadorSelecionado.telFixo | brPhoneNumber) || '-'}}</dd>
+
+                                <dt>Telefone Móvel</dt>
+                                <dd>{{(vm.indicadorSelecionado.telMovel | brPhoneNumber) || '-'}}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -113,7 +142,8 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <a ui-sref="mapa({id : vm.loteSelecionado.loteamentoId})" class="btn btn-sm btn-default"><i class="fa fa-map"></i> Alterar lote</a>
+                <a ng-if="vm.indicador == null" ui-sref="mapa.default({id : vm.loteSelecionado.loteamentoId})" class="btn btn-sm btn-default"><i class="fa fa-map"></i> Alterar lote</a>
+                <a ng-if="vm.indicador != null" ui-sref="mapa.indicador({id : vm.loteSelecionado.loteamentoId, login: vm.indicador})" class="btn btn-sm btn-default"><i class="fa fa-map"></i> Alterar lote</a>
             </div>
         </div>
     </section>

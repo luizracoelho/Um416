@@ -8,5 +8,10 @@ namespace Um416.API.Controllers
     [Authorize(Roles = Autorizacao.AdminEmpresa)]
     public class ParametrosController : BaseController<Parametro, ParametroLogic>
     {
+        [AllowAnonymous]
+        public override Parametro Get(long id)
+        {
+            return base.Get(id);
+        }
     }
 }
