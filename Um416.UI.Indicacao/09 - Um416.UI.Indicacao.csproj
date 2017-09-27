@@ -67,6 +67,7 @@
     <Content Include="directives\steps.directive.js" />
     <Content Include="directives\on-loading.directive.js" />
     <Content Include="filter\br.filter.js" />
+    <Content Include="filter\encode.filter.js" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="images\Logo.svg" />
