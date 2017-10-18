@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Um416.Base;
 
 namespace Um416
@@ -17,6 +18,7 @@ namespace Um416
         public decimal ValorParcela { get; set; }
         public int Pagas { get; set; }
         public long? IndicadorId { get; set; }
-        public UsuarioCliente Indicador { get; set; }
+        public Lote Indicador { get; set; }
+        public virtual IList<Venda> VendasIndicadas { get; set; }
     }
 }

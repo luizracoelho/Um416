@@ -20,7 +20,7 @@
         ];
 
         vm.init = function () {
-            vm.indicador = $stateParams.login;
+            vm.indicador = $stateParams.indicador;
 
             vm.clienteLogado = JSON.parse(sessionStorage.getItem('login'));
             vm.loteSelecionado = JSON.parse(sessionStorage.getItem('lote'));
@@ -33,13 +33,13 @@
                 if (vm.indicador == null)
                     $state.go('mapa.default', { id: $stateParams.id });
                 else
-                    $state.go('mapa.indicador', { id: $stateParams.id, login: vm.indicador });
+                    $state.go('mapa.indicador', { id: $stateParams.id, indicador: vm.indicador });
             }
         }
 
         vm.avancar = function () {
-            if ($stateParams.login)
-                $state.go('finalizar.indicador', { id: $stateParams.id, login: $stateParams.login });
+            if ($stateParams.indicador)
+                $state.go('finalizar.indicador', { id: $stateParams.id, indicador: $stateParams.indicador });
             else
                 $state.go('finalizar.default', { id: $stateParams.id });
         }

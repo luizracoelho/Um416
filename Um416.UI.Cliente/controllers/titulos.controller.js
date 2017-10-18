@@ -5,7 +5,7 @@
         .module('ngApp')
         .controller('titulosController', titulosController);
 
-    function titulosController($rootScope, $scope, $stateParams, loginService, titulosService, notificacoesService, chamadosService) {
+    function titulosController($rootScope, $scope, $stateParams, loginService, titulosService) {
         var vm = this;
 
         vm.areSubmitting = false;
@@ -22,16 +22,19 @@
 
                     vm.titulos.forEach(function (titulo) {
                         if (titulo.pago == true) {
-                            titulo.status = "Pago";
+                            titulo.status = "Paga";
+                            titulo.icone = "fa-check";
                             titulo.corStatus = 'success';
                         }
                         else {
                             if (new Date(titulo.dataVencimento) < new Date()) {
-                                titulo.status = "Vencido";
+                                titulo.status = "Vencida";
+                                titulo.icone = "fa-ban";
                                 titulo.corStatus = 'danger';
                             }
                             else {
                                 titulo.status = "Em Aberto";
+                                titulo.icone = "fa-exclamation-triangle";
                                 titulo.corStatus = 'warning';
                             }
                         }

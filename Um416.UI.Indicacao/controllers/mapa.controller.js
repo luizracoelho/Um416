@@ -11,7 +11,7 @@
         vm.areSubmitting = false;
 
         vm.init = function () {
-            vm.indicador = $stateParams.login;
+            vm.indicador = $stateParams.indicador;
 
             vm.loteSelecionado = JSON.parse(sessionStorage.getItem('lote'));
 
@@ -44,8 +44,8 @@
         }
 
         vm.avancar = function () {
-            if ($stateParams.login)
-                $state.go('cadastro.indicador', { id: $stateParams.id, login: $stateParams.login });
+            if ($stateParams.indicador)
+                $state.go('cadastro.indicador', { id: $stateParams.id, indicador: $stateParams.indicador });
             else
                 $state.go('cadastro.default', { id: $stateParams.id });
         }

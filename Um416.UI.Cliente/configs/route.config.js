@@ -51,6 +51,18 @@
             }
         };
 
+        var mmnState = {
+            url: '/mmn',
+            templateUrl: 'views/arvores.view.html',
+            controller: 'arvoresController',
+            controllerAs: 'vm',
+            resolve: {
+                auth: function (loginService) {
+                    loginService.authorize();
+                }
+            }
+        };
+
         var perfilState = {
             url: '/perfil',
             templateUrl: 'views/perfil.view.html',
@@ -115,6 +127,7 @@
         $stateProvider.state("login.entrar", entrarState);
         $stateProvider.state("painel", painelState);
         $stateProvider.state("painel.home", homeState);
+        $stateProvider.state("painel.mmn", mmnState);
         $stateProvider.state("painel.perfil", perfilState);
         $stateProvider.state("painel.alterar-senha", alterarSenhaState);
         $stateProvider.state("painel.notificacoes", notificacoesState);

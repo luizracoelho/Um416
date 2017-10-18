@@ -63,7 +63,6 @@
     <Content Include="css\font-awesome.min.css" />
     <Content Include="css\lumen.min.css" />
     <Content Include="css\on-loading.css" />
-    <Content Include="directives\input.directive.js" />
     <Content Include="directives\steps.directive.js" />
     <Content Include="directives\on-loading.directive.js" />
     <Content Include="filter\br.filter.js" />

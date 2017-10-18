@@ -3,7 +3,7 @@
         {{vm.error}}
     </div>
 
-    <div class="panel panel-default">
+    <div class="panel panel-default sticky">
         <div class="panel-heading">
             <a class="btn btn-default pull-right" ui-sref="painel.home"><i class="fa fa-arrow-left"></i> Voltar</a>
             <h4><i class="fa fa-file"></i> Parcelas do Lote {{vm.titulos[0].venda.lote.codigo}}</h4>
@@ -31,7 +31,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="dropdown pull-right">
-                        <p class="label label-{{titulo.corStatus}}">{{titulo.status}}</p>
+                        <p class="label label-{{titulo.corStatus}}"><i class="fa {{titulo.icone}}"></i> {{titulo.status}}</p>
                     </div>
                     <span class="h4">
                         Parcela {{titulo.numero}}/{{titulo.venda.quantParcelas}}

@@ -5,6 +5,7 @@ using System.Transactions;
 using Um416.BLL.Base;
 using Um416.BLL.Tools;
 using Um416.DAL;
+using Um416.TransferModels;
 
 namespace Um416.BLL
 {
@@ -60,7 +61,7 @@ namespace Um416.BLL
             {
                 var titulos = new List<Titulo>();
 
-                venda.Lote.Loteamento.Url = $"{parametro?.UrlVenda ?? ""}#!/loteamentos/{venda.Lote.LoteamentoId}/indicador/{venda.Cliente.Login}";
+                venda.Lote.Loteamento.Url = $"{parametro?.UrlVenda ?? ""}#!/loteamentos/{venda.Lote.LoteamentoId}/indicador/{venda.Id}";
                 venda.Lote.Loteamento.NomeHashtag = venda.Lote.Loteamento.Nome.ToHashtag();
 
                 titulos = tituloBo.List(venda.Id).ToList();
@@ -107,6 +108,40 @@ namespace Um416.BLL
         public Venda GetPorLote(long loteId)
         {
             return _dao.GetPorLote(loteId);
+        }
+
+        public IEnumerable<Venda> GetArvores(long clienteId)
+        {
+            var vendas = ListPorCliente(clienteId);
+            var arvores = new List<Venda>();
+
+            foreach (var venda in vendas)
+            {
+                var indicadorMultinivel = venda.Lote.Loteamento.IndicadorMultinivel;
+
+                venda.VendasIndicadas = _dao.ListPorIndicador(venda.Id).ToList();
+                if (venda.VendasIndicadas.Count < indicadorMultinivel)
+                {
+                    var diferenca = indicadorMultinivel - venda.VendasIndicadas.Count;
+                    for (int i = 0; i < diferenca; i++)
+                        venda.VendasIndicadas.Add(new Venda());
+                }
+
+                foreach (var vendaIndicada in venda.VendasIndicadas)
+                {
+                    vendaIndicada.VendasIndicadas = _dao.ListPorIndicador(vendaIndicada.Id).ToList();
+                    if (vendaIndicada.VendasIndicadas.Count < indicadorMultinivel)
+                    {
+                        var diferenca = indicadorMultinivel - vendaIndicada.VendasIndicadas.Count;
+                        for (int i = 0; i < diferenca; i++)
+                            vendaIndicada.VendasIndicadas.Add(new Venda());
+                    }
+                }
+
+                arvores.Add(venda);
+            }
+
+            return arvores;
         }
     }
 }

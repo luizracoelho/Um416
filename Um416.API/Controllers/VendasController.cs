@@ -24,5 +24,11 @@ namespace Um416.API.Controllers
         {
             return _bo.GetPorLote(loteId);
         }
+
+        [HttpGet, Route("api/clientes/{clienteId}/arvores")]
+        public IEnumerable<Venda> GetArvores(long clienteId)
+        {
+            return _bo.GetArvores(clienteId);
+        }
     }
 }

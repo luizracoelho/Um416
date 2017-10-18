@@ -10,6 +10,7 @@
         var Service = function () {
             this.list = list;
             this.find = find;
+            this.listArvores = listArvores;
         };
 
         return new Service();
@@ -55,6 +56,30 @@
                     if (err.status == 401)
                         loginService.logout();
                 });
+
+            return def.promise;
+        };
+
+        function listArvores() {
+            var def = $q.defer();
+
+            var login = loginService.getLogin();
+
+            if (login != null) {
+                $http({
+                    method: "get",
+                    url: baseUrl + `clientes/${login.id}/arvores`,
+                    headers: { 'Authorization': loginService.getToken() }
+                })
+                    .then(function success(resp) {
+                        def.resolve(resp.data);
+                    }, function error(err) {
+                        def.reject(err);
+
+                        if (err.status == 401)
+                            loginService.logout();
+                    });
+            }
 
             return def.promise;
         };

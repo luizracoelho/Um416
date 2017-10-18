@@ -1,0 +1,149 @@
+﻿<div ng-controller="arvoresController as vm" ng-init="vm.list();">
+    <div class="alert alert-danger" ng-show="vm.error != null">
+        {{vm.error}}
+    </div>
+
+    <div class="panel panel-default sticky">
+        <div class="panel-heading">
+            <h4><i class="fa fa-sitemap"></i> Minhas Árvores</h4>
+        </div>
+        <div class="panel-body" ng-show="!vm.showGrid()">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h5>
+                        Nenhum registro encontrado!
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12" ng-show="vm.showGrid()">
+            <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false" ng-swipe-right="vm.carouselPrev()" ng-swipe-left="vm.carouselNext()">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel" data-slide-to="{{$index}}" ng-class="$index == 0 ? 'active': ''" ng-repeat="arvore in vm.arvores"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item" ng-class="$index == 0 ? 'active': ''" ng-repeat="arvore in vm.arvores">
+                        <div class="row">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <div class="panel panel-default">
+                                    <div class="panel-body text-center">
+                                        <style scoped>
+                                            .tree-line {
+                                                border-left: 1px solid #ddd !important;
+                                            }
+
+                                            .tree-line:before {
+                                                content: "";
+                                                position: absolute;
+                                                top: 50%;
+                                                left: 0;
+                                                width: 9%;
+                                                border-bottom: 1px solid #ddd !important;
+                                            }
+
+                                            .tree-line-top:before {
+                                                content: "";
+                                                position: absolute;
+                                                bottom: 0;
+                                                left: -0.2%;
+                                                height: 50%;
+                                                border-left: 1px solid #ddd !important;
+                                            }
+
+                                            .tree-line-top:before {
+                                                content: "";
+                                                position: absolute;
+                                                width: 9%;
+                                                border-top: 1px solid #ddd !important;
+                                            }
+
+                                            .tree-line-bottom:before {
+                                                content: "";
+                                                position: absolute;
+                                                top: 0;
+                                                left: -0.2%;
+                                                height: 50%;
+                                                border-left: 1px solid #ddd !important;
+                                            }
+
+                                            .tree-line-bottom:before {
+                                                content: "";
+                                                position: absolute;
+                                                width: 9%;
+                                                border-bottom: 1px solid #ddd !important;
+                                            }
+
+                                            .tree-line-l:before {
+                                                content: "";
+                                                position: absolute;
+                                                top: 50%;
+                                                right: 0;
+                                                width: 9%;
+                                                border-bottom: 1px solid #ddd !important;
+                                            }
+                                        </style>
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <td style="width: 34%; position: relative;" class="tree-line-l">
+                                                    <button type="button" class="btn btn-primary col-xs-10 col-xs-offset-1">
+                                                        <i class="fa fa-lg fa-star"></i>
+                                                        <span><br />{{arvore.lote.codigo}}</span>
+                                                    </button>
+                                                </td>
+                                                <td style="width: 66%; position: relative;">
+                                                    <table style="width: 100%;">
+                                                        <tr ng-repeat="n1 in arvore.vendasIndicadas">
+                                                            <td style="width: 50%; position: relative;" ng-class="$index == 0 ? 'tree-line-top' : ($index == (arvore.vendasIndicadas.length -1) ? 'tree-line-bottom': 'tree-line')">
+                                                                <div class="tree-line-l">
+                                                                    <button type="button" class="btn col-xs-10 col-xs-offset-1" ng-class="n1.lote == null ? 'btn-default' : 'btn-info'" ng-disabled="n1.lote == null">
+                                                                        <i class="fa fa-lg" ng-class="n1.lote == null ? 'fa-flag-o' :'fa-flag'"></i>
+                                                                        <span><br />{{n1.lote.codigo || 'Pendente'}}</span>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            <td style="padding: 12px 0 12px 0;">
+                                                                <table style="width: 100%;">
+                                                                    <tr ng-repeat="n2 in n1.vendasIndicadas">
+                                                                        <td style="padding: 5px 0 5px 0; width: 50%; position: relative;" ng-class="$index == 0 ? 'tree-line-top' : ($index == (n1.vendasIndicadas.length -1) ? 'tree-line-bottom': 'tree-line')">
+                                                                            <button type="button" class="btn col-xs-10 col-xs-offset-1" ng-disabled="n2.lote == null" ng-class="n2.lote == null ? 'btn-default' : 'btn-info'">
+                                                                                <i class="fa fa-lg" ng-class="n2.lote == null ? 'fa-flag-o' :'fa-flag'"></i>
+                                                                                <span><br />{{n2.lote.codigo || 'Pendente'}}</span>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-caption">
+                            <strong class="label label-primary">{{$index + 1}}/{{vm.arvores.length}}</strong>
+                        </div>
+                    </div>
+
+                    <!-- Left and right controls -->
+                    <span class="left carousel-control hidden-xs" data-target="#carousel" data-slide="prev" style="cursor:pointer;">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Previous</span>
+                    </span>
+                    <span class="right carousel-control hidden-xs" data-target="#carousel" data-slide="next" style="cursor:pointer;">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Next</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

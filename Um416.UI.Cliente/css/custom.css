@@ -1,6 +1,10 @@
 ﻿body {
     padding-top: 70px;
     background-color: #f7f7f7;
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 textarea {
@@ -19,15 +23,15 @@ blockquote {
     background-color: #fff;
 }
 
-.panel-default > .panel-heading {
-    background-color: #fff !important;
-    border-bottom: 1px solid #f0f0f0 !important;
-}
+    .panel-default > .panel-heading {
+        background-color: #fff !important;
+        border-bottom: 1px solid #f0f0f0 !important;
+    }
 
-.panel-default > .panel-heading, .panel-default > .panel-footer {
-    background-color: #fff !important;
-    border-top: 1px solid #f0f0f0 !important;
-}
+    .panel-default > .panel-heading, .panel-default > .panel-footer {
+        background-color: #fff !important;
+        border-top: 1px solid #f0f0f0 !important;
+    }
 
 .panel-secondary {
     border-color: #ddd
@@ -80,7 +84,7 @@ blockquote {
         color: #333;
     }
 
-.page-header{
+.page-header {
     margin-right: 20px !important;
 }
 
@@ -106,3 +110,52 @@ blockquote {
 .navbar {
     z-index: 999 !important;
 }
+
+/*Fixar cabeçalhos*/
+.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 48px;
+    z-index: 9;
+}
+
+/*Personalizar carousel*/
+.carousel-indicators {
+    margin-bottom: -30px;
+}
+
+    .carousel-indicators li {
+        border: 1px solid #006992 !important;
+    }
+
+    .carousel-indicators .active {
+        background-color: #006992 !important;
+    }
+
+.carousel-caption {
+    border-radius: 10% !important;
+    left: auto !important;
+    right: 5px !important;
+    top: 5px !important;
+    bottom: auto !important;
+    padding: 5px !important;
+}
+
+.carousel-control {
+    color: #006992 !important;
+    width: 40px !important;
+}
+
+    .carousel-control.left, .carousel-control.right {
+        background-image: none !important;
+    }
+
+    .carousel-control .glyphicon-chevron-left, .carousel-control .icon-prev {
+        left: 5px !important;
+        margin-left: 0 !important;
+    }
+
+    .carousel-control .glyphicon-chevron-right, .carousel-control .icon-next {
+        right: 5px !important;
+        margin-right: 0 !important;
+    }

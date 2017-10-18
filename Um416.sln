@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01 - Um416", "Um416\01 - Um416.csproj", "{1CE7B609-70C5-4FF9-9C9E-D18797852795}"
 EndProject
@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06 - Um416.UI.Empresa", "Um
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "09 - Um416.UI.Indicacao", "Um416.UI.Indicacao\09 - Um416.UI.Indicacao.csproj", "{1F094C94-07AD-44E1-AB23-9AA677452E2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Um416.Testes", "Um416.Testes\Um416.Testes.csproj", "{8FC48F82-B996-4406-B05A-0A8C16FAE040}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "10 - Um416.Testes", "Um416.Testes\10 - Um416.Testes.csproj", "{8FC48F82-B996-4406-B05A-0A8C16FAE040}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

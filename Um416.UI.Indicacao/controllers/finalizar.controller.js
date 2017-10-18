@@ -5,13 +5,13 @@
         .module('ngApp')
         .controller('finalizarController', finalizarController);
 
-    function finalizarController($scope, $state, $stateParams, lotesService, vendasService, clientesService) {
+    function finalizarController($scope, $state, $stateParams, lotesService, vendasService) {
         var vm = this;
 
         vm.areSubmitting = false;
 
         vm.init = function () {
-            vm.indicador = $stateParams.login;
+            vm.indicador = $stateParams.indicador;
 
             vm.clienteLogado = JSON.parse(sessionStorage.getItem('login'));
             vm.loteSelecionado = JSON.parse(sessionStorage.getItem('lote'));
@@ -28,10 +28,10 @@
             }
 
             if (vm.indicador != null)
-                clientesService
-                    .findByLogin(vm.indicador)
-                    .then(function (indicador) {
-                        vm.indicadorSelecionado = indicador;
+                vendasService
+                    .find(vm.indicador)
+                    .then(function (venda) {
+                        vm.indicadorSelecionado = venda.cliente;
                     }, function (error) {
                         vm.error = error;
                     });
@@ -73,10 +73,10 @@
             vm.areSubmitting = true;
 
             if (vm.indicador != null)
-                clientesService
-                    .findByLogin(vm.indicador)
-                    .then(function (indicador) {
-                        vm.venda.indicadorId = indicador.id;
+                vendasService
+                    .find(vm.indicador)
+                    .then(function (venda) {
+                        vm.venda.indicadorId = venda.id;
 
                         vm.salvarVenda(vm.venda);
                     }, function (error) {

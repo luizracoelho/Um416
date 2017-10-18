@@ -9,6 +9,7 @@
         // Retorno
         var Service = function () {
             this.save = save;
+            this.find = find;
         };
 
         return new Service();
@@ -29,6 +30,21 @@
 
                     if (err.status == 401)
                         loginService.logout();
+                });
+
+            return def.promise;
+        };
+
+        function find(id) {
+            var def = $q.defer();
+            $http({
+                method: "get",
+                url: baseUrl + "vendas/" + id,
+            })
+                .then(function success(resp) {
+                    def.resolve(resp.data);
+                }, function error(err) {
+                    def.reject("Não foi possível obter o indicador.");
                 });
 
             return def.promise;

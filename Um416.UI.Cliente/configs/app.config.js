@@ -7,7 +7,7 @@
     let baseUrl = dev;
 
     angular
-        .module('ngApp', ['ui.router', 'angularMoment', 'ui.bootstrap', 'ui.utils.masks', 'idf.br-filters'])
+        .module('ngApp', ['ui.router', 'angularMoment', 'ngTouch', 'ui.bootstrap', 'ui.utils.masks', 'idf.br-filters'])
         .constant('baseUrl', baseUrl)
         .constant('tokenUrl', baseUrl + 'token');
 })();

@@ -5,7 +5,7 @@
         .module('ngApp')
         .controller('vendasController', vendasController);
 
-    function vendasController($rootScope, $scope, loginService, vendasService, notificacoesService, chamadosService, titulosService) {
+    function vendasController($rootScope, $scope, loginService, vendasService, notificacoesService, chamadosService) {
         var vm = this;
 
         vm.areSubmitting = false;

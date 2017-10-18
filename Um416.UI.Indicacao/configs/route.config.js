@@ -29,7 +29,7 @@
         });
 
         $stateProvider.state("mapa.indicador", {
-            url: '/loteamentos/:id/indicador/:login',
+            url: '/loteamentos/:id/indicador/:indicador',
             templateUrl: 'views/mapa.view.html',
             controller: 'mapaController',
             controllerAs: 'vm'
@@ -44,7 +44,7 @@
         });
 
         $stateProvider.state("cadastro.indicador", {
-            url: '/loteamentos/:id/indicador/:login/cadastro',
+            url: '/loteamentos/:id/indicador/:indicador/cadastro',
             templateUrl: 'views/cadastro.view.html',
             controller: 'cadastroController',
             controllerAs: 'vm'
@@ -59,7 +59,7 @@
         });
 
         $stateProvider.state("finalizar.indicador", {
-            url: '/loteamentos/:id/indicador/:login/finalizar',
+            url: '/loteamentos/:id/indicador/:indicador/finalizar',
             templateUrl: 'views/finalizar.view.html',
             controller: 'finalizarController',
             controllerAs: 'vm'

@@ -26,11 +26,12 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
                         <ul class="nav navbar-nav" ng-show="!isNavCollapsed">
-                            <li><strong>Navegação</strong></li>
-                            <li ng-click="isNavCollapsed = true;"><a ui-sref="painel.home"><i class="fa fa-shopping-bag"></i> Minhas Compras</a></li>
+                            <!--<li><strong>Navegação</strong></li>-->
                             <!--<li ng-click="isNavCollapsed = true;"><a ui-sref="painel.notificacoes"><i class="fa fa-bell-o"></i> Notificações</a></li>
                             <li ng-click="isNavCollapsed = true;"><a ui-sref="painel.chamados"><i class="fa fa-life-ring"></i> Chamados</a></li>-->
                             <li><strong>Menu</strong></li>
+                            <li ng-click="isNavCollapsed = true;"><a ui-sref="painel.home"><i class="fa fa-shopping-bag"></i> Minhas Compras</a></li>
+                            <li ng-click="isNavCollapsed = true;"><a ui-sref="painel.mmn"><i class="fa fa-sitemap"></i> Minhas Árvores</a></li>
                         </ul>
                     </div>
 
@@ -62,9 +63,13 @@
                     <img src="././images/Logo.svg" class="img-responsive" />
                     <br />
                 </li>
-                <li><strong>Navegação</strong></li>
+                <!--<li><strong>Navegação</strong></li>-->
+                <li><strong>Menu</strong></li>
                 <li ng-click="isNavCollapsed = true;" class="active" ui-sref-active="active">
                     <a ui-sref="painel.home"><i class="fa fa-shopping-bag"></i> Minhas Compras</a>
+                </li>
+                <li ng-click="isNavCollapsed = true;" class="active" ui-sref-active="active">
+                    <a ui-sref="painel.mmn"><i class="fa fa-sitemap"></i> Minhas Árvores</a>
                 </li>
                 <!--<li ng-click="isNavCollapsed = true;" class="active" ui-sref-active="active">
                     <a ui-sref="painel.notificacoes">

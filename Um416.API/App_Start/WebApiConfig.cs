@@ -27,6 +27,9 @@ namespace Um416.API
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+            // Allow show inner exception errors
+            config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+
             // Default Route
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
