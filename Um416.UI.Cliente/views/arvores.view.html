@@ -1,4 +1,4 @@
-﻿<div ng-controller="arvoresController as vm" ng-init="vm.list();">
+﻿<div id="content" ng-init="vm.list();">
     <div class="alert alert-danger" ng-show="vm.error != null">
         {{vm.error}}
     </div>
@@ -37,14 +37,14 @@
                                                 border-left: 1px solid #ddd !important;
                                             }
 
-                                            .tree-line:before {
-                                                content: "";
-                                                position: absolute;
-                                                top: 50%;
-                                                left: 0;
-                                                width: 9%;
-                                                border-bottom: 1px solid #ddd !important;
-                                            }
+                                                .tree-line:before {
+                                                    content: "";
+                                                    position: absolute;
+                                                    top: 50%;
+                                                    left: 0;
+                                                    width: 9%;
+                                                    border-bottom: 1px solid #ddd !important;
+                                                }
 
                                             .tree-line-top:before {
                                                 content: "";
@@ -90,7 +90,7 @@
                                         <table style="width: 100%">
                                             <tr>
                                                 <td style="width: 34%; position: relative;" class="tree-line-l">
-                                                    <button type="button" class="btn btn-primary col-xs-10 col-xs-offset-1">
+                                                    <button type="button" class="btn col-xs-10 col-xs-offset-1" ng-class="arvore.valida ? 'btn-primary' : 'btn-warning'" ng-click="vm.find(arvore.id, true);">
                                                         <i class="fa fa-lg fa-star"></i>
                                                         <span><br />{{arvore.lote.codigo}}</span>
                                                     </button>
@@ -100,7 +100,8 @@
                                                         <tr ng-repeat="n1 in arvore.vendasIndicadas">
                                                             <td style="width: 50%; position: relative;" ng-class="$index == 0 ? 'tree-line-top' : ($index == (arvore.vendasIndicadas.length -1) ? 'tree-line-bottom': 'tree-line')">
                                                                 <div class="tree-line-l">
-                                                                    <button type="button" class="btn col-xs-10 col-xs-offset-1" ng-class="n1.lote == null ? 'btn-default' : 'btn-info'" ng-disabled="n1.lote == null">
+                                                                    <button type="button" class="btn btn-default col-xs-10 col-xs-offset-1 text" ng-class="n1.lote == null ? 'text-default' : 'text-primary'" ng-disabled="n1.lote == null" ng-click="vm.find(n1.id);">
+                                                                        <span class="text text-warning pull-right" ng-if="n1.lote != null && !n1.valida"><i class="fa fa-exclamation-triangle"></i></span>
                                                                         <i class="fa fa-lg" ng-class="n1.lote == null ? 'fa-flag-o' :'fa-flag'"></i>
                                                                         <span><br />{{n1.lote.codigo || 'Pendente'}}</span>
                                                                     </button>
@@ -110,7 +111,8 @@
                                                                 <table style="width: 100%;">
                                                                     <tr ng-repeat="n2 in n1.vendasIndicadas">
                                                                         <td style="padding: 5px 0 5px 0; width: 50%; position: relative;" ng-class="$index == 0 ? 'tree-line-top' : ($index == (n1.vendasIndicadas.length -1) ? 'tree-line-bottom': 'tree-line')">
-                                                                            <button type="button" class="btn col-xs-10 col-xs-offset-1" ng-disabled="n2.lote == null" ng-class="n2.lote == null ? 'btn-default' : 'btn-info'">
+                                                                            <button type="button" class="btn btn-default text col-xs-10 col-xs-offset-1" ng-disabled="n2.lote == null" ng-class="n2.lote == null ? 'text-default' : 'text-primary'" ng-click="vm.find(n2.id);">
+                                                                                <span class="text text-warning pull-right" ng-if="n2.lote != null && !n2.valida"><i class="fa fa-exclamation-triangle"></i></span>
                                                                                 <i class="fa fa-lg" ng-class="n2.lote == null ? 'fa-flag-o' :'fa-flag'"></i>
                                                                                 <span><br />{{n2.lote.codigo || 'Pendente'}}</span>
                                                                             </button>
@@ -142,6 +144,76 @@
                         <span class="glyphicon glyphicon-chevron-right"></span>
                         <span class="sr-only">Next</span>
                     </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modalDetails" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-xs-12">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <span class="h4" ng-if="vm.venda.indicador"><i class="fa fa-user"></i> Você</span>
+                        <span class="h4" ng-if="!vm.venda.indicador"><i class="fa fa-user"></i> {{vm.venda.cliente.nome}}</span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <style scoped>
+                        th {
+                            white-space: nowrap !important;
+                        }
+                    </style>
+                    <div ng-if="!vm.venda.valida" class="alert alert-warning">
+                        <strong><i class="fa fa-lightbulb-o "></i> Considere Resolver</strong>
+                        <br />
+                        <p ng-bind-html="vm.venda.mensagem | br "></p>
+                    </div>
+                    <blockquote><i class="fa fa-flag"></i> Lote</blockquote>
+                    <table class="table table-condensed" style="margin-bottom: auto;">
+                        <tr>
+                            <th><i class="fa fa-cubes"></i> Número</th>
+                            <td class="text-right">{{vm.venda.lote.codigo}}</td>
+                        </tr>
+                        <tr>
+                            <th><i class="fa fa-object-group"></i> Área</th>
+                            <td class="text-right">{{vm.venda.lote.area}}m²</td>
+                        </tr>
+                        <tr>
+                            <th><i class="fa fa-comments-o"></i> Descrição</th>
+                            <td class="text-right">{{vm.venda.lote.descricao || '-'}}</td>
+                        </tr>
+                        <tr>
+                            <th><i class="fa fa-cube"></i> Loteamento</th>
+                            <td class="text-right">{{vm.venda.lote.loteamento.nome}}</td>
+                        </tr>
+                    </table>
+
+                    <br />
+
+                    <blockquote><i class="fa fa-shopping-bag"></i> Compra</blockquote>
+                    <table class="table table-condensed" style="margin-bottom: auto;">
+                        <tr>
+                            <th><i class="fa fa-money"></i> Valor do lote</th>
+                            <td class="text-right">{{vm.venda.valor | currency}}</td>
+                        </tr>
+                        <tr>
+                            <th><i class="fa fa-money"></i> Valor médio da parcela</th>
+                            <td class="text-right">{{vm.venda.valorParcela | currency}}</td>
+                        </tr>
+                        <tr>
+                            <th><i class="fa fa-calendar"></i> Vencimento</th>
+                            <td class="text-right">Dia {{vm.venda.diaVencimento}}</td>
+                        </tr>
+                        <tr>
+                            <th><i class="fa fa-bookmark-o"></i> Pagas/Total    </th>
+                            <td class="text-right">{{vm.venda.pagas == null ? 0 : vm.venda.pagas}}/{{vm.venda.quantParcelas}}
+                            <td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Fechar</button>
                 </div>
             </div>
         </div>

@@ -20,5 +20,8 @@ namespace Um416
         public long? IndicadorId { get; set; }
         public Lote Indicador { get; set; }
         public virtual IList<Venda> VendasIndicadas { get; set; }
+        //Campos que informar se a venda está válida para a indicação e descontos, caso não, preenche-se uma mensagem para o usuário
+        public bool Valida { get; set; }
+        public string Mensagem { get; set; }
     }
 }

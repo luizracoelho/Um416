@@ -24,20 +24,18 @@
                 });
         };
 
-        vm.find = function (id) {
+        vm.find = function (id, indicador=false) {
             if (id != null)
                 vendasService
                     .find(id)
-                    .then(function (arvore) {
-                        $scope.arvoreForm.$setPristine();
-
-                        vm.arvore = arvore;
-
-                        vm.errorDetail = null;
-
-                        $('#modalDetails').modal('show');
+                    .then(function (venda) {
+                        vm.venda = venda;
+                        //Informar se a venda que está sendo exibida é do indicador
+                        vm.venda.indicador = indicador;
+                        $('#modalDetails').animate({ scrollTop: 0 }, 300).modal('show');
                     }, function (error) {
                         vm.error = error;
+                        $('html').animate({ scrollTop: 0 }, 300);
                     });
         };
 

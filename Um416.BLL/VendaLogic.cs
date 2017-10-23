@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Transactions;
 using Um416.BLL.Base;
 using Um416.BLL.Tools;
@@ -11,6 +12,13 @@ namespace Um416.BLL
 {
     public class VendaLogic : BaseLogic<Venda, VendaRepository>
     {
+        TituloLogic _tituloBo;
+
+        public VendaLogic()
+        {
+            _tituloBo = new TituloLogic();
+        }
+
         protected override void Insert(Venda entity)
         {
             if (entity.DiaVencimento == 0)
@@ -54,19 +62,13 @@ namespace Um416.BLL
             var parametroBo = new ParametroLogic();
             var parametro = parametroBo.Get(1);
 
-            var tituloBo = new TituloLogic();
-
-
             foreach (var venda in vendas)
             {
-                var titulos = new List<Titulo>();
-
                 venda.Lote.Loteamento.Url = $"{parametro?.UrlVenda ?? ""}#!/loteamentos/{venda.Lote.LoteamentoId}/indicador/{venda.Id}";
                 venda.Lote.Loteamento.NomeHashtag = venda.Lote.Loteamento.Nome.ToHashtag();
 
-                titulos = tituloBo.List(venda.Id).ToList();
-
-                venda.Pagas = titulos.Where(x => x.Pago == true).Count();
+                //Validar a Venda
+                Validar(venda);
             }
 
             return vendas;
@@ -119,7 +121,7 @@ namespace Um416.BLL
             {
                 var indicadorMultinivel = venda.Lote.Loteamento.IndicadorMultinivel;
 
-                venda.VendasIndicadas = _dao.ListPorIndicador(venda.Id).ToList();
+                venda.VendasIndicadas = ListPorIndicador(venda.Id);
                 if (venda.VendasIndicadas.Count < indicadorMultinivel)
                 {
                     var diferenca = indicadorMultinivel - venda.VendasIndicadas.Count;
@@ -129,7 +131,7 @@ namespace Um416.BLL
 
                 foreach (var vendaIndicada in venda.VendasIndicadas)
                 {
-                    vendaIndicada.VendasIndicadas = _dao.ListPorIndicador(vendaIndicada.Id).ToList();
+                    vendaIndicada.VendasIndicadas = ListPorIndicador(vendaIndicada.Id);
                     if (vendaIndicada.VendasIndicadas.Count < indicadorMultinivel)
                     {
                         var diferenca = indicadorMultinivel - vendaIndicada.VendasIndicadas.Count;
@@ -142,6 +144,43 @@ namespace Um416.BLL
             }
 
             return arvores;
+        }
+
+        private List<Venda> ListPorIndicador(long vendaId)
+        {
+            var vendas = _dao.ListPorIndicador(vendaId).ToList();
+
+            foreach (var venda in vendas)
+            {
+                //Validar a Venda
+                Validar(venda);
+            }
+
+            return vendas;
+        }
+
+        public override Venda Get(long id)
+        {
+            var venda = base.Get(id);
+
+            //Validar a venda 
+            Validar(venda);
+
+            return venda;
+        }
+
+        private void Validar(Venda venda)
+        {
+            venda.Valida = true;
+            var sb = new StringBuilder();
+
+            if (venda.Pagas == 0)
+            {
+                venda.Valida = false;
+                sb.Append("- Pague a primeira parcela de seu lote para habilitar a indicação e conseguir descontos.\n");
+            }
+
+            venda.Mensagem = sb.ToString();
         }
     }
 }
