@@ -6,7 +6,6 @@ using System.Transactions;
 using Um416.BLL.Base;
 using Um416.BLL.Tools;
 using Um416.DAL;
-using Um416.TransferModels;
 
 namespace Um416.BLL
 {
@@ -178,6 +177,12 @@ namespace Um416.BLL
             {
                 venda.Valida = false;
                 sb.Append("- Pague a primeira parcela de seu lote para habilitar a indicação e conseguir descontos.\n");
+            }
+
+            if (venda.Vencidas > 0)
+            {
+                venda.Valida = false;
+                sb.Append("- Existe(m) parcela(s) vencida(s). Os descontos referentes à essa indicação estão temporariamente indisponíveis.\n");
             }
 
             venda.Mensagem = sb.ToString();

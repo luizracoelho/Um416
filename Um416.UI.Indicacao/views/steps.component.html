@@ -8,7 +8,7 @@
                     <i class="fa fa-circle fa-stack-2x" ng-class="step >= 1 ? 'text-primary' : 'text-muted'"></i>
                     <i class="fa fa-map fa-stack-1x fa-inverse"></i>
                 </a>
-                <a ui-sref="mapa.indicador({id : lote.loteamentoId, login: indicador})" ng-if="indicador != null">
+                <a ui-sref="mapa.indicador({id : lote.loteamentoId, indicador: indicador})" ng-if="indicador != null">
                     <i class="fa fa-circle fa-stack-2x" ng-class="step >= 1 ? 'text-primary' : 'text-muted'"></i>
                     <i class="fa fa-map fa-stack-1x fa-inverse"></i>
                 </a>
@@ -21,17 +21,17 @@
             <small ng-class="step >= 1 ? 'text-primary' : 'text-muted'">Seleção de Lote</small>
         </div>
         <div class="col-xs-4">
-            <span class="fa-stack fa-2x" ng-if="login">
+            <span class="fa-stack fa-2x" ng-if="indicador">
                 <a ui-sref="cadastro.default({id : lote.loteamentoId})" ng-if="indicador == null">
                     <i class="fa fa-circle fa-stack-2x" ng-class="step >= 2 ? 'text-primary' : 'text-muted'"></i>
                     <i class="fa fa-user fa-stack-1x fa-inverse"></i>
                 </a>
-                <a ui-sref="cadastro.indicador({id : lote.loteamentoId, login: indicador})" ng-if="indicador != null">
+                <a ui-sref="cadastro.indicador({id : lote.loteamentoId, indicador: indicador})" ng-if="indicador != null">
                     <i class="fa fa-circle fa-stack-2x" ng-class="step >= 2 ? 'text-primary' : 'text-muted'"></i>
                     <i class="fa fa-user fa-stack-1x fa-inverse"></i>
                 </a>
             </span>
-            <span class="fa-stack fa-2x" ng-if="!login">
+            <span class="fa-stack fa-2x" ng-if="!indicador">
                 <i class="fa fa-circle fa-stack-2x" ng-class="step >= 2 ? 'text-primary' : 'text-muted'"></i>
                 <i class="fa fa-user fa-stack-1x fa-inverse"></i>
             </span>
@@ -39,17 +39,17 @@
             <small ng-class="step >= 2 ? 'text-primary' : 'text-muted'">Login/Cadastro</small>
         </div>
         <div class="col-xs-4">
-            <span class="fa-stack fa-2x" ng-if="lote && login">
+            <span class="fa-stack fa-2x" ng-if="lote && indicador">
                 <a ui-sref="finalizar.default({id : lote.loteamentoId})" ng-if="indicador == null">
                     <i class="fa fa-circle fa-stack-2x" ng-class="step >= 3 ? 'text-primary' : 'text-muted'"></i>
                     <i class="fa fa-check fa-stack-1x fa-inverse"></i>
                 </a>
-                <a ui-sref="finalizar.indicador({id : lote.loteamentoId})" ng-if="indicador != null">
+                <a ui-sref="finalizar.indicador({id : lote.loteamentoId, indicador: indicador})" ng-if="indicador != null">
                     <i class="fa fa-circle fa-stack-2x" ng-class="step >= 3 ? 'text-primary' : 'text-muted'"></i>
                     <i class="fa fa-check fa-stack-1x fa-inverse"></i>
                 </a>
             </span>
-            <span class="fa-stack fa-2x" ng-if="!lote || !login">
+            <span class="fa-stack fa-2x" ng-if="!lote || !indicador">
                 <i class="fa fa-circle fa-stack-2x" ng-class="step >= 3 ? 'text-primary' : 'text-muted'"></i>
                 <i class="fa fa-check fa-stack-1x fa-inverse"></i>
             </span>

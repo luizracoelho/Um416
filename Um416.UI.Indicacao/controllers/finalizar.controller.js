@@ -24,7 +24,7 @@
                 if (vm.indicador == null)
                     $state.go('mapa.default', { id: $stateParams.id });
                 else
-                    $state.go('mapa.indicador', { id: $stateParams.id, login: vm.indicador });
+                    $state.go('mapa.indicador', { id: $stateParams.id, indicador: $stateParams.indicador });
             }
 
             if (vm.indicador != null)
@@ -77,7 +77,7 @@
                     .find(vm.indicador)
                     .then(function (venda) {
                         vm.venda.indicadorId = venda.id;
-
+                        console.log(vm.venda);
                         vm.salvarVenda(vm.venda);
                     }, function (error) {
                         vm.errorDetail = error;

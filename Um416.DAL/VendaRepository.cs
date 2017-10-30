@@ -25,12 +25,12 @@ namespace Um416.DAL
         {
             using (var db = new SqlConnection(ConnectionString))
             {
-                var query = @"SELECT v.*, (SELECT COUNT(*) FROM Titulos WHERE Pago = 1 AND VendaId = v.Id) Pagas, c.Nome, c.Email, c.TelFixo, c.TelMovel, l.Codigo, l.LoteamentoId, l.Descricao, l.Area, lo.Nome 
-                            FROM Vendas v 
-                            LEFT JOIN UsuariosClientes c ON v.ClienteId = c.Id 
-                            LEFT JOIN Lotes l ON v.LoteId = l.Id 
-                            LEFT JOIN Loteamentos lo ON l.LoteamentoId = lo.Id
-                            WHERE v.Id = @id;";
+                var query = @"SELECT v.*, (SELECT COUNT(*) FROM Titulos WHERE Pago = 1 AND VendaId = v.Id) Pagas, (SELECT COUNT(*) FROM Titulos WHERE Pago = 0 AND DataVencimento < GETDATE() AND VendaId = v.Id) Vencidas, c.Nome, c.Email, c.TelFixo, c.TelMovel, l.Codigo, l.LoteamentoId, l.Descricao, l.Area, lo.Nome 
+                                FROM Vendas v 
+                                LEFT JOIN UsuariosClientes c ON v.ClienteId = c.Id 
+                                LEFT JOIN Lotes l ON v.LoteId = l.Id 
+                                LEFT JOIN Loteamentos lo ON l.LoteamentoId = lo.Id
+                                WHERE v.Id = @id;";
                 return db.Query<Venda, UsuarioCliente, Lote, Loteamento, Venda>(query, (venda, cli, lote, loteamento) =>
                 {
                     venda.Cliente = cli;
@@ -75,7 +75,7 @@ namespace Um416.DAL
         {
             using (var db = new SqlConnection(ConnectionString))
             {
-                var query = "SELECT v.*, (SELECT COUNT(*) FROM Titulos WHERE Pago = 1 AND VendaId = v.Id) Pagas, c.Nome, c.Cpf, c.TelFixo, c.TelMovel, c.Email, l.Codigo, l.LoteamentoId, lo.Nome, lo.IndicadorMultinivel FROM Vendas v LEFT JOIN UsuariosClientes c ON v.ClienteId = c.Id LEFT JOIN Lotes l ON v.LoteId = l.Id LEFT JOIN Loteamentos lo ON l.LoteamentoId = lo.Id WHERE v.IndicadorId = @id;";
+                var query = "SELECT v.*, (SELECT COUNT(*) FROM Titulos WHERE Pago = 1 AND VendaId = v.Id) Pagas, (SELECT COUNT(*) FROM Titulos WHERE Pago = 0 AND DataVencimento < GETDATE() AND VendaId = v.Id) Vencidas, c.Nome, c.Cpf, c.TelFixo, c.TelMovel, c.Email, l.Codigo, l.LoteamentoId, lo.Nome, lo.IndicadorMultinivel FROM Vendas v LEFT JOIN UsuariosClientes c ON v.ClienteId = c.Id LEFT JOIN Lotes l ON v.LoteId = l.Id LEFT JOIN Loteamentos lo ON l.LoteamentoId = lo.Id WHERE v.IndicadorId = @id;";
                 return db.Query<Venda, UsuarioCliente, Lote, Loteamento, Venda>(query, (venda, cli, lote, loteamento) =>
                 {
                     venda.Cliente = cli;
@@ -90,7 +90,11 @@ namespace Um416.DAL
         {
             using (var db = new SqlConnection(ConnectionString))
             {
-                var query = "select max(Numero) from Vendas where Vendas.LoteId = @id;";
+                var query = @"SELECT MAX(v.Numero) FROM Vendas v
+                                LEFT JOIN Lotes l ON v.LoteId = l.Id
+                                LEFT JOIN Loteamentos lo ON l.LoteamentoId = lo.Id
+                                LEFT JOIN Empresas e ON lo.EmpresaId = e.Id
+                                WHERE e.Id = 1;";
                 var ultimoNumero = db.Query<long?>(query, new { id = entity.LoteId }).FirstOrDefault();
 
                 entity.Numero = ultimoNumero != null ? (long)ultimoNumero + 1 : 1;
