@@ -25,7 +25,7 @@ namespace Um416.DAL
         {
             using (var db = new SqlConnection(ConnectionString))
             {
-                var query = @"SELECT v.*, (SELECT COUNT(*) FROM Titulos WHERE Pago = 1 AND VendaId = v.Id) Pagas, (SELECT COUNT(*) FROM Titulos WHERE Pago = 0 AND DataVencimento < GETDATE() AND VendaId = v.Id) Vencidas, c.Nome, c.Email, c.TelFixo, c.TelMovel, l.Codigo, l.LoteamentoId, l.Descricao, l.Area, lo.Nome 
+                var query = @"SELECT v.*, (SELECT COUNT(*) FROM Titulos WHERE Pago = 1 AND VendaId = v.Id) Pagas, (SELECT COUNT(*) FROM Titulos WHERE Pago = 0 AND DataVencimento < GETDATE() AND VendaId = v.Id) Vencidas, c.Nome, c.Email, c.TelFixo, c.TelMovel, l.Codigo, l.LoteamentoId, l.Descricao, l.Area, lo.Nome, lo.IndicadorMultinivel 
                                 FROM Vendas v 
                                 LEFT JOIN UsuariosClientes c ON v.ClienteId = c.Id 
                                 LEFT JOIN Lotes l ON v.LoteId = l.Id 
@@ -107,7 +107,7 @@ namespace Um416.DAL
         {
             using (var db = new SqlConnection(ConnectionString))
             {
-                var query = "SELECT v.*, c.Nome, c.Cpf, c.TelFixo, c.TelMovel, c.Email, l.Codigo, l.LoteamentoId, lo.Nome, lo.IndicadorMultinivel FROM Vendas v LEFT JOIN UsuariosClientes c ON v.ClienteId = c.Id LEFT JOIN Lotes l ON v.LoteId = l.Id LEFT JOIN Loteamentos lo ON l.LoteamentoId = lo.Id WHERE v.LoteId = @id;";
+                var query = "SELECT v.*, c.Nome, c.Cpf, c.TelFixo, c.TelMovel, c.Email, l.Codigo, l.LoteamentoId, lo.Nome, lo.IndicadorMultinivel, lo.EmpresaId FROM Vendas v LEFT JOIN UsuariosClientes c ON v.ClienteId = c.Id LEFT JOIN Lotes l ON v.LoteId = l.Id LEFT JOIN Loteamentos lo ON l.LoteamentoId = lo.Id WHERE v.LoteId = @id;";
                 return db.Query<Venda, UsuarioCliente, Lote, Loteamento, Venda>(query, (venda, cli, lote, loteamento) =>
                 {
                     venda.Cliente = cli;

@@ -385,7 +385,7 @@
                         Informações
                     </blockquote>
                     <div class="row">
-                        <dl class="dl-horizontal col-sm-6">
+                        <dl class="dl-horizontal col-md-6">
                             <dt>Número</dt>
                             <dd>{{vm.venda.numero}}</dd>
                             <dt>Data</dt>
@@ -397,7 +397,7 @@
                             <dt>Dia Vcto.</dt>
                             <dd>{{vm.venda.diaVencimento}}</dd>
                         </dl>
-                        <dl class="dl-horizontal col-sm-6">
+                        <dl class="dl-horizontal col-md-6">
                             <dt>Cliente</dt>
                             <dd>{{vm.venda.cliente.nome}}</dd>
                             <dt>Cpf</dt>
@@ -463,13 +463,17 @@
                     <p ng-if="vm.titulo != null">Confirma a baixa do título <strong> #{{vm.titulo.venda.numero}} Parcela: {{vm.titulo.numero}}</strong>?</p>
                     <br />
                     <div class="row">
-                        <div class="form-group col-sm-3 col-md-3">
+                        <div class="form-group col-sm-4 col-md-4">
                             <label>Data de Pgto.</label>
-                            <input type="text" class="form-control" placeholder="00/00/0000" name="dataPgto" ng-model="vm.titulo.dataPgto" ui-date-mask disabled="disabled" />
+                            <input type="text" class="form-control" placeholder="00/00/0000" name="dataPgto" ng-model="vm.titulo.dataPgto" disabled="disabled" ui-date-mask />
                         </div>
-                        <div class="form-group col-sm-3 col-md-3">
+                        <div class="form-group col-sm-4 col-md-4">
+                            <label>Valor Parcela</label>
+                            <input type="text" class="form-control" placeholder="0,00" name="dataPgto" ng-model="vm.titulo.valor" disabled="disabled" ui-money-mask />
+                        </div>
+                        <div class="form-group col-sm-4 col-md-4">
                             <label>Valor Pago</label>
-                            <input type="text" class="form-control text-right" placeholder="0,00" ng-model="vm.titulo.valor" disabled="disabled" ui-money-mask />
+                            <input type="text" class="form-control text-right" placeholder="0,00" ng-model="vm.titulo.valorPgto" disabled="disabled" ui-money-mask />
                         </div>
                     </div>
                 </div>
@@ -483,7 +487,7 @@
     </div>
 
     <div id="modalEstornaTitulo" class="modal fade" role="dialog" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -497,13 +501,17 @@
                     <p ng-if="vm.titulo != null">Confirma o estorno do título <strong> #{{vm.titulo.venda.numero}} Parcela: {{vm.titulo.numero}}</strong>?</p>
                     <br />
                     <div class="row">
-                        <div class="form-group col-sm-3 col-md-3">
+                        <div class="form-group col-sm-4 col-md-4">
                             <label>Data de Pgto.</label>
                             <input type="text" class="form-control" placeholder="00/00/0000" name="dataPgto" ng-model="vm.titulo.dataPgto" disabled="disabled" ui-date-mask />
                         </div>
-                        <div class="form-group col-sm-3 col-md-3">
+                        <div class="form-group col-sm-4 col-md-4">
+                            <label>Valor Parcela</label>
+                            <input type="text" class="form-control" placeholder="0,00" name="dataPgto" ng-model="vm.titulo.valor" disabled="disabled" ui-money-mask />
+                        </div>
+                        <div class="form-group col-sm-4 col-md-4">
                             <label>Valor Pago</label>
-                            <input type="text" class="form-control text-right" placeholder="0,00" ng-model="vm.titulo.valor" disabled="disabled" ui-money-mask />
+                            <input type="text" class="form-control text-right" placeholder="0,00" ng-model="vm.titulo.valorPgto" disabled="disabled" ui-money-mask />
                         </div>
                     </div>
                 </div>

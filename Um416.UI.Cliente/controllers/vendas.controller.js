@@ -5,7 +5,7 @@
         .module('ngApp')
         .controller('vendasController', vendasController);
 
-    function vendasController($rootScope, $scope, loginService, vendasService, notificacoesService, chamadosService) {
+    function vendasController($rootScope, $scope, loginService, vendasService, notificacoesService, chamadosService, titulosService) {
         var vm = this;
 
         vm.areSubmitting = false;
@@ -41,6 +41,23 @@
                 .list(login.id)
                 .then(function (vendas) {
                     vm.vendas = vendas;
+
+                    vm.vendas.forEach(function (venda) {
+                        venda.totalDesconto = 0;
+
+                        titulosService
+                            .list(venda.id)
+                            .then(function (titulos) {
+                                vm.titulos = titulos;
+
+                                vm.titulos.forEach(function (titulo) {
+                                    if (titulo.pago == true)
+                                        venda.totalDesconto += titulo.valor - titulo.valorPgto;
+                                });
+                            }, function (error) {
+                                vm.error = error;
+                            });
+                    });
                 }, function (error) {
                     vm.error = error;
                 });

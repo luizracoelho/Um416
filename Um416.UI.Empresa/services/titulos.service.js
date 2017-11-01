@@ -36,11 +36,11 @@
             return def.promise;
         };
 
-        function find(id) {
+        function find(tituloId, empresaId) {
             var def = $q.defer();
             $http({
                 method: "get",
-                url: baseUrl + "titulos/" + id,
+                url: baseUrl + `titulos/${tituloId}/empresa/${empresaId}`,
                 headers: { 'Authorization': loginService.getToken() }
             })
                 .then(function success(resp) {
@@ -55,11 +55,11 @@
             return def.promise;
         };
 
-        function baixar(tituloId) {
+        function baixar(tituloId, empresaId) {
             var def = $q.defer();
             $http({
-                method: "get",
-                url: baseUrl + `titulos/baixar/${tituloId}`,
+                method: "post",
+                url: baseUrl + `titulos/baixar/${tituloId}/empresa/${empresaId}`,
                 headers: { 'Authorization': loginService.getToken() }
             })
                 .then(function success(resp) {
@@ -74,11 +74,11 @@
             return def.promise;
         };
 
-        function estornar(tituloId) {
+        function estornar(tituloId, empresaId) {
             var def = $q.defer();
             $http({
-                method: "get",
-                url: baseUrl + `titulos/estornar/${tituloId}`,
+                method: "post",
+                url: baseUrl + `titulos/estornar/${tituloId}/empresa/${empresaId}`,
                 headers: { 'Authorization': loginService.getToken() }
             })
                 .then(function success(resp) {

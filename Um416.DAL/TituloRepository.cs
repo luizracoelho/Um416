@@ -34,5 +34,33 @@ namespace Um416.DAL
                 }, new { id = id }, splitOn: "QuantParcelas").FirstOrDefault();
             }
         }
+
+        public Titulo Get(long tituloId, long empresaId)
+        {
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var query = @"SELECT t.*, v.Id, v.QuantParcelas, v.Numero, v.DiaVencimento, v.ClienteId, v.LoteId, v.ValorParcela, l.Id, lo.IndicadorMultinivel FROM Titulos t
+                                LEFT JOIN Vendas v ON t.VendaId = v.Id
+                                LEFT JOIN Lotes l ON v.LoteId = l.Id
+                                LEFT JOIN Loteamentos lo on l.LoteamentoId = lo.Id
+                                WHERE t.Id = @tituloId AND lo.EmpresaId = @empresaId;";
+                return db.Query<Titulo, Venda, Lote, Loteamento, Titulo>(query, (tit, venda, lote, loteam) =>
+                {
+                    lote.Loteamento = loteam;
+                    venda.Lote = lote;
+                    tit.Venda = venda;
+                    return tit;
+                }, new { tituloId = tituloId, empresaId = empresaId }, splitOn:"Id, Id, IndicadorMultinivel" ).FirstOrDefault();
+            }
+        }
+
+        public void BaixarEstornar(Titulo titulo)
+        {
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var query = "UPDATE Titulos SET DataPgto = @DataPgto, ValorPgto = @ValorPgto, Pago = @Pago WHERE VendaId = @VendaId AND Id = @Id";
+                db.Query(query, titulo);
+            }
+        }
     }
 }
