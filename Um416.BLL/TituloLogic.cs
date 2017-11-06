@@ -55,26 +55,62 @@ namespace Um416.BLL
             }
         }
 
-        public void BaixarTitulo(long tituloId)
+        public void BaixarTitulo(long tituloId, long empresaId)
         {
-            var titulo = Get(tituloId);
+            var titulo = Get(tituloId, empresaId);
 
             titulo.DataPgto = DateTime.Today;
-            titulo.ValorPgto = titulo.Valor;
             titulo.Pago = true;
 
-            Save(titulo);
+            _dao.BaixarEstornar(titulo);
         }
 
-        public void EstornarTitulo(long tituloId)
+        public void EstornarTitulo(long tituloId, long empresaId)
         {
-            var titulo = Get(tituloId);
+            var titulo = Get(tituloId, empresaId);
 
             titulo.DataPgto = null;
             titulo.ValorPgto = null;
             titulo.Pago = false;
 
-            Save(titulo);
+            _dao.BaixarEstornar(titulo);
+        }
+
+        public decimal CalcularDesconto(long vendaId)
+        {
+            var desconto = 0M;
+
+            var vendaBo = new VendaLogic();
+            var venda = vendaBo.Get(vendaId);
+            var indicadorMMN = venda.Lote.Loteamento.IndicadorMultinivel;
+
+            var nivelUm = vendaBo.ListPorIndicador(vendaId);
+
+            foreach (var vendaUm in nivelUm)
+            {
+                if (vendaUm.Pagas > 0 && vendaUm.Vencidas == 0)
+                    desconto += (0.5M / indicadorMMN);
+
+                var nivelDois = vendaBo.ListPorIndicador(vendaUm.Id);
+
+                foreach (var vendaDois in nivelDois)
+                {
+                    if (vendaDois.Pagas > 0 && vendaDois.Vencidas == 0)
+                        desconto += (0.5M / (indicadorMMN * indicadorMMN));
+                }
+            }
+
+            return desconto;
+        }
+
+        public Titulo Get(long tituloId, long empresaId)
+        {
+            var titulo = _dao.Get(tituloId, empresaId);
+
+            var desconto = CalcularDesconto(titulo.VendaId);
+            titulo.ValorPgto = titulo.Valor - (titulo.Valor * desconto);
+
+            return titulo;
         }
     }
 }

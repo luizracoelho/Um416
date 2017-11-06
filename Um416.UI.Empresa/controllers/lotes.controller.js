@@ -317,18 +317,18 @@
                                 if (titulo.pago == true) {
                                     titulo.icon = "check-circle";
                                     titulo.cor = 'success';
-                                    titulo.title = "Paga"
+                                    titulo.title = "Paga";
                                 }
                                 else {
-                                    if (new Date(titulo.dataVencimento) < new Date()) {
-                                        titulo.icon = "exclamation-triangle";
+                                    if (moment(titulo.dataVencimento) < moment().clone().startOf('day')) {
+                                        titulo.icon = "ban";
                                         titulo.cor = 'danger';
-                                        titulo.title = "Vencida"
+                                        titulo.title = "Vencida";
                                     }
                                     else {
-                                        titulo.icon = "asterisk";
+                                        titulo.icon = "exclamation-circle";
                                         titulo.cor = 'warning';
-                                        titulo.title = "Em Aberto"
+                                        titulo.title = "Em Aberto";
                                     }
                                 }
                             }, function (error) {
@@ -345,7 +345,7 @@
         vm.findTitulo = function (tituloId, estorna = false) {
             vm.areSubmitting = false;
             titulosService
-                .find(tituloId)
+                .find(tituloId, vm.venda.lote.loteamento.empresaId)
                 .then(function (titulo) {
                     vm.titulo = titulo;
 
@@ -366,7 +366,7 @@
             vm.areSubmitting = true;
 
             titulosService
-                .baixar(tituloId)
+                .baixar(tituloId, vm.venda.lote.loteamento.empresaId)
                 .then(function () {
                     $('#modalBaixaTitulo').modal('hide');
 
@@ -379,18 +379,18 @@
                                 if (titulo.pago == true) {
                                     titulo.icon = "check-circle";
                                     titulo.cor = 'success';
-                                    titulo.title = "Paga"
+                                    titulo.title = "Paga";
                                 }
                                 else {
                                     if (new Date(titulo.dataVencimento) < new Date()) {
                                         titulo.icon = "exclamation-triangle";
                                         titulo.cor = 'danger';
-                                        titulo.title = "Vencida"
+                                        titulo.title = "Vencida";
                                     }
                                     else {
                                         titulo.icon = "asterisk";
                                         titulo.cor = 'warning';
-                                        titulo.title = "Em Aberto"
+                                        titulo.title = "Em Aberto";
                                     }
                                 }
                             }, function (error) {
@@ -406,7 +406,7 @@
             vm.areSubmitting = true;
 
             titulosService
-                .estornar(tituloId)
+                .estornar(tituloId, vm.venda.lote.loteamento.empresaId)
                 .then(function () {
                     $('#modalEstornaTitulo').modal('hide');
 
@@ -419,18 +419,18 @@
                                 if (titulo.pago == true) {
                                     titulo.icon = "check-circle";
                                     titulo.cor = 'success';
-                                    titulo.title = "Paga"
+                                    titulo.title = "Paga";
                                 }
                                 else {
                                     if (new Date(titulo.dataVencimento) < new Date()) {
                                         titulo.icon = "exclamation-triangle";
                                         titulo.cor = 'danger';
-                                        titulo.title = "Vencida"
+                                        titulo.title = "Vencida";
                                     }
                                     else {
                                         titulo.icon = "asterisk";
                                         titulo.cor = 'warning';
-                                        titulo.title = "Em Aberto"
+                                        titulo.title = "Em Aberto";
                                     }
                                 }
                             }, function (error) {

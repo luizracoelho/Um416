@@ -75,9 +75,14 @@
                             <td class="text-right">Dia {{venda.diaVencimento}}</td>
                         </tr>
                         <tr>
-                            <th><i class="fa fa-bookmark-o"></i> Pagas/Total    </th>
-                            <td class="text-right">{{venda.pagas == null ? 0 : venda.pagas}}/{{venda.quantParcelas}}
-                            <td>
+                            <th><i class="fa fa-bookmark-o"></i> Pagas/Total</th>
+                            <td class="text-right">{{venda.pagas == null ? 0 : venda.pagas}}/{{venda.quantParcelas}}</td>
+                        </tr>
+                        <tr>
+                            <th class="{{venda.totalDesconto > 0 ? 'text-success' : ''}}"><i class="fa fa-trophy"></i> Desconto por Indicações</th>
+                            <td ng-if="venda.totalDesconto > 0" class="text-right {{venda.totalDesconto > 0 ? 'text-success' : ''}}">{{venda.totalDesconto | currency}}
+                            </td>
+                            <td ng-if="venda.totalDesconto == 0" class="text-right">-</td>
                         </tr>
                     </table>
                     <div class="hidden-xs">
@@ -91,6 +96,7 @@
             </div>
         </div>
     </div>
+
     <div id="modalMMNAtivo" class="modal fade" role="dialog" tabindex="-1">
         <div class="modal-dialog modal-md">
             <div class="modal-content">

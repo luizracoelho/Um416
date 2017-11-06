@@ -4,4 +4,4 @@ Alter Table Vendas
 Alter Table Vendas
 	Drop Column IndicadorId;	
 Alter Table Vendas	
-	Add Column IndicadorId bigint NULL CONSTRAINT FK_Indicador_Vendas FOREIGN KEY REFERENCES Vendas(Id);
+	Add IndicadorId bigint NULL CONSTRAINT FK_Indicador_Vendas FOREIGN KEY REFERENCES Vendas(Id);

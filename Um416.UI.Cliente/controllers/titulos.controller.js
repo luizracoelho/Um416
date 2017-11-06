@@ -21,6 +21,9 @@
                     vm.titulos = titulos;
 
                     vm.titulos.forEach(function (titulo) {
+
+                        titulo.valorDesconto = titulo.valor - titulo.valorPgto;
+
                         if (titulo.pago == true) {
                             titulo.status = "Paga";
                             titulo.icone = "fa-check";

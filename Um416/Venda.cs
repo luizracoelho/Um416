@@ -23,5 +23,6 @@ namespace Um416
         //Campos que informar se a venda está válida para a indicação e descontos, caso não, preenche-se uma mensagem para o usuário
         public bool Valida { get; set; }
         public string Mensagem { get; set; }
+        public int Vencidas { get; set; }
     }
 }

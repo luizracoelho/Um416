@@ -22,6 +22,7 @@ namespace Um416.DAL.Mappings
             Map(x => x.Pagas).Ignore();
             Map(x => x.Valida).Ignore();
             Map(x => x.Mensagem).Ignore();
+            Map(x => x.Vencidas).Ignore();
         }
     }
 }

@@ -58,6 +58,11 @@
                             <td ng-if="titulo.pago" class="text-right">{{titulo.dataPgto | date: "dd/MM/yyyy"}}</td>
                             <td ng-if="!titulo.pago" class="text-right">-</td>
                         </tr>
+                        <tr>
+                            <th class="{{titulo.pago ? 'text-success' : ''}}"><i class="fa fa-trophy"></i> Desconto por Indicações</th>
+                            <td ng-if="titulo.pago" class="text-right {{titulo.pago? 'text-success' : ''}}">{{titulo.valorDesconto | currency}}</td>
+                            <td ng-if="!titulo.pago" class="text-right">-</td>
+                        </tr>
                     </table>
                 </div>
             </div>
