@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Um416.BLL.Base;
 using Um416.DAL;
+using Um416.TransferModels;
 
 namespace Um416.BLL
 {
@@ -10,9 +11,9 @@ namespace Um416.BLL
     {
         public IEnumerable<Titulo> List(long id) => _dao.List(id);
 
-        public IEnumerable<Titulo> ListPorCliente(long clienteId, long id)
+        public IEnumerable<Titulo> ListPorCliente(long clienteId, long? vendaId)
         {
-            var titulos = _dao.ListPorCliente(clienteId, id);
+            var titulos = _dao.ListPorCliente(clienteId, vendaId);
 
             if (titulos.Count() == 0)
                 throw new Exception("Não foi possível encontrar parcelas solicitadas.");
@@ -111,6 +112,11 @@ namespace Um416.BLL
             titulo.ValorPgto = titulo.Valor - (titulo.Valor * desconto);
 
             return titulo;
+        }
+
+        public IEnumerable<Titulo> Filtrar(TituloFiltroDTO filtro)
+        {
+            return _dao.Filtrar(filtro);
         }
     }
 }

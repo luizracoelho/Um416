@@ -124,6 +124,18 @@
         };
 
         var titulosState = {
+            url: '/titulos',
+            templateUrl: 'views/titulos.view.html',
+            controller: 'titulosController',
+            controllerAs: 'vm',
+            resolve: {
+                auth: function (loginService) {
+                    loginService.authorize();
+                }
+            }
+        };
+
+        var titulosVendaIdState = {
             url: '/titulos/compra/:vendaId',
             templateUrl: 'views/titulos.view.html',
             controller: 'titulosController',
@@ -146,6 +158,7 @@
         $stateProvider.state("painel.notificacoes", notificacoesState);
         $stateProvider.state("painel.chamados", chamadosState);
         $stateProvider.state("painel.titulos", titulosState);
+        $stateProvider.state("painel.titulosVendaId", titulosVendaIdState);
 
         //Outras rotas
         $urlRouterProvider.otherwise('/');

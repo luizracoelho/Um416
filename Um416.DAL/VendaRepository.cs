@@ -117,5 +117,25 @@ namespace Um416.DAL
                 }, new { id = loteId }, splitOn: "Nome, Codigo, Nome").FirstOrDefault();
             }
         }
+
+        public Venda GetPorCliente(long clienteId, long vendaId)
+        {
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var query = @"SELECT v.*, (SELECT COUNT(*) FROM Titulos WHERE Pago = 1 AND VendaId = v.Id) Pagas, (SELECT COUNT(*) FROM Titulos WHERE Pago = 0 AND DataVencimento < GETDATE() AND VendaId = v.Id) Vencidas, c.Nome, c.Email, c.TelFixo, c.TelMovel, l.Codigo, l.LoteamentoId, l.Descricao, l.Area, lo.Nome, lo.IndicadorMultinivel 
+                                FROM Vendas v 
+                                LEFT JOIN UsuariosClientes c ON v.ClienteId = c.Id 
+                                LEFT JOIN Lotes l ON v.LoteId = l.Id 
+                                LEFT JOIN Loteamentos lo ON l.LoteamentoId = lo.Id
+                                WHERE v.Id = @vendaId AND c.Id = @clienteId;";
+                return db.Query<Venda, UsuarioCliente, Lote, Loteamento, Venda>(query, (venda, cli, lote, loteamento) =>
+                {
+                    venda.Cliente = cli;
+                    lote.Loteamento = loteamento;
+                    venda.Lote = lote;
+                    return venda;
+                }, new { vendaId = vendaId, clienteId = clienteId }, splitOn: "Nome, Codigo, Nome").FirstOrDefault();
+            }
+        }
     }
 }

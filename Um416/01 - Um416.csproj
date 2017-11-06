@@ -63,6 +63,7 @@
     <Compile Include="TransferModels\Login.cs" />
     <Compile Include="TransferModels\PasswordProfile.cs" />
     <Compile Include="TransferModels\Autorizacao.cs" />
+    <Compile Include="TransferModels\TituloFiltroDTO.cs" />
     <Compile Include="TransferModels\UserInfo.cs" />
     <Compile Include="Uf.cs" />
     <Compile Include="Pessoa.cs" />

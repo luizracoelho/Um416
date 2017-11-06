@@ -3,27 +3,121 @@
         {{vm.error}}
     </div>
 
+    <!-- Filtros -->
     <div class="panel panel-default sticky">
         <div class="panel-heading">
-            <a class="btn btn-default pull-right" ui-sref="painel.home"><i class="fa fa-arrow-left"></i> Voltar</a>
-            <h4><i class="fa fa-file"></i> Parcelas do Lote {{vm.titulos[0].venda.lote.codigo}}</h4>
+            <div ng-if="vm.vendaId != null">
+                <h4 class="clearfix" style="line-height: 36px;">
+                    <a class="btn btn-default pull-right" ui-sref="painel.home"><i class="fa fa-arrow-left"></i> Voltar</a>
+                    <i class="fa fa-file"></i> Parcelas do Lote {{vm.titulos[0].venda.lote.codigo}}
+                </h4>
+            </div>
+            <div ng-if="vm.vendaId == null" class="panel-heading" ng-click="vm.filtroCollapse = !vm.filtroCollapse;" style="cursor: pointer;">
+                <h4>
+                    <i class="pull-right fa" ng-class="vm.filtroCollapse ? 'fa-compress' : 'fa-filter'"></i>
+                    <i class="fa fa-money"></i> Meus Débitos
+                </h4>
+            </div>
         </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-sm-6" ng-show="vm.showGrid()">
-                    <span class="input-group">
-                        <input type="text" ng-model="filtro" placeholder="Pesquisar" class="form-control" />
-                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                    </span>
+        <div id="filtrosCollapse" class="collapse" ng-class="vm.filtroCollapse ? 'in' : ''">
+            <form name="formFiltro" ng-submit="vm.filtrar()">
+                <div class="panel-body">
+                    <div class="row">
+                        <!-- Data de Emissao -->
+                        <div class="form-group col-md-4">
+                            <label>Data de Emissão</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Todas" name="dataEmissaoDe" ng-model="vm.filtro._dataEmissaoDe" ng-required="vm.filtro._dataEmissaoAte" ui-date-mask parse="false" />
+                                <span class="input-group-addon">Até</span>
+                                <input type="text" class="form-control" placeholder="Todas" name="dataEmissaoAte" ng-model="vm.filtro._dataEmissaoAte" ng-required="vm.filtro._dataEmissaoDe" ui-date-mask parse="false" />
+                            </div>
+                            <p class="text-danger" ng-show="(formFiltro.dataEmissaoDe.$error.date && !formFiltro.dataEmissaoDe.$pristine) ||(formFiltro.dataEmissaoAte.$error.date && !formFiltro.dataEmissaoAte.$pristine)">
+                                Data inválida.
+                            </p>
+                            <p class="text-danger" ng-show="(formFiltro.dataEmissaoDe.$error.required || formFiltro.dataEmissaoAte.$error.required) && (!formFiltro.dataEmissaoDe.$pristine || !formFiltro.dataEmissaoAte.$pristine)">
+                                Preencha ambas as datas.
+                            </p>
+                        </div>
+                        <!-- Data de Vencimento -->
+                        <div class="form-group col-md-4">
+                            <label>Data de Vencimento</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Todas" name="dataVencimentoDe" ng-model="vm.filtro._dataVencimentoDe" ui-date-mask parse="false" ng-required="vm.filtro._dataVencimentoAte" />
+                                <span class="input-group-addon">Até</span>
+                                <input type="text" class="form-control" placeholder="Todas" name="dataVencimentoAte" ng-model="vm.filtro._dataVencimentoAte" ui-date-mask parse="false" ng-required="vm.filtro._dataVencimentoDe" />
+                            </div>
+                            <p class="text-danger" ng-show="(formFiltro.dataVencimentoDe.$error.date && !formFiltro.dataVencimentoDe.$pristine) ||(formFiltro.dataVencimentoAte.$error.date && !formFiltro.dataVencimentoAte.$pristine)">
+                                Data inválida.
+                            </p>
+                            <p class="text-danger" ng-show="(formFiltro.dataVencimentoDe.$error.required || formFiltro.dataVencimentoAte.$error.required) && (!formFiltro.dataVencimentoDe.$pristine || !formFiltro.dataVencimentoAte.$pristine)">
+                                Preencha ambas as datas.
+                            </p>
+                        </div>
+                        <!-- Data de Pagamento -->
+                        <div class="form-group col-md-4">
+                            <label>Data de Pagamento</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Todas" name="dataPgtoDe" ng-model="vm.filtro._dataPgtoDe" ng-required="vm.filtro._dataPgtoAte" ui-date-mask parse="false" />
+                                <span class="input-group-addon">Até</span>
+                                <input type="text" class="form-control" placeholder="Todas" name="dataPgtoAte" ng-model="vm.filtro._dataPgtoAte" ng-required="vm.filtro._dataPgtoDe" ui-date-mask parse="false" />
+                            </div>
+                            <p class="text-danger" ng-show="(formFiltro.dataPgtoDe.$error.date && !formFiltro.dataPgtoDe.$pristine) ||(formFiltro.dataPgtoAte.$error.date && !formFiltro.dataPgtoAte.$pristine)">
+                                Data inválida.
+                            </p>
+                            <p class="text-danger" ng-show="(formFiltro.dataPgtoDe.$error.required || formFiltro.dataPgtoAte.$error.required) && (!formFiltro.dataPgtoDe.$pristine || !formFiltro.dataPgtoAte.$pristine)">
+                                Preencha ambas as datas.
+                            </p>
+                        </div>
+                        <!-- Status -->
+                        <div class="form-group col-md-4">
+                            <label>Status</label>
+                            <br />
+                            <div class="btn-group btn-group-xs btn-group-justified" data-toggle="buttons">
+                                <label class="btn btn-default" ng-click="vm.filtro.status = null;">
+                                    <input type="radio" name="status" title="Todas">
+                                    <i class="fa fa-bars"></i>
+                                    <br />
+                                    <small>Todas</small>
+                                </label>
+                                <label class="btn btn-default active" ng-click="vm.filtro.status = false;">
+                                    <input type="radio" name="status" title="Em Aberto" checked>
+                                    <i class="fa fa-lg fa-exclamation-circle text-warning"></i>
+                                    <br />
+                                    <small>Em Aberto</small>
+                                </label>
+                                <label class="btn btn-default" ng-click="vm.filtro.status = true;">
+                                    <input type="radio" name="status" title="Pagas">
+                                    <i class="fa fa-lg fa-check-circle text-success"></i>
+                                    <br />
+                                    <small>Pagas</small>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12" ng-show="!vm.showGrid()">
-                    <h5>
-                        Nenhum registro encontrado!
-                    </h5>
+                <div class="panel-footer">
+                    <button type="submit" ng-disabled="formFiltro.$invalid" class="btn btn-primary"><i class="fa fa-filter"></i> Filtrar</button>
+                    <button type="button" class="btn btn-default" ng-click="vm.createFiltro()"><i class="fa fa-trash-o"></i> Limpar Campos</button>
                 </div>
-            </div>
+            </form>
+        </div>
+    </div>
+
+    <!--Registros-->
+    <div class="row">
+        <div class="col-sm-offset-3 col-sm-6" ng-show="vm.showGrid()">
+            <span class="input-group">
+                <input type="text" ng-model="filtro" placeholder="Pesquisar" class="form-control" />
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            </span>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-center" ng-show="!vm.showGrid()">
+            <h5>
+                Nenhum registro encontrado!
+            </h5>
         </div>
     </div>
     <div class="row">
@@ -35,6 +129,12 @@
                     </div>
                     <span class="h4">
                         Parcela {{titulo.numero}}/{{titulo.venda.quantParcelas}}
+                        <span ng-if="vm.vendaId == null">
+                            <br />
+                            <span class="text-muted">#{{titulo.vendaId}}</span> Lote {{titulo.venda.lote.codigo}}
+                            <br />
+                            <small>{{titulo.venda.lote.loteamento.nome}}</small>
+                        </span>
                     </span>
                     <div class="row">
                         <hr style="margin-top: 5px; margin-bottom: 5px;" />

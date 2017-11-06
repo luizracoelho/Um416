@@ -10,6 +10,7 @@
         var Service = function () {
             this.list = list;
             this.find = find;
+            this.filtrar = filtrar;
         };
 
         return new Service();
@@ -55,5 +56,26 @@
 
             return def.promise;
         };
+
+        function filtrar(filtro) {
+            var def = $q.defer();
+
+            $http({
+                method: "post",
+                url: baseUrl + "titulos/filtrar",
+                headers: { 'Authorization': loginService.getToken() },
+                data: filtro
+            })
+                .then(function success(resp) {
+                    def.resolve(resp.data);
+                }, function error(err) {
+                    def.reject(err.data.exceptionMessage);
+
+                    if (err.status == 401)
+                        loginService.logout();
+                });
+
+            return def.promise;
+        }
     };
 })();

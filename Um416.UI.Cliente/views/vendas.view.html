@@ -33,7 +33,7 @@
                         <button type="button" class="btn btn-sm btn-link" dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Opções"><i class="fa fa-ellipsis-v fa-lg text-primary"></i></button>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li>
-                                <a ui-sref="painel.titulos({vendaId: venda.id})" class="h5"><i class="fa fa-file text-primary"></i> Parcelas</a>
+                                <a ui-sref="painel.titulosVendaId({vendaId: venda.id})" class="h5"><i class="fa fa-file text-primary"></i> Parcelas</a>
                             </li>
                         </ul>
                     </div>
@@ -89,7 +89,7 @@
                         <div class="row">
                             <hr style="margin-top: 6px; margin-bottom: 12px;" />
                         </div>
-                        <a class="btn btn-sm btn-primary" ui-sref="painel.titulos({vendaId: venda.id})"><i class="fa fa-file"></i> Parcelas</a>
+                        <a class="btn btn-sm btn-primary" ui-sref="painel.titulosVendaId({vendaId: venda.id})"><i class="fa fa-file"></i> Parcelas</a>
                         <a class="btn btn-sm btn-primary" ui-sref="painel.arvoreId({vendaId: venda.id})"><i class="fa fa-sitemap"></i> Árvore</a>
                     </div>
                 </div>

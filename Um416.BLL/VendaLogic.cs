@@ -165,7 +165,7 @@ namespace Um416.BLL
             return arvores;
         }
 
-        private List<Venda> ListPorIndicador(long vendaId)
+        public List<Venda> ListPorIndicador(long vendaId)
         {
             var vendas = _dao.ListPorIndicador(vendaId).ToList();
 
