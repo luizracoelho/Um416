@@ -77,7 +77,6 @@
                     .find(vm.indicador)
                     .then(function (venda) {
                         vm.venda.indicadorId = venda.id;
-
                         vm.salvarVenda(vm.venda);
                     }, function (error) {
                         vm.errorDetail = error;

@@ -60,7 +60,7 @@
             return def.promise;
         };
 
-        function listArvores() {
+        function listArvores(vendaId) {
             var def = $q.defer();
 
             var login = loginService.getLogin();
@@ -68,13 +68,13 @@
             if (login != null) {
                 $http({
                     method: "get",
-                    url: baseUrl + `clientes/${login.id}/arvores`,
+                    url: baseUrl + `clientes/${login.id}/arvores/${vendaId}`,
                     headers: { 'Authorization': loginService.getToken() }
                 })
                     .then(function success(resp) {
                         def.resolve(resp.data);
                     }, function error(err) {
-                        def.reject(err);
+                        def.reject(err.data.exceptionMessage);
 
                         if (err.status == 401)
                             loginService.logout();

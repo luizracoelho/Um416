@@ -309,7 +309,7 @@
                     vm.venda = venda;
 
                     titulosService
-                        .list(vm.venda.id)
+                        .list(venda.clienteId, vm.venda.id)
                         .then(function (titulos) {
                             vm.venda.titulos = titulos;
 
@@ -371,7 +371,7 @@
                     $('#modalBaixaTitulo').modal('hide');
 
                     titulosService
-                        .list(vm.venda.id)
+                        .list(vm.venda.clienteId, vm.venda.id)
                         .then(function (titulos) {
                             vm.venda.titulos = titulos;
 
@@ -411,7 +411,7 @@
                     $('#modalEstornaTitulo').modal('hide');
 
                     titulosService
-                        .list(vm.venda.id)
+                        .list(vm.venda.clienteId, vm.venda.id)
                         .then(function (titulos) {
                             vm.venda.titulos = titulos;
 

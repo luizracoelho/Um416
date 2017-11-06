@@ -5,12 +5,13 @@ using Um416.BLL;
 
 namespace Um416.API.Controllers
 {
+    [Authorize]
     public class TitulosController : BaseController<Titulo, TituloLogic>
     {
-        [HttpGet, Route("api/clientes/venda/{vendaId}/titulos")]
-        public IEnumerable<Titulo> List(long vendaId)
+        [HttpGet, Route("api/clientes/{clienteId}/venda/{vendaId}/titulos")]
+        public IEnumerable<Titulo> List(long clienteId, long vendaId)
         {
-            return _bo.List(vendaId);
+            return _bo.ListPorCliente(clienteId, vendaId);
         }
 
         [HttpGet, Route("api/titulos/baixar/{tituloId}")]

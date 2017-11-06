@@ -5,7 +5,7 @@
         .module('ngApp')
         .controller('arvoresController', arvoresController);
 
-    function arvoresController($rootScope, $scope, loginService, vendasService) {
+    function arvoresController($rootScope, $scope, $stateParams, loginService, vendasService) {
         var vm = this;
 
         vm.areSubmitting = false;
@@ -16,7 +16,7 @@
 
         vm.list = function () {
             vendasService
-                .listArvores()
+                .listArvores($stateParams.vendaId)
                 .then(function (arvores) {
                     vm.arvores = arvores;
                 }, function (error) {

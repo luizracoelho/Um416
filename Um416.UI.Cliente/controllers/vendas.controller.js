@@ -52,11 +52,8 @@
                     .find(id)
                     .then(function (venda) {
                         $scope.vendaForm.$setPristine();
-
                         vm.venda = venda;
-
                         vm.errorDetail = null;
-
                         $('#modalDetails').modal('show');
                     }, function (error) {
                         vm.error = error;

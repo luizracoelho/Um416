@@ -25,7 +25,7 @@ namespace Um416.DAL
         {
             using (var db = new SqlConnection(ConnectionString))
             {
-                var query = @"SELECT v.*, (SELECT COUNT(*) FROM Titulos WHERE Pago = 1 AND VendaId = v.Id) Pagas, c.Nome, c.Email, c.TelFixo, c.TelMovel, l.Codigo, l.LoteamentoId, l.Descricao, l.Area, lo.Nome 
+                var query = @"SELECT v.*, (SELECT COUNT(*) FROM Titulos WHERE Pago = 1 AND VendaId = v.Id) Pagas, c.Nome, c.Email, c.TelFixo, c.TelMovel, l.Codigo, l.LoteamentoId, l.Descricao, l.Area, lo.Nome, lo.IndicadorMultinivel 
                             FROM Vendas v 
                             LEFT JOIN UsuariosClientes c ON v.ClienteId = c.Id 
                             LEFT JOIN Lotes l ON v.LoteId = l.Id 
@@ -38,6 +38,26 @@ namespace Um416.DAL
                     venda.Lote = lote;
                     return venda;
                 }, new { id = id }, splitOn: "Nome, Codigo, Nome").FirstOrDefault();
+            }
+        }
+
+        public Venda GetPorCliente(long clienteId, long id)
+        {
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var query = @"SELECT v.*, (SELECT COUNT(*) FROM Titulos WHERE Pago = 1 AND VendaId = v.Id) Pagas, c.Nome, c.Email, c.TelFixo, c.TelMovel, l.Codigo, l.LoteamentoId, l.Descricao, l.Area, lo.Nome, lo.IndicadorMultinivel 
+                            FROM Vendas v 
+                            LEFT JOIN UsuariosClientes c ON v.ClienteId = c.Id 
+                            LEFT JOIN Lotes l ON v.LoteId = l.Id 
+                            LEFT JOIN Loteamentos lo ON l.LoteamentoId = lo.Id
+                            WHERE v.id = @id AND v.ClienteId = @clienteId;";
+                return db.Query<Venda, UsuarioCliente, Lote, Loteamento, Venda>(query, (venda, cli, lote, loteamento) =>
+                {
+                    venda.Cliente = cli;
+                    lote.Loteamento = loteamento;
+                    venda.Lote = lote;
+                    return venda;
+                }, new { clienteId = clienteId, id = id }, splitOn: "Nome, Codigo, Nome").FirstOrDefault();
             }
         }
 

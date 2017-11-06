@@ -112,10 +112,29 @@ namespace Um416.BLL
             return _dao.GetPorLote(loteId);
         }
 
-        public IEnumerable<Venda> GetArvores(long clienteId)
+        public Venda GetPorCliente(long clienteId, long vendaId)
         {
-            var vendas = ListPorCliente(clienteId);
+            var venda = _dao.GetPorCliente(clienteId, vendaId);
+            Validar(venda);
+            return venda;
+        }
+
+        public IEnumerable<Venda> GetArvores(long clienteId, long? vendaId)
+        {
+            var vendas = new List<Venda>();
             var arvores = new List<Venda>();
+
+            if (vendaId != null)
+            {
+                var venda = GetPorCliente(clienteId, (long)vendaId);
+
+                if (venda == null)
+                    throw new Exception("Não foi possível encontrar a árvore solicitada.");
+
+                vendas.Add(venda);
+            }
+            else
+                vendas = ListPorCliente(clienteId).ToList();
 
             foreach (var venda in vendas)
             {
@@ -171,16 +190,19 @@ namespace Um416.BLL
 
         private void Validar(Venda venda)
         {
-            venda.Valida = true;
-            var sb = new StringBuilder();
-
-            if (venda.Pagas == 0)
+            if (venda != null)
             {
-                venda.Valida = false;
-                sb.Append("- Pague a primeira parcela de seu lote para habilitar a indicação e conseguir descontos.\n");
-            }
+                venda.Valida = true;
+                var sb = new StringBuilder();
 
-            venda.Mensagem = sb.ToString();
+                if (venda.Pagas == 0)
+                {
+                    venda.Valida = false;
+                    sb.Append("- Pagar a primeira parcela para habilitar a indicação e ganhar descontos.\n");
+                }
+
+                venda.Mensagem = sb.ToString();
+            }
         }
     }
 }

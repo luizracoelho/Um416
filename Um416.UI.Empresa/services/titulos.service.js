@@ -17,21 +17,21 @@
         return new Service();
 
         // Implementação
-        function list(vendaId) {
-            var def = $q.defer();
-            $http({
-                method: "get",
-                url: baseUrl + `clientes/venda/${vendaId}/titulos`,
-                headers: { 'Authorization': loginService.getToken() }
-            })
-                .then(function success(resp) {
-                    def.resolve(resp.data);
-                }, function error(err) {
-                    def.reject("Não foi possível obter os títulos.");
+        function list(clienteId, vendaId) {
+                var def = $q.defer();
+                $http({
+                    method: "get",
+                    url: baseUrl + `clientes/${clienteId}/venda/${vendaId}/titulos`,
+                    headers: { 'Authorization': loginService.getToken() }
+                })
+                    .then(function success(resp) {
+                        def.resolve(resp.data);
+                    }, function error(err) {
+                        def.reject("Não foi possível obter os títulos.");
 
-                    if (err.status == 401)
-                        loginService.logout();
-                });
+                        if (err.status == 401)
+                            loginService.logout();
+                    });
 
             return def.promise;
         };

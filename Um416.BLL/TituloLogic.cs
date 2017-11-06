@@ -8,9 +8,16 @@ namespace Um416.BLL
 {
     public class TituloLogic : BaseLogic<Titulo, TituloRepository>
     {
-        public IEnumerable<Titulo> List(long id)
+        public IEnumerable<Titulo> List(long id) => _dao.List(id);
+
+        public IEnumerable<Titulo> ListPorCliente(long clienteId, long id)
         {
-            return _dao.List(id);
+            var titulos = _dao.ListPorCliente(clienteId, id);
+
+            if (titulos.Count() == 0)
+                throw new Exception("Não foi possível encontrar parcelas solicitadas.");
+
+            return titulos;
         }
 
         public void GerarTitulos(long vendaId)
@@ -21,7 +28,7 @@ namespace Um416.BLL
             var dataVcto = DateTime.Today;
 
             if (dataVcto.Day > venda.DiaVencimento)
-               dataVcto = dataVcto.AddMonths(1);
+                dataVcto = dataVcto.AddMonths(1);
 
             dataVcto = Convert.ToDateTime($"{dataVcto.Year}-{dataVcto.Month}-{venda.DiaVencimento}");
 

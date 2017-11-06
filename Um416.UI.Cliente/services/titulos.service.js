@@ -16,21 +16,24 @@
 
         // Implementação
         function list(vendaId) {
-            var def = $q.defer();
-            $http({
-                method: "get",
-                url: baseUrl + `clientes/venda/${vendaId}/titulos`,
-                headers: { 'Authorization': loginService.getToken() }
-            })
-            .then(function success(resp) {
-                def.resolve(resp.data);
-            }, function error(err) {
-                def.reject("Não foi possível obter os títulos.");
+            var login = loginService.getLogin();
 
-                if (err.status == 401)
-                    loginService.logout();
-            });
+            if (login != null) {
+                var def = $q.defer();
+                $http({
+                    method: "get",
+                    url: baseUrl + `clientes/${login.id}/venda/${vendaId}/titulos`,
+                    headers: { 'Authorization': loginService.getToken() }
+                })
+                    .then(function success(resp) {
+                        def.resolve(resp.data);
+                    }, function error(err) {
+                        def.reject("Não foi possível obter os títulos.");
 
+                        if (err.status == 401)
+                            loginService.logout();
+                    });
+            }
             return def.promise;
         };
 
