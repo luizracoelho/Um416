@@ -137,6 +137,8 @@
                                 titulo.corStatus = 'warning';
                             }
                         }
+
+                        vm.filtroCollapse = false;
                     });
                 }, function (error) {
                     vm.error = error;

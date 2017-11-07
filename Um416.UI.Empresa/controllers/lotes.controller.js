@@ -309,7 +309,7 @@
                     vm.venda = venda;
 
                     titulosService
-                        .list(venda.clienteId, vm.venda.id)
+                        .list(vm.venda.clienteId, vm.venda.id)
                         .then(function (titulos) {
                             vm.venda.titulos = titulos;
 

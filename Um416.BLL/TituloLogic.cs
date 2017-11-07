@@ -80,6 +80,7 @@ namespace Um416.BLL
         public decimal CalcularDesconto(long vendaId)
         {
             var desconto = 0M;
+            var diferenca = 0M;
 
             var vendaBo = new VendaLogic();
             var venda = vendaBo.Get(vendaId);
@@ -90,16 +91,30 @@ namespace Um416.BLL
             foreach (var vendaUm in nivelUm)
             {
                 if (vendaUm.Pagas > 0 && vendaUm.Vencidas == 0)
-                    desconto += (0.5M / indicadorMMN);
+                {
+                    var descUm = (0.5M / indicadorMMN);
+                    desconto += descUm;
+
+                    if (venda.Valor > vendaUm.Valor)
+                        diferenca += descUm * ((100 - (vendaUm.Valor * 100 / venda.Valor)) / 100);
+                }
 
                 var nivelDois = vendaBo.ListPorIndicador(vendaUm.Id);
 
                 foreach (var vendaDois in nivelDois)
                 {
                     if (vendaDois.Pagas > 0 && vendaDois.Vencidas == 0)
-                        desconto += (0.5M / (indicadorMMN * indicadorMMN));
+                    {
+                        var descDois = (0.5M / (indicadorMMN * indicadorMMN));
+                        desconto += descDois;
+
+                        if (vendaUm.Valor > vendaDois.Valor)
+                            diferenca += descDois * ((100 - (vendaDois.Valor * 100 / vendaUm.Valor)) / 100);
+                    }
                 }
             }
+
+            desconto -= diferenca;
 
             return desconto;
         }
