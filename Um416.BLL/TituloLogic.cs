@@ -11,7 +11,7 @@ namespace Um416.BLL
     {
         public IEnumerable<Titulo> List(long id) => _dao.List(id);
 
-        public IEnumerable<Titulo> ListPorCliente(long clienteId, long? vendaId)
+        public IEnumerable<Titulo> ListPorCliente(long clienteId, long? vendaId = null)
         {
             var titulos = _dao.ListPorCliente(clienteId, vendaId);
 

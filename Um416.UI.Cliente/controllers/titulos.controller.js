@@ -54,6 +54,8 @@
                     }, function (error) {
                         vm.error = error;
                     })
+
+            vm.filtroCollapse = true;
         };
 
         vm.find = function (id) {
@@ -137,8 +139,6 @@
                                 titulo.corStatus = 'warning';
                             }
                         }
-
-                        vm.filtroCollapse = false;
                     });
                 }, function (error) {
                     vm.error = error;

@@ -1,0 +1,339 @@
+﻿<div ng-init="vm.init();">
+    <div class="alert alert-danger" ng-show="vm.error != null">
+        {{vm.error}}
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4><i class="fa fa-dashboard"></i> Dashboard</h4>
+        </div>
+    </div>
+
+    <!--Compras-->
+    <div class="panel panel-default" ng-if="vm.dashboard != null">
+        <div class="panel-heading" ng-click="vm.comprasCollapse = !vm.comprasCollapse;" style="cursor: pointer;">
+            <h4>
+                <i class="pull-right fa" ng-class="vm.comprasCollapse ? 'fa-angle-down' : 'fa-angle-right'"></i>
+                <i class="fa fa-shopping-bag"></i> Minhas Compras
+            </h4>
+        </div>
+        <div id="comprasCollapse" class="collapse" ng-class="vm.comprasCollapse ? 'in' : ''">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="alert alert-warning alert-bordered">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <span class="fa-stack fa-2x text-warning">
+                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                        <i class="fa fa-shopping-cart fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="text-muted text-nowrap"> Quant. de Compras</span>
+                                    <br />
+                                    <span class="lead text-warning">{{vm.dashboard.quantCompras}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="alert alert-warning alert-bordered">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <span class="fa-stack fa-2x text-warning">
+                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                        <i class="fa fa-money fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="text-muted text-nowrap"> Valor Total</span>
+                                    <br />
+                                    <span class="lead text-warning">{{vm.dashboard.valorTotalCompras | currency}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="alert alert-warning alert-bordered">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <span class="fa-stack fa-2x text-warning">
+                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                        <i class="fa fa-users fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="text-muted text-nowrap"> Indicações Ativas</span>
+                                    <br />
+                                    <span class="lead text-warning">{{vm.dashboard.quantMMNAtivo}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="alert alert-warning alert-bordered">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <span class="fa-stack fa-2x text-warning">
+                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                        <i class="fa fa-trophy fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="text-muted text-nowrap"> Valor Desconto</span>
+                                    <br />
+                                    <span class="lead text-warning">{{vm.dashboard.valorDescontoCompras | currency}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Árvores-->
+    <div class="panel panel-default" ng-if="vm.dashboard != null">
+        <div class="panel-heading" ng-click="vm.arvoresCollapse = !vm.arvoresCollapse;" style="cursor: pointer;">
+            <h4>
+                <i class="pull-right fa" ng-class="vm.arvoresCollapse ? 'fa-angle-down' : 'fa-angle-right'"></i>
+                <i class="fa fa-sitemap"></i> Minhas Árvores
+            </h4>
+        </div>
+        <div id="arvoresCollapse" class="collapse" ng-class="vm.arvoresCollapse ? 'in' : ''">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="alert alert-info alert-bordered">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <span class="fa-stack fa-2x text-info">
+                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                        <i class="fa fa-user fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="text-muted text-nowrap"> Indicações Diretas</span>
+                                    <br />
+                                    <span class="lead text-info">{{vm.dashboard.quantIndicacoesDiretas}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="alert alert-info alert-bordered">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <span class="fa-stack fa-2x text-info">
+                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                        <i class="fa fa-exclamation fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="text-muted text-nowrap"> Precisam de Atenção</span>
+                                    <br />
+                                    <span class="lead text-info">{{vm.dashboard.quantIndicacoesDiretasAtencao}}</span><small class="text-muted"> Direta(s)</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="alert alert-info alert-bordered">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <span class="fa-stack fa-2x text-info">
+                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                        <i class="fa fa-users fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="text-muted text-nowrap"> Indicações Indiretas</span>
+                                    <br />
+                                    <span class="lead text-info">{{vm.dashboard.quantIndicacoesIndiretas}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="alert alert-info alert-bordered">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <span class="fa-stack fa-2x text-info">
+                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                        <i class="fa fa-exclamation fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="text-muted text-nowrap"> Precisam de Atenção</span>
+                                    <br />
+                                    <span class="lead text-info">{{vm.dashboard.quantIndicacoesIndiretasAtencao}}</span><small class="text-muted"> Indireta(s)</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Débitos-->
+    <div class="panel panel-default" ng-if="vm.dashboard != null">
+        <div class="panel-heading" ng-click="vm.debitosCollapse = !vm.debitosCollapse;" style="cursor: pointer;">
+            <h4>
+                <i class="pull-right fa" ng-class="vm.debitosCollapse ? 'fa-angle-down' : 'fa-angle-right'"></i>
+                <i class="fa fa-money"></i> Meus Débitos
+            </h4>
+        </div>
+        <div id="debitosCollapse" class="collapse" ng-class="vm.debitosCollapse ? 'in' : ''">
+            <div class="panel-body">
+                <blockquote>
+                    Neste Mês
+                </blockquote>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="alert alert-success alert-bordered">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <span class="fa-stack fa-2x text-success">
+                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                        <i class="fa fa-calendar fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="text-muted text-nowrap"> Parcelas Vencendo</span>
+                                    <br />
+                                    <span class="lead text-success">{{vm.dashboard.quantParcelasVencendo}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="alert alert-success alert-bordered">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <span class="fa-stack fa-2x text-success">
+                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                        <i class="fa fa-money fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="text-muted text-nowrap"> Valor Vencendo</span>
+                                    <br />
+                                    <span class="lead text-success">{{vm.dashboard.valorParcelasVencendo | currency}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="alert alert-success alert-bordered">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <span class="fa-stack fa-2x text-success">
+                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                        <i class="fa fa-info fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="text-muted text-nowrap"> Vcto. mais Próximo</span>
+                                    <br />
+                                    <span class="lead text-success">Dia {{vm.dashboard.diaVctoProximo}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="alert alert-success alert-bordered">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <span class="fa-stack fa-2x text-success">
+                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                        <i class="fa fa-exclamation fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="text-muted text-nowrap"> Vencendo Dia {{vm.dashboard.diaVctoProximo}}</span>
+                                    <br />
+                                    <span class="lead text-success">{{vm.dashboard.valorVencendoDiaProximo | currency}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <blockquote>
+                    Geral
+                </blockquote>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="alert alert-success alert-bordered">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <span class="fa-stack fa-2x text-success">
+                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                        <i class="fa fa-files-o fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="text-muted text-nowrap"> Parcelas Em Aberto</span>
+                                    <br />
+                                    <span class="lead text-success">{{vm.dashboard.quantAbertas}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="alert alert-success alert-bordered">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <span class="fa-stack fa-2x text-success">
+                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                        <i class="fa fa-money fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="text-muted text-nowrap"> Valor Em ABerto</span>
+                                    <br />
+                                    <span class="lead text-success">{{vm.dashboard.valorAbertas | currency}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="alert alert-success alert-bordered">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <span class="fa-stack fa-2x text-success">
+                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                        <i class="fa fa-check fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="text-muted text-nowrap"> Parcelas Pagas</span>
+                                    <br />
+                                    <span class="lead text-success">{{vm.dashboard.quantPagas}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="alert alert-success alert-bordered">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <span class="fa-stack fa-2x text-success">
+                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                        <i class="fa fa-money fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="text-muted text-nowrap"> Valor Pagas</span>
+                                    <br />
+                                    <span class="lead text-success">{{vm.dashboard.valorPagas | currency}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

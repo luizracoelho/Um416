@@ -41,6 +41,18 @@
 
         var homeState = {
             url: '/',
+            templateUrl: 'views/home.view.html',
+            controller: 'homeController',
+            controllerAs: 'vm',
+            resolve: {
+                auth: function (loginService) {
+                    loginService.authorize();
+                }
+            }
+        };
+
+        var vendasState = {
+            url: '/',
             templateUrl: 'views/vendas.view.html',
             controller: 'vendasController',
             controllerAs: 'vm',
@@ -151,6 +163,7 @@
         $stateProvider.state("login.entrar", entrarState);
         $stateProvider.state("painel", painelState);
         $stateProvider.state("painel.home", homeState);
+        $stateProvider.state("painel.vendas", vendasState);
         $stateProvider.state("painel.arvore", arvoreState);
         $stateProvider.state("painel.arvoreId", arvoreIdState);
         $stateProvider.state("painel.perfil", perfilState);

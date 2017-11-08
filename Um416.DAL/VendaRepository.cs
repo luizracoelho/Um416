@@ -45,7 +45,7 @@ namespace Um416.DAL
         {
             using (var db = new SqlConnection(ConnectionString))
             {
-                var query = "SELECT v.*, (SELECT COUNT(*) FROM Titulos WHERE Pago = 1 AND VendaId = v.Id) Pagas, c.Nome, c.Login, l.Codigo, l.LoteamentoId, lo.Nome, lo.IndicadorMultinivel FROM Vendas v LEFT JOIN UsuariosClientes c ON v.ClienteId = c.Id LEFT JOIN Lotes l ON v.LoteId = l.Id LEFT JOIN Loteamentos lo ON l.LoteamentoId = lo.Id WHERE c.Id = @id;";
+                var query = "SELECT v.*, (SELECT COUNT(*) FROM Titulos WHERE Pago = 1 AND VendaId = v.Id) Pagas, c.Nome, c.Login, l.Codigo, l.LoteamentoId, lo.Nome, lo.IndicadorMultinivel, lo.EmpresaId FROM Vendas v LEFT JOIN UsuariosClientes c ON v.ClienteId = c.Id LEFT JOIN Lotes l ON v.LoteId = l.Id LEFT JOIN Loteamentos lo ON l.LoteamentoId = lo.Id WHERE c.Id = @id;";
                 return db.Query<Venda, UsuarioCliente, Lote, Loteamento, Venda>(query, (venda, cli, lote, loteamento) =>
                 {
                     venda.Cliente = cli;
