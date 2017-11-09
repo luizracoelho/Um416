@@ -4,7 +4,7 @@
     angular
         .module('ngApp')
         .config(registerRoutes)
-        .config(configureTemplateFactory);
+        .config(['$provide', configureTemplateFactory]);
 
     function registerRoutes($locationProvider, $stateProvider, $urlRouterProvider) {
 
@@ -138,7 +138,7 @@
         $urlRouterProvider.otherwise('/');
     }
 
-    //Remover o cache dos templates
+//Remover o cache dos templates
     function configureTemplateFactory($provide) {
         // Set a suffix outside the decorator function 
         var cacheBuster = Date.now().toString();
