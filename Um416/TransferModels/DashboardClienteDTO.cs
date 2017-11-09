@@ -18,8 +18,8 @@
         //--Neste mês
         public int QuantParcelasVencendo { get; set; }
         public decimal ValorParcelasVencendo { get; set; }
-        public int DiaVctoProximo { get; set; }
-        public decimal ValorVencendoDiaProximo { get; set; }
+        public int? DiaVctoProximo { get; set; }
+        public decimal? ValorVencendoDiaProximo { get; set; }
 
         //--Geral
         public int QuantAbertas { get; set; }

@@ -52,7 +52,7 @@
         };
 
         var vendasState = {
-            url: '/',
+            url: '/compras',
             templateUrl: 'views/vendas.view.html',
             controller: 'vendasController',
             controllerAs: 'vm',

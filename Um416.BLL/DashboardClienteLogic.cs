@@ -114,7 +114,7 @@ namespace Um416.BLL
         {
             var data = DateTime.Today;
             var dataInicial = new DateTime(data.Year, data.Month, 1);
-            var dataFinal = new DateTime(data.Year, data.Month, dataInicial.AddMonths(1).AddDays(-1).Day);
+            var dataFinal = new DateTime(data.Year, data.Month, DateTime.DaysInMonth(data.Year, data.Month));
 
             return titulos.Where(x => x.DataVencimento >= dataInicial && x.DataVencimento <= dataFinal).Count();
         }
@@ -128,16 +128,30 @@ namespace Um416.BLL
             return titulos.Where(x => x.DataVencimento >= dataInicial && x.DataVencimento <= dataFinal).Select(x => x.Valor).Sum();
         }
 
-        private int GetDiaVctoProximo(IEnumerable<Titulo> titulos)
+        private int? GetDiaVctoProximo(IEnumerable<Titulo> titulos)
         {
-            return titulos.FirstOrDefault(x => x.DataVencimento >= DateTime.Today).DataVencimento.Day;
+            var data = DateTime.Today;
+            var dataFinal = new DateTime(data.Year, data.Month, DateTime.DaysInMonth(data.Year, data.Month));
+
+            var titulo = titulos.FirstOrDefault(x => x.DataVencimento >= DateTime.Today && x.DataVencimento <= dataFinal);
+
+            if (titulo != null)
+                return titulo.DataVencimento.Day;
+            else
+                return null;
         }
 
-        private decimal GetValorVencendoDiaProximo(IEnumerable<Titulo> titulos)
+        private decimal? GetValorVencendoDiaProximo(IEnumerable<Titulo> titulos)
         {
-            var data = new DateTime(DateTime.Today.Year, DateTime.Today.Month, GetDiaVctoProximo(titulos));
+            var dia = GetDiaVctoProximo(titulos);
+            if (dia != null)
+            {
+                var data = new DateTime(DateTime.Today.Year, DateTime.Today.Month, (int)dia);
 
-            return titulos.Where(x => x.DataVencimento == data).Select(x => x.Valor).Sum();
+                return titulos.Where(x => x.DataVencimento == data).Select(x => x.Valor).Sum();
+            }
+            else
+                return null;
         }
 
         //--Geral
