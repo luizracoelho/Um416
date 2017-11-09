@@ -3,7 +3,7 @@
         {{vm.error}}
     </div>
 
-    <div class="panel panel-default">
+    <div class="panel panel-default sticky">
         <div class="panel-heading">
             <h4><i class="fa fa-dashboard"></i> Dashboard</h4>
         </div>
@@ -13,8 +13,8 @@
     <div class="panel panel-default" ng-if="vm.dashboard != null">
         <div class="panel-heading" ng-click="vm.comprasCollapse = !vm.comprasCollapse;" style="cursor: pointer;">
             <h4>
-                <i class="pull-right fa" ng-class="vm.comprasCollapse ? 'fa-angle-down' : 'fa-angle-right'"></i>
-                <i class="fa fa-shopping-bag"></i> Minhas Compras
+                <i class="pull-right text-warning fa" ng-class="vm.comprasCollapse ? 'fa-angle-down' : 'fa-angle-right'"></i>
+                <i class="fa text-warning fa-shopping-bag"></i><span class="text-muted"> Minhas Compras</span>
             </h4>
         </div>
         <div id="comprasCollapse" class="collapse" ng-class="vm.comprasCollapse ? 'in' : ''">
@@ -97,9 +97,9 @@
     <div class="panel panel-default" ng-if="vm.dashboard != null">
         <div class="panel-heading" ng-click="vm.arvoresCollapse = !vm.arvoresCollapse;" style="cursor: pointer;">
             <h4>
-                <i class="pull-right fa" ng-class="vm.arvoresCollapse ? 'fa-angle-down' : 'fa-angle-right'"></i>
-                <i class="fa fa-sitemap"></i> Minhas Árvores
-            </h4>
+                <i class="pull-right text-info fa" ng-class="vm.arvoresCollapse ? 'fa-angle-down' : 'fa-angle-right'"></i>
+                <i class="fa text-info fa-sitemap"></i><span class="text-muted"> Minhas Árvores</span>
+</h4>
         </div>
         <div id="arvoresCollapse" class="collapse" ng-class="vm.arvoresCollapse ? 'in' : ''">
             <div class="panel-body">
@@ -181,9 +181,9 @@
     <div class="panel panel-default" ng-if="vm.dashboard != null">
         <div class="panel-heading" ng-click="vm.debitosCollapse = !vm.debitosCollapse;" style="cursor: pointer;">
             <h4>
-                <i class="pull-right fa" ng-class="vm.debitosCollapse ? 'fa-angle-down' : 'fa-angle-right'"></i>
-                <i class="fa fa-money"></i> Meus Débitos
-            </h4>
+                <i class="pull-right text-success fa" ng-class="vm.debitosCollapse ? 'fa-angle-down' : 'fa-angle-right'"></i>
+                <i class="fa text-success fa-money"></i><span class="text-muted"> Meus Débitos</span>
+</h4>
         </div>
         <div id="debitosCollapse" class="collapse" ng-class="vm.debitosCollapse ? 'in' : ''">
             <div class="panel-body">
