@@ -99,7 +99,7 @@ namespace Um416.DAL
         {
             using (var db = new SqlConnection(ConnectionString))
             {
-                var query = "UPDATE Titulos SET DataPgto = @DataPgto, ValorPgto = @ValorPgto, Pago = @Pago WHERE VendaId = @VendaId AND Id = @Id";
+                var query = "UPDATE Titulos SET DataPgto = @DataPgto, ValorLiquido = @ValorLiquido, ValorPgto = @ValorPgto, Pago = @Pago WHERE VendaId = @VendaId AND Id = @Id";
                 db.Query(query, titulo);
             }
         }

@@ -62,6 +62,8 @@ namespace Um416.BLL
 
             titulo.DataPgto = DateTime.Today;
             titulo.Pago = true;
+            titulo.ValorLiquido = CalcularValorLiquido(titulo);
+            titulo.ValorPgto = CalcularValorLiquido(titulo);
 
             _dao.BaixarEstornar(titulo);
         }
@@ -77,7 +79,7 @@ namespace Um416.BLL
             _dao.BaixarEstornar(titulo);
         }
 
-        public decimal CalcularDesconto(long vendaId)
+        public decimal CalcularPercentualDesconto(long vendaId)
         {
             var desconto = 0M;
             var diferenca = 0M;
@@ -119,19 +121,29 @@ namespace Um416.BLL
             return desconto;
         }
 
-        public Titulo Get(long tituloId, long empresaId)
-        {
-            var titulo = _dao.Get(tituloId, empresaId);
+        public decimal CalcularValorLiquido(Titulo titulo) => 
+            titulo.Valor - (titulo.Valor * CalcularPercentualDesconto(titulo.VendaId));
 
-            var desconto = CalcularDesconto(titulo.VendaId);
-            titulo.ValorPgto = titulo.Valor - (titulo.Valor * desconto);
-
-            return titulo;
-        }
+        public Titulo Get(long tituloId, long empresaId) => 
+            _dao.Get(tituloId, empresaId);
 
         public IEnumerable<Titulo> Filtrar(TituloFiltroDTO filtro)
         {
             return _dao.Filtrar(filtro);
+        }
+
+        public string GerarBoleto(Titulo titulo)
+        {
+            var codEmpresa = "J0196936980001040000027166";
+            var chave = "O1n3S5e5r9vGs109";
+            var urlRetorna = "";
+            var obsAdicional1 = "Nao receber após vencimento";
+            var obsAdicional2 = "Nao receber após vencimento";
+            var obsAdicional3 = "Nao receber após vencimento";
+
+            var _itau = new Itaucripto.cripto();
+
+            return _itau.geraDados(codEmpresa, titulo.Numero.ToString(), titulo.ValorLiquido.ToString("N2"), "3", chave, titulo.Venda.Cliente.Nome, "01", titulo.Venda.Cliente.Cpf, $"{titulo.Venda.Cliente.Logradouro}, {titulo.Venda.Cliente.Numero}", titulo.Venda.Cliente.Bairro, titulo.Venda.Cliente.Cep, titulo.Venda.Cliente.Cidade, titulo.Venda.Cliente.Uf, titulo.DataVencimento.ToString("ddMMyyyy"), urlRetorna, obsAdicional1, obsAdicional2, obsAdicional3);
         }
     }
 }

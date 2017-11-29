@@ -11,6 +11,7 @@ namespace Um416.DAL.Mappings
             Map(x => x.Id).ToColumn("Id").IsKey().IsIdentity();
             Map(x => x.Numero).ToColumn("Numero");
             Map(x => x.Valor).ToColumn("Valor");
+            Map(x => x.ValorLiquido).ToColumn("ValorLiquido");
             Map(x => x.DataVencimento).ToColumn("DataVencimento");
             Map(x => x.Pago).ToColumn("Pago");
             Map(x => x.DataPgto).ToColumn("DataPgto");

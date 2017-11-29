@@ -7,6 +7,7 @@ namespace Um416
     {
         public int Numero { get; set; }
         public decimal Valor { get; set; }
+        public decimal ValorLiquido { get; set; }
         public DateTime DataVencimento { get; set; }
         public bool Pago { get; set; }
         public DateTime? DataPgto { get; set; }
