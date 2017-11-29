@@ -4,7 +4,7 @@
     angular
         .module('ngApp')
         .config(registerRoutes)
-        .config(.config(['$provide', configureTemplateFactory]););
+        .config(['$provide', configureTemplateFactory]);
 
     function registerRoutes($locationProvider, $stateProvider, $urlRouterProvider) {
 
