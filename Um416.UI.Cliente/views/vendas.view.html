@@ -38,7 +38,7 @@
                         </ul>
                     </div>
                     <div class="dropdown pull-right" ng-if="venda.pagas > 0">
-                        <button type="button" class="btn btn-sm btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Compartilhar"><i class="fa fa-share-alt fa-lg"></i></button>
+                        <button type="button" class="btn btn-sm btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Compartilhar"><i class="fa fa-share fa-lg"></i></button>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li><a ng-href="mailto:?subject={{venda.lote.loteamento.nome}}&body=Adquira seu lote {{venda.lote.loteamento.url | encode}}" class="h5"><i class="fa fa-envelope-o text-muted" style="width: 24px"></i> E-mail</a></li>
                             <li><a onclick="window.open(this.href, 'whatsapp-share','width=560, height=300');return false;" ng-href=" https://api.whatsapp.com/send?text={{venda.lote.loteamento.nome}}, adquira seu lote {{venda.lote.loteamento.url | encode}}" class="h5"><i class="fa fa-whatsapp text-success" style="width: 24px"></i> WhatsApp</a></li>
@@ -48,7 +48,7 @@
                         </ul>
                     </div>
                     <div class="pull-right" ng-if="venda.pagas > 0">
-                        <button class="btn btn-sm btn-link" type="button" title="Copiar" ng-click="vm.copy(venda.lote.loteamento.url)"><i class="fa fa-clipboard fa-lg"></i></button>
+                        <button class="btn btn-sm btn-link" type="button" title="Copiar" ng-click="vm.copy(venda.lote.loteamento.url)"><i class="fa fa-copy fa-lg"></i></button>
                     </div>
                     <span class="h4">
                         <span class="text-muted">#{{venda.id}}</span> Lote {{venda.lote.codigo}}

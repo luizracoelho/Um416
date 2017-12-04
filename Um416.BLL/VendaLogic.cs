@@ -74,6 +74,25 @@ namespace Um416.BLL
             return vendas;
         }
 
+        public IEnumerable<Venda> ListMMNAtivoPorCliente(long clienteId)
+        {
+            var vendas = _dao.ListMMNAtivoPorCliente(clienteId);
+
+            var parametroBo = new ParametroLogic();
+            var parametro = parametroBo.Get(1);
+
+            foreach (var venda in vendas)
+            {
+                venda.Lote.Loteamento.Url = $"{parametro?.UrlVenda ?? ""}#!/loteamentos/{venda.Lote.LoteamentoId}/indicador/{venda.Id}";
+                venda.Lote.Loteamento.NomeHashtag = venda.Lote.Loteamento.Nome.ToHashtag();
+
+                //Validar a Venda
+                Validar(venda);
+            }
+
+            return vendas;
+        }
+
         public IEnumerable<Venda> ListPorEmpresa(long empresaId)
         {
             var vendas = _dao.ListPorCliente(empresaId);

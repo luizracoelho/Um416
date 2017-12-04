@@ -18,161 +18,76 @@ namespace Um416.BLL
 
         public DashboardClienteDTO GetDashboard(long clienteId)
         {
-            var vendas = _vendaBo.ListPorCliente(clienteId);
+            var vendasMMNAtivo = _vendaBo.ListMMNAtivoPorCliente(clienteId).ToList();
             var titulos = _tituloBo.ListPorCliente(clienteId);
-            var diretas = GetIndicacoesDiretas(vendas);
 
             var dashboard = new DashboardClienteDTO
             {
-                //Compras
-                QuantCompras = vendas.Count(),
-                QuantMMNAtivo = GetQuantMMNAtivo(vendas),
-                ValorTotalCompras = GetValorTotalCompras(vendas),
-                ValorDescontoCompras = GetValorDescontoCompras(titulos),
-
-                //Árvores
-                QuantIndicacoesDiretas = diretas.Count(),
-                QuantIndicacoesIndiretas = GetIndicacoesIndiretas(diretas).Count(),
-                QuantIndicacoesDiretasAtencao = GetQuantIndicacoesDiretasAtencao(diretas),
-                QuantIndicacoesIndiretasAtencao = GetQuantIndicacoesIndiretasAtencao(diretas),
-
-                //Débitos
-                //--Neste mês
-                QuantParcelasVencendo = GetQuantParcelasVencendo(titulos),
-                ValorParcelasVencendo = GetValorParcelasVencendo(titulos),
-                DiaVctoProximo = GetDiaVctoProximo(titulos),
-                ValorVencendoDiaProximo = GetValorVencendoDiaProximo(titulos),
-                //--Geral
-                QuantAbertas = GetQuantAbertas(titulos),
-                ValorAbertas = GetValorAbertas(titulos),
-                QuantPagas = GetQuantPagas(titulos),
-                ValorPagas = GetValorPagas(titulos)
+                SituacaoCadastral = vendasMMNAtivo != null,
+                VendasMMNAtivo = vendasMMNAtivo,
+                GanhoDoDia = GetGanhosDoDia(titulos),
+                GanhoDoMes = GetGanhosDoMes(titulos),
+                GanhoTotal = GetGanhosTotal(titulos),
+                Indicacoes = GetIndicacoes(vendasMMNAtivo)
             };
 
             return dashboard;
         }
 
-        //Compras
-        private decimal GetValorTotalCompras(IEnumerable<Venda> vendas)
-        {
-            return vendas.Select(x => x.Valor).Sum();
-        }
-
-        private decimal GetValorDescontoCompras(IEnumerable<Titulo> titulos)
+        private decimal GetGanhosTotal(IEnumerable<Titulo> titulos)
         {
             var titulosPagos = titulos.Where(x => x.Pago);
 
             return (titulosPagos.Select(x => x.Valor).Sum() - titulosPagos.Select(x => (decimal)x.ValorPgto).Sum());
         }
 
-        private int GetQuantMMNAtivo(IEnumerable<Venda> vendas)
+        private decimal GetGanhosDoMes(IEnumerable<Titulo> titulos)
         {
-            return vendas.Where(x => x.Pagas > 0 && x.Vencidas == 0).Count();
+            var hoje = DateTime.Today;
+            var primeiroDiaDoMes = new DateTime(hoje.Year, hoje.Month, 1);
+            var ultimoDiaDoMes = new DateTime(hoje.Year, hoje.Month, DateTime.DaysInMonth(hoje.Year, hoje.Month));
+
+            var titulosPagos = titulos.Where(x => x.Pago && x.DataPgto >= primeiroDiaDoMes && x.DataPgto <= ultimoDiaDoMes);
+
+            return (titulosPagos.Select(x => x.Valor).Sum() - titulosPagos.Select(x => (decimal)x.ValorPgto).Sum());
         }
 
-        //Árvores
-        private IEnumerable<Venda> GetIndicacoesDiretas(IEnumerable<Venda> vendas)
+        private decimal GetGanhosDoDia(IEnumerable<Titulo> titulos)
         {
-            var diretas = new List<Venda>();
+            var titulosPagos = titulos.Where(x => x.Pago && x.DataPgto == DateTime.Today);
+
+            return (titulosPagos.Select(x => x.Valor).Sum() - titulosPagos.Select(x => (decimal)x.ValorPgto).Sum());
+        }
+
+        private Dictionary<string, int> GetIndicacoes(IEnumerable<Venda> vendas)
+        {
+            var seisMesesAtras = DateTime.Today.AddMonths(-6);
+            var indicacoes = new List<Venda>();
 
             foreach (var venda in vendas)
             {
-                var indicadas = _vendaBo.ListPorIndicador(venda.Id);
-                diretas.AddRange(indicadas);
+                var indicacoesDiretas = _vendaBo.ListPorIndicador(venda.Id);
+
+                indicacoes.AddRange(indicacoesDiretas);
+
+                foreach (var indicacaoDireta in indicacoesDiretas)
+                {
+                    if (indicacaoDireta.DataHora >= seisMesesAtras)
+                    {
+                        indicacoes.Add(indicacaoDireta);
+
+                        var indicacoesIndiretas = _vendaBo.ListPorIndicador(indicacaoDireta.Id);
+
+                        foreach (var indicacaoIndireta in indicacoesIndiretas)
+                        {
+                            if (indicacaoIndireta.DataHora >= seisMesesAtras)
+                                indicacoes.Add(indicacaoIndireta);
+                        }
+                    }
+                }
             }
 
-            return diretas;
-        }
-
-        private IEnumerable<Venda> GetIndicacoesIndiretas(IEnumerable<Venda> diretas)
-        {
-            var indiretas = new List<Venda>();
-
-            foreach (var direta in diretas)
-            {
-                indiretas.AddRange(_vendaBo.ListPorIndicador(direta.Id));
-            }
-
-            return indiretas;
-        }
-
-        private int GetQuantIndicacoesDiretasAtencao(IEnumerable<Venda> diretas)
-        {
-            return diretas.Where(x => x.Pagas == 0 || x.Vencidas != 0).Count();
-        }
-
-        private int GetQuantIndicacoesIndiretasAtencao(IEnumerable<Venda> diretas)
-        {
-            var indiretas = GetIndicacoesIndiretas(diretas);
-
-            return indiretas.Where(x => x.Pagas == 0 || x.Vencidas != 0).Count();
-        }
-
-        //Débitos
-        //--Neste mês
-        private int GetQuantParcelasVencendo(IEnumerable<Titulo> titulos)
-        {
-            var data = DateTime.Today;
-            var dataInicial = new DateTime(data.Year, data.Month, 1);
-            var dataFinal = new DateTime(data.Year, data.Month, DateTime.DaysInMonth(data.Year, data.Month));
-
-            return titulos.Where(x => x.DataVencimento >= dataInicial && x.DataVencimento <= dataFinal).Count();
-        }
-
-        private decimal GetValorParcelasVencendo(IEnumerable<Titulo> titulos)
-        {
-            var data = DateTime.Today;
-            var dataInicial = new DateTime(data.Year, data.Month, 1);
-            var dataFinal = new DateTime(data.Year, data.Month, DateTime.DaysInMonth(data.Year, data.Month));
-
-            return titulos.Where(x => x.DataVencimento >= dataInicial && x.DataVencimento <= dataFinal).Select(x => x.Valor).Sum();
-        }
-
-        private int? GetDiaVctoProximo(IEnumerable<Titulo> titulos)
-        {
-            var data = DateTime.Today;
-            var dataFinal = new DateTime(data.Year, data.Month, DateTime.DaysInMonth(data.Year, data.Month));
-
-            var titulo = titulos.FirstOrDefault(x => x.DataVencimento >= DateTime.Today && x.DataVencimento <= dataFinal);
-
-            if (titulo != null)
-                return titulo.DataVencimento.Day;
-            else
-                return null;
-        }
-
-        private decimal? GetValorVencendoDiaProximo(IEnumerable<Titulo> titulos)
-        {
-            var dia = GetDiaVctoProximo(titulos);
-            if (dia != null)
-            {
-                var data = new DateTime(DateTime.Today.Year, DateTime.Today.Month, (int)dia);
-
-                return titulos.Where(x => x.DataVencimento == data).Select(x => x.Valor).Sum();
-            }
-            else
-                return null;
-        }
-
-        //--Geral
-        private int GetQuantAbertas(IEnumerable<Titulo> titulos)
-        {
-            return titulos.Where(x => !x.Pago).Count();
-        }
-
-        private decimal GetValorAbertas(IEnumerable<Titulo> titulos)
-        {
-            return titulos.Where(x => !x.Pago).Select(x => x.Valor).Sum();
-        }
-
-        private int GetQuantPagas(IEnumerable<Titulo> titulos)
-        {
-            return titulos.Where(x => x.Pago).Count();
-        }
-
-        private decimal GetValorPagas(IEnumerable<Titulo> titulos)
-        {
-            return titulos.Where(x => x.Pago).Select(x => (decimal)x.ValorPgto).Sum();
+            return indicacoes.GroupBy(x => x.DataHora.ToString("MM/yyyy")).ToDictionary(g => g.Key, g => g.Count());
         }
     }
 }

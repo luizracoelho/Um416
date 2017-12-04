@@ -56,6 +56,26 @@ namespace Um416.DAL
             }
         }
 
+        public IEnumerable<Venda> ListMMNAtivoPorCliente(long clienteId)
+        {
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var query = @"  SELECT v.*, (SELECT COUNT(*) FROM Titulos WHERE Pago = 1 AND VendaId = v.Id) Pagas, (SELECT COUNT(*) FROM Titulos WHERE Pago = 0 AND DataVencimento < GETDATE() AND VendaId = v.Id) Vencidas, c.Nome, c.Login, l.Codigo, l.LoteamentoId, lo.Nome, lo.DataCadastro, lo.IndicadorMultinivel, lo.EmpresaId 
+                                FROM Vendas v 
+                                LEFT JOIN UsuariosClientes c ON v.ClienteId = c.Id 
+                                LEFT JOIN Lotes l ON v.LoteId = l.Id 
+                                LEFT JOIN Loteamentos lo ON l.LoteamentoId = lo.Id 
+                                WHERE c.Id = @id AND (SELECT COUNT(*) FROM Titulos WHERE Pago = 1 AND VendaId = v.Id) /*Pagas*/ > 0 AND (SELECT COUNT(*) FROM Titulos WHERE Pago = 0 AND DataVencimento < GETDATE() AND VendaId = v.Id)/*Vencidas*/ = 0;";
+                return db.Query<Venda, UsuarioCliente, Lote, Loteamento, Venda>(query, (venda, cli, lote, loteamento) =>
+                {
+                    venda.Cliente = cli;
+                    lote.Loteamento = loteamento;
+                    venda.Lote = lote;
+                    return venda;
+                }, new { id = clienteId }, splitOn: "Nome, Codigo, Nome");
+            }
+        }
+
         public IEnumerable<Venda> ListPorEmpresa(long empresaId)
         {
             using (var db = new SqlConnection(ConnectionString))
