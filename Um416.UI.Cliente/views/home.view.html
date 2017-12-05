@@ -1,4 +1,4 @@
-﻿<div ng-init="vm.init();">
+﻿<div ng-init="vm.init();" id="homeCtrl">
     <div class="alert alert-danger" ng-show="vm.error != null">
         {{vm.error}}
     </div>
@@ -48,13 +48,10 @@
                             <div class="col-xs-12">
                                 <span class="h4">
                                     <span class="text-muted">#{{venda.lote.loteamentoId}}</span> {{venda.lote.loteamento.nome}}
-                                    <small>
-                                        (Lote: {{venda.lote.codigo}})
-                                    </small>
                                 </span>
                                 <br />
                                 <small>
-                                    Inserido em: {{venda.lote.loteamento.dataCadastro | date : "dd/MM/yyyy"}}
+                                    Lote: {{venda.lote.codigo}}
                                 </small>
                             </div>
                         </div>
@@ -160,6 +157,16 @@
     </div>
 </div>
 <script type="text/javascript">
-    //google.charts.setOnLoadCallback(drawChart);
-    google.charts.load('current', { 'packages': ['corechart'] });
+    $(function () {
+        //Obter o escopo do angular
+        var vm = angular.element($('#homeCtrl')).scope().vm;
+
+        //Iniciar o google charts
+        google.charts.load('current', { 'packages': ['corechart'] });
+
+        //Redimensionar o gráfico
+        $(window).on('resize', function () {
+            vm.drawChart(vm.dashboard.indicacoes);
+        });
+    });
 </script>

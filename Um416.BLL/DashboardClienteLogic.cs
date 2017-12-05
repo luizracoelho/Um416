@@ -87,7 +87,21 @@ namespace Um416.BLL
                 }
             }
 
-            return indicacoes.GroupBy(x => x.DataHora.ToString("MM/yyyy")).ToDictionary(g => g.Key, g => g.Count());
+            //Agrupar as vendas
+            var indicacoesDict = indicacoes.GroupBy(x => x.DataHora.ToString("MM/yyyy")).Select(x => new KeyValuePair<string, int>(x.Key, x.Count())).ToList();
+
+            //Inserir os meses sem movimento
+            for (int i = 0; i < 6; i++)
+            {
+                var mes = seisMesesAtras.AddMonths(i);
+                var mesStr = mes.ToString("MM/yyyy");
+                var dict = indicacoesDict.FirstOrDefault(x => x.Key == mesStr);
+
+                if (dict.Key == null)
+                    indicacoesDict.Add(new KeyValuePair<string, int>(mesStr, 0));
+            }
+
+            return indicacoesDict.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
         }
     }
 }

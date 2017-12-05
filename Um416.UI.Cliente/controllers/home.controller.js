@@ -53,18 +53,16 @@
         vm.drawChart = function (indicacoes) {
             var array = [['Mês/Ano', 'Indicações']];
 
-            if (Array.isArray(indicacoes)) {
-                indicacoes.forEach(function (indicacao) {
-                    array.push([Object.keys(indicacao)[0], Object.values(indicacao)[0]]);
-                });
+            var chaves = Object.keys(indicacoes);
+            var valores = Object.values(indicacoes);
+
+            if (chaves.length > 0) {
+                for (var i = 0; i < chaves.length; i++) {
+                    array.push([chaves[i], valores[i]]);
+                }
             }
             else {
-                if (!angular.equals({}, indicacoes)) {
-                    array.push([Object.keys(indicacoes)[0], Object.values(indicacoes)[0]]);
-                }
-                else {
-                    array.push(["", 0]);
-                }
+                array.push(["", 0]);
             }
 
             var data = google.visualization.arrayToDataTable(array);
@@ -72,7 +70,8 @@
             var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
             chart.draw(data, {
                 legend: 'bottom',
-                chartArea: { left: '5%', top: '5%', width: "90%", height: "80%" }
+                chartArea: { left: '5%', top: '5%', width: "90%", height: "80%" },
+                vAxis: { viewWindow: { min: 0 }, format: '#' }
             });
         };
 
