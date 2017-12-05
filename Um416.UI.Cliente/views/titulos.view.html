@@ -12,10 +12,10 @@
                     <i class="fa fa-file"></i> Parcelas do Lote {{vm.titulos[0].venda.lote.codigo}}
                 </h4>
             </div>
-            <div ng-if="vm.vendaId == null" class="panel-heading" ng-click="vm.filtroCollapse = !vm.filtroCollapse;" style="cursor: pointer;">
+            <div ng-if="vm.vendaId == null" ng-click="vm.filtroCollapse = !vm.filtroCollapse;" style="cursor: pointer;">
                 <h4>
                     <i class="pull-right fa" ng-class="vm.filtroCollapse ? 'fa-compress' : 'fa-filter'"></i>
-                    <i class="fa fa-money"></i> Meus Débitos
+                    <i class="fa fa-money"></i> Financeiro
                 </h4>
             </div>
         </div>
@@ -27,9 +27,9 @@
                         <div class="form-group col-md-4">
                             <label>Data de Emissão</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Todas" name="dataEmissaoDe" ng-model="vm.filtro._dataEmissaoDe" ng-required="vm.filtro._dataEmissaoAte" ui-date-mask parse="false" />
+                                <input type="text" class="form-control text-center" placeholder="Todas" name="dataEmissaoDe" ng-model="vm.filtro._dataEmissaoDe" ng-required="vm.filtro._dataEmissaoAte" ui-date-mask parse="false" />
                                 <span class="input-group-addon">Até</span>
-                                <input type="text" class="form-control" placeholder="Todas" name="dataEmissaoAte" ng-model="vm.filtro._dataEmissaoAte" ng-required="vm.filtro._dataEmissaoDe" ui-date-mask parse="false" />
+                                <input type="text" class="form-control text-center" placeholder="Todas" name="dataEmissaoAte" ng-model="vm.filtro._dataEmissaoAte" ng-required="vm.filtro._dataEmissaoDe" ui-date-mask parse="false" />
                             </div>
                             <p class="text-danger" ng-show="(formFiltro.dataEmissaoDe.$error.date && !formFiltro.dataEmissaoDe.$pristine) ||(formFiltro.dataEmissaoAte.$error.date && !formFiltro.dataEmissaoAte.$pristine)">
                                 Data inválida.
@@ -42,9 +42,9 @@
                         <div class="form-group col-md-4">
                             <label>Data de Vencimento</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Todas" name="dataVencimentoDe" ng-model="vm.filtro._dataVencimentoDe" ui-date-mask parse="false" ng-required="vm.filtro._dataVencimentoAte" />
+                                <input type="text" class="form-control text-center" placeholder="Todas" name="dataVencimentoDe" ng-model="vm.filtro._dataVencimentoDe" ui-date-mask parse="false" ng-required="vm.filtro._dataVencimentoAte" />
                                 <span class="input-group-addon">Até</span>
-                                <input type="text" class="form-control" placeholder="Todas" name="dataVencimentoAte" ng-model="vm.filtro._dataVencimentoAte" ui-date-mask parse="false" ng-required="vm.filtro._dataVencimentoDe" />
+                                <input type="text" class="form-control text-center" placeholder="Todas" name="dataVencimentoAte" ng-model="vm.filtro._dataVencimentoAte" ui-date-mask parse="false" ng-required="vm.filtro._dataVencimentoDe" />
                             </div>
                             <p class="text-danger" ng-show="(formFiltro.dataVencimentoDe.$error.date && !formFiltro.dataVencimentoDe.$pristine) ||(formFiltro.dataVencimentoAte.$error.date && !formFiltro.dataVencimentoAte.$pristine)">
                                 Data inválida.
@@ -57,9 +57,9 @@
                         <div class="form-group col-md-4">
                             <label>Data de Pagamento</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Todas" name="dataPgtoDe" ng-model="vm.filtro._dataPgtoDe" ng-required="vm.filtro._dataPgtoAte" ui-date-mask parse="false" />
+                                <input type="text" class="form-control text-center" placeholder="Todas" name="dataPgtoDe" ng-model="vm.filtro._dataPgtoDe" ng-required="vm.filtro._dataPgtoAte" ui-date-mask parse="false" />
                                 <span class="input-group-addon">Até</span>
-                                <input type="text" class="form-control" placeholder="Todas" name="dataPgtoAte" ng-model="vm.filtro._dataPgtoAte" ng-required="vm.filtro._dataPgtoDe" ui-date-mask parse="false" />
+                                <input type="text" class="form-control text-center" placeholder="Todas" name="dataPgtoAte" ng-model="vm.filtro._dataPgtoAte" ng-required="vm.filtro._dataPgtoDe" ui-date-mask parse="false" />
                             </div>
                             <p class="text-danger" ng-show="(formFiltro.dataPgtoDe.$error.date && !formFiltro.dataPgtoDe.$pristine) ||(formFiltro.dataPgtoAte.$error.date && !formFiltro.dataPgtoAte.$pristine)">
                                 Data inválida.

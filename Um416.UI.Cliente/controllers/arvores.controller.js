@@ -19,12 +19,13 @@
                 .listArvores($stateParams.vendaId)
                 .then(function (arvores) {
                     vm.arvores = arvores;
+                    vm.setZoom();
                 }, function (error) {
                     vm.error = error;
                 });
         };
 
-        vm.find = function (id, indicador=false) {
+        vm.find = function (id, indicador = false) {
             if (id != null)
                 vendasService
                     .find(id)
@@ -50,8 +51,28 @@
         vm.carouselNext = function () {
             $('#carousel').carousel('next');
         }
+
         vm.carouselPrev = function () {
             $('#carousel').carousel('prev');
         }
+
+        vm.setZoom = function () {
+            // xs
+            if ($(window).width() < 768) {
+                return 1;
+            }
+            //sm
+            else if ($(window).width() >= 768 && $(window).width() <= 992) {
+                return 1.3;
+            }
+            // md
+            else if ($(window).width() > 992 && $(window).width() <= 1200) {
+                return 1.6;
+            }
+            //lg
+            else {
+                return 1.9;
+            }
+        };
     }
 })();

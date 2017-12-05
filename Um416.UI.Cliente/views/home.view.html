@@ -157,12 +157,12 @@
     </div>
 </div>
 <script type="text/javascript">
+    //Iniciar o google charts
+    google.charts.load('current', { 'packages': ['corechart'] });
+
     $(function () {
         //Obter o escopo do angular
         var vm = angular.element($('#homeCtrl')).scope().vm;
-
-        //Iniciar o google charts
-        google.charts.load('current', { 'packages': ['corechart'] });
 
         //Redimensionar o gráfico
         $(window).on('resize', function () {
