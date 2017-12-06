@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Base\BaseClass.cs" />
     <Compile Include="Chamado.cs" />
+    <Compile Include="ConfiguracaoBoleto.cs" />
     <Compile Include="Enumerators\Sexo.cs" />
     <Compile Include="Enumerators\StatusAdicao.cs" />
     <Compile Include="Enumerators\TipoEncerramento.cs" />

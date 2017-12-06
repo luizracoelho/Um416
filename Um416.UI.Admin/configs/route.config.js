@@ -159,6 +159,18 @@
             }
         };
 
+        var configuracoesBoletosState = {
+            url: '/configuracoesBoletos',
+            templateUrl: 'views/configuracoesBoletos.view.html',
+            controller: 'configuracoesBoletosController',
+            controllerAs: 'vm',
+            resolve: {
+                auth: function (loginService) {
+                    loginService.authorize();
+                }
+            }
+        };
+
         $stateProvider.state("login", loginState);
         $stateProvider.state("login.entrar", entrarState);
         $stateProvider.state("painel", painelState);
@@ -172,6 +184,7 @@
         $stateProvider.state("painel.notificacoes", notificacoesState);
         $stateProvider.state("painel.chamados", chamadosState);
         $stateProvider.state("painel.parametros", parametrosState);
+        $stateProvider.state("painel.configuracoesBoletos", configuracoesBoletosState);
 
         //Outras rotas
         $urlRouterProvider.otherwise('/');

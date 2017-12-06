@@ -140,6 +140,7 @@
     <Compile Include="Controllers\TitulosController.cs" />
     <Compile Include="Controllers\UfsController.cs" />
     <Compile Include="Controllers\UsuariosAdminsController.cs" />
+    <Compile Include="Controllers\ConfiguracoesBoletosController.cs" />
     <Compile Include="Controllers\UsuariosEmpresasController.cs" />
     <Compile Include="Controllers\UsuariosVendedoresController.cs" />
     <Compile Include="Controllers\UsuariosClientesController.cs" />

@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChamadoRepository.cs" />
+    <Compile Include="Mappings\ConfiguracaoBoletoMap.cs" />
     <Compile Include="Mappings\TituloMap.cs" />
     <Compile Include="Mappings\VendaMap.cs" />
     <Compile Include="ParametroRepository.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Base\BaseRepository.cs" />
     <Compile Include="TituloRepository.cs" />
     <Compile Include="UsuarioAdminRepository.cs" />
+    <Compile Include="ConfiguracaoBoletoRepository.cs" />
     <Compile Include="UsuarioEmpresaRepository.cs" />
     <Compile Include="UsuarioVendedorRepository.cs" />
     <Compile Include="UsuarioClienteRepository.cs" />

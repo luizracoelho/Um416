@@ -66,6 +66,7 @@
     <Compile Include="Tools\Crypt.cs" />
     <Compile Include="Tools\StringExtensions.cs" />
     <Compile Include="UfLogic.cs" />
+    <Compile Include="ConfiguracaoBoletoLogic.cs" />
     <Compile Include="UsuarioEmpresaLogic.cs" />
     <Compile Include="UsuarioLogic.cs" />
     <Compile Include="UsuarioVendedorLogic.cs" />

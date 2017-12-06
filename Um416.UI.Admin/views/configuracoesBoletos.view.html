@@ -1,0 +1,79 @@
+﻿<div ng-init="vm.find();">
+    <div class="alert alert-danger" ng-show="vm.error != null">
+        {{vm.error}}
+    </div>
+
+    <form name="configuracaoBoletoForm" ng-submit="vm.save()">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="modal-title"><i class="fa fa-barcode"></i> Config. Boleto</h4>
+            </div>
+            <div class="panel-body">
+                <blockquote>
+                    Gerais
+                </blockquote>
+
+                <div class="row">
+                    <div class="form-group col-sm-6 col-md-7">
+                        <label>Código da Empresa<span class="text-primary">*</span></label>
+                        <input type="text" class="form-control" placeholder="123456" name="codigoEmpresa" ng-model="vm.configuracaoBoleto.codigoEmpresa" required pattern="^(\d|\w){26}$" maxlength="26" />
+                        <p class="text-danger" ng-show="configuracaoBoletoForm.codigoEmpresa.$error.required && !configuracaoBoletoForm.codigoEmpresa.$pristine">
+                            Campo obrigatório.
+                        </p>
+                        <p class="text-danger" ng-show="configuracaoBoletoForm.codigoEmpresa.$error.pattern && !configuracaoBoletoForm.codigoEmpresa.$pristine">
+                            Este campo deve ter 26 caracteres alfanuméricos.
+                        </p>
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-5">
+                        <label>Chave<span class="text-primary">*</span></label>
+                        <input type="text" class="form-control" placeholder="ABC123" name="chave" ng-model="vm.configuracaoBoleto.chave" required pattern="^.{16}$" maxlength="16" />
+                        <p class="text-danger" ng-show="configuracaoBoletoForm.chave.$error.required && !configuracaoBoletoForm.chave.$pristine">
+                            Campo obrigatório.
+                        </p>
+                        <p class="text-danger" ng-show="configuracaoBoletoForm.chave.$error.pattern && !configuracaoBoletoForm.chave.$pristine">
+                            Este campo deve ter 16 caracteres.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6 col-md-7">
+                        <label>URL de Retorno</label>
+                        <input type="text" class="form-control" placeholder="/consultas/boletos" name="urlRetorna" ng-model="vm.configuracaoBoleto.urlRetorna" />
+                    </div>
+                </div>
+
+                <blockquote>
+                    Observações
+                </blockquote>
+
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        <label>Linha 1</label>
+                        <input type="text" class="form-control" name="observacao1" placeholder="Observação 1" ng-model="vm.configuracaoBoleto.observacao1" maxlength="60" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        <label>Linha 2</label>
+                        <input type="text" class="form-control" name="observacao2" placeholder="Observação 2" ng-model="vm.configuracaoBoleto.observacao2" maxlength="60" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        <label>Linha 3</label>
+                        <input type="text" class="form-control" name="observacao3" placeholder="Observação 3" ng-model="vm.configuracaoBoleto.observacao3" maxlength="60" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer text-right">
+                <button type="submit" class="btn btn-sm btn-primary" ng-disabled="configuracaoBoletoForm.$invalid || vm.areSubmitting"><i class="fa fa-check"></i> Salvar</button>
+                <a ui-sref="painel.home" class="btn btn-sm btn-default"><i class="fa fa-ban"></i> Cancelar</a>
+            </div>
+        </div>
+    </form>
+</div>
