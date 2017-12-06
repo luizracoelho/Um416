@@ -61,7 +61,7 @@ namespace Um416.BLL
 
         private Dictionary<string, int> GetIndicacoes(IEnumerable<Venda> vendas)
         {
-            var seisMesesAtras = DateTime.Today.AddMonths(-6);
+            var seisMesesAtras = DateTime.Today.AddMonths(-5);
             var indicacoes = new List<Venda>();
 
             foreach (var venda in vendas)
