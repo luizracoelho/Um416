@@ -73,7 +73,12 @@
                     chart.draw(data, {
                         legend: 'bottom',
                         chartArea: { left: '5%', top: '5%', width: "90%", height: "80%" },
-                        vAxis: { viewWindow: { min: 0 }, format: '#' }
+                        vAxis: { viewWindow: { min: 0 }, format: '#' },
+                        animation: {
+                            duration: 500,
+                            easing: 'out',
+                            startup: true
+                        },
                     });
                 }, 100);
             }
