@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using Um416.BLL.Base;
 using Um416.DAL;
@@ -50,6 +51,11 @@ namespace Um416.BLL
 
             if (!string.IsNullOrEmpty(errors))
                 throw new Exception($"Os seguintes problemas foram encontrados:\n{errors}");
+        }
+
+        public ConfiguracaoBoleto Get()
+        {
+            return List().FirstOrDefault();
         }
     }
 }

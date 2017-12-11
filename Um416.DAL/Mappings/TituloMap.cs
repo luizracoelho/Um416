@@ -17,6 +17,7 @@ namespace Um416.DAL.Mappings
             Map(x => x.DataPgto).ToColumn("DataPgto");
             Map(x => x.ValorPgto).ToColumn("ValorPgto");
             Map(x => x.VendaId).ToColumn("VendaId");
+            Map(x => x.BoletoGerado).ToColumn("BoletoGerado");
         }
     }
 }

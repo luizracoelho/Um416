@@ -143,6 +143,38 @@
                 }, function (error) {
                     vm.error = error;
                 })
-        }
+        };
+
+        vm.gerarBoleto = function (id) {
+            titulosService
+                .gerarBoleto(id)
+                .then(function (dados) {
+                    vm.dc = dados;
+                    if (vm.dc != null) {
+
+                        // criando um form para enviar as informacoes via post
+                        var form = document.createElement("form");
+                        form.setAttribute("method", "post");
+                        form.setAttribute("action", "https://shopline.itau.com.br/shopline/shopline.aspx");
+
+                        form.setAttribute("target", "view");
+
+                        var hiddenField = document.createElement("input");
+                        hiddenField.setAttribute("type", "hidden");
+                        hiddenField.setAttribute("name", "DC");
+                        hiddenField.setAttribute("value", vm.dc);
+                        form.appendChild(hiddenField);
+                        document.body.appendChild(form);
+
+                        window.open('', 'view');
+
+                        form.submit();
+
+                    }
+
+                }, function (error) {
+                    vm.error = error;
+                });
+        };
     }
 })();

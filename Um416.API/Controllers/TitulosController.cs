@@ -27,6 +27,12 @@ namespace Um416.API.Controllers
             _bo.EstornarTitulo(tituloId, empresaId);
         }
 
+        [HttpGet, Route("api/titulos/{tituloId}/cliente/{clienteId}/gerarboleto")]
+        public string GerarBoleto(long tituloId, long clienteId)
+        {
+           return _bo.GerarBoleto(tituloId, clienteId);
+        }
+
         [HttpGet, Route("api/titulos/{tituloId}/empresa/{empresaId}")]
         public Titulo Get(long tituloId, long empresaId)
         {

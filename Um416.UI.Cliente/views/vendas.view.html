@@ -35,6 +35,9 @@
                             <li>
                                 <a ui-sref="painel.titulosVendaId({vendaId: venda.id})" class="h5"><i class="fa fa-file text-primary"></i> Parcelas</a>
                             </li>
+                            <li>
+                                <a ui-sref="painel.arvoreId({vendaId: venda.id})" class="h5"><i class="fa fa-sitemap text-primary"></i> Rede</a>
+                            </li>
                         </ul>
                     </div>
                     <div class="dropdown pull-right" ng-if="venda.pagas > 0">
@@ -80,7 +83,8 @@
                         </tr>
                         <tr>
                             <th class="{{venda.totalDesconto > 0 ? 'text-success' : ''}}"><i class="fa fa-trophy"></i> Desconto por Indicações</th>
-                            <td ng-if="venda.totalDesconto > 0" class="text-right {{venda.totalDesconto > 0 ? 'text-success' : ''}}">{{venda.totalDesconto | currency}}
+                            <td ng-if="venda.totalDesconto > 0" class="text-right {{venda.totalDesconto > 0 ? 'text-success' : ''}}">
+                                {{venda.totalDesconto | currency}}
                             </td>
                             <td ng-if="venda.totalDesconto == 0" class="text-right">-</td>
                         </tr>
@@ -88,9 +92,13 @@
                     <div class="hidden-xs">
                         <div class="row">
                             <hr style="margin-top: 6px; margin-bottom: 12px;" />
+                            <div class="col-sm-offset-3 col-sm-6">
+                                <div class="btn-group btn-group-justified btn-group-sm" role="group">
+                                    <a class="btn btn-primary" ui-sref="painel.titulosVendaId({vendaId: venda.id})"><i class="fa fa-file"></i> Parcelas</a>
+                                    <a class="btn btn-primary" ui-sref="painel.arvoreId({vendaId: venda.id})"><i class="fa fa-sitemap"></i> Rede</a>
+                                </div>
+                            </div>
                         </div>
-                        <a class="btn btn-sm btn-primary" ui-sref="painel.titulosVendaId({vendaId: venda.id})"><i class="fa fa-file"></i> Parcelas</a>
-                        <a class="btn btn-sm btn-primary" ui-sref="painel.arvoreId({vendaId: venda.id})"><i class="fa fa-sitemap"></i> Árvore</a>
                     </div>
                 </div>
             </div>
@@ -112,7 +120,7 @@
                     <p>Para isso, basta você clicar no botão de compartilhar <i class="fa fa-share-alt"></i>, no canto superior direito das informações sobre sua compra.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Fechar</button>
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Fechar</button>
                 </div>
             </div>
         </div>
@@ -132,7 +140,7 @@
                     <p>Assim que seu indicado confirmar a aquisição de um lote você receberá um desconto proporcional em sua parcela, quanto mais indicações mais desconto para você, desta forma seu lote poderá até mesmo sair de graça.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Fechar</button>
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Fechar</button>
                 </div>
             </div>
         </div>

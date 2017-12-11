@@ -14,5 +14,6 @@ namespace Um416
         public decimal? ValorPgto { get; set; }
         public long VendaId { get; set; }
         public Venda Venda { get; set; }
+        public bool BoletoGerado { get; set; }
     }
 }

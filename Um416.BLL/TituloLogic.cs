@@ -58,13 +58,19 @@ namespace Um416.BLL
 
         public void BaixarTitulo(long tituloId, long empresaId)
         {
+            // Obter o título
             var titulo = Get(tituloId, empresaId);
 
+            // Se o boleto não tiver sido gerado, efetua o cálculo do valor líquido
+            if (!titulo.BoletoGerado)
+                titulo.ValorLiquido = CalcularValorLiquido(titulo);
+
+            // Preencher os dados da baixa
             titulo.DataPgto = DateTime.Today;
             titulo.Pago = true;
-            titulo.ValorLiquido = CalcularValorLiquido(titulo);
-            titulo.ValorPgto = CalcularValorLiquido(titulo);
+            titulo.ValorPgto = titulo.ValorLiquido;
 
+            // Baixar o título
             _dao.BaixarEstornar(titulo);
         }
 
@@ -79,7 +85,7 @@ namespace Um416.BLL
             _dao.BaixarEstornar(titulo);
         }
 
-        public decimal CalcularPercentualDesconto(long vendaId)
+        private decimal CalcularPercentualDesconto(long vendaId)
         {
             var desconto = 0M;
             var diferenca = 0M;
@@ -121,29 +127,43 @@ namespace Um416.BLL
             return desconto;
         }
 
-        public decimal CalcularValorLiquido(Titulo titulo) => 
+        public decimal CalcularValorLiquido(Titulo titulo) =>
             titulo.Valor - (titulo.Valor * CalcularPercentualDesconto(titulo.VendaId));
 
-        public Titulo Get(long tituloId, long empresaId) => 
+        public Titulo Get(long tituloId, long empresaId) =>
             _dao.Get(tituloId, empresaId);
+
+        public Titulo GetByCliente(long tituloId, long clienteId) =>
+            _dao.GetByCliente(tituloId, clienteId);
 
         public IEnumerable<Titulo> Filtrar(TituloFiltroDTO filtro)
         {
             return _dao.Filtrar(filtro);
         }
 
-        public string GerarBoleto(Titulo titulo)
+        public string GerarBoleto(long tituloId, long clienteId)
         {
-            var codEmpresa = "J0196936980001040000027166";
-            var chave = "O1n3S5e5r9vGs109";
-            var urlRetorna = "";
-            var obsAdicional1 = "Nao receber após vencimento";
-            var obsAdicional2 = "Nao receber após vencimento";
-            var obsAdicional3 = "Nao receber após vencimento";
+            var titulo = GetByCliente(tituloId, clienteId);
 
+            // Calcular o valor líquido do título e atualizar no banco
+            titulo.ValorLiquido = CalcularValorLiquido(titulo);
+            Save(titulo);
+
+            // Gerar o boleto
+            var logic = new ConfiguracaoBoletoLogic();
+            var config = logic.Get();
+
+            // Instanciar a classe do Itaú e retornar os dados criptografados
             var _itau = new Itaucripto.cripto();
 
-            return _itau.geraDados(codEmpresa, titulo.Numero.ToString(), titulo.ValorLiquido.ToString("N2"), "3", chave, titulo.Venda.Cliente.Nome, "01", titulo.Venda.Cliente.Cpf, $"{titulo.Venda.Cliente.Logradouro}, {titulo.Venda.Cliente.Numero}", titulo.Venda.Cliente.Bairro, titulo.Venda.Cliente.Cep, titulo.Venda.Cliente.Cidade, titulo.Venda.Cliente.Uf, titulo.DataVencimento.ToString("ddMMyyyy"), urlRetorna, obsAdicional1, obsAdicional2, obsAdicional3);
+            return _itau.geraDados(config.CodigoEmpresa, titulo.Numero.ToString(), titulo.ValorLiquido.ToString("N2"), "3", config.Chave, titulo.Venda.Cliente.Nome, "01", titulo.Venda.Cliente.Cpf, $"{titulo.Venda.Cliente.Logradouro}, {titulo.Venda.Cliente.Numero}", titulo.Venda.Cliente.Bairro, titulo.Venda.Cliente.Cep, titulo.Venda.Cliente.Cidade, titulo.Venda.Cliente.Uf, titulo.DataVencimento.ToString("ddMMyyyy"), config.UrlRetorna, config.Observacao1, config.Observacao2, config.Observacao3);
+        }
+
+        public void ConsultarBoleto(Titulo titulo)
+        {
+            // Caso tenha gerado o boleto atualiza o título
+            titulo.BoletoGerado = true;
+            Save(titulo);
         }
     }
 }

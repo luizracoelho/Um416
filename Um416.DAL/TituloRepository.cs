@@ -95,6 +95,28 @@ namespace Um416.DAL
             }
         }
 
+        public Titulo GetByCliente(long tituloId, long clienteId)
+        {
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var query = @"  SELECT t.*, v.Id, v.QuantParcelas, v.Numero, v.DiaVencimento, v.ClienteId, v.LoteId, v.ValorParcela, l.Id, lo.IndicadorMultinivel , c.Nome, c.Cpf, c.Logradouro, c.Numero, c.Bairro, c.Cep, c.Cidade, c.Uf
+                                FROM Titulos t
+                                LEFT JOIN Vendas v ON t.VendaId = v.Id
+                                LEFT JOIN UsuariosClientes c on v.ClienteId = c.Id
+                                LEFT JOIN Lotes l ON v.LoteId = l.Id
+                                LEFT JOIN Loteamentos lo on l.LoteamentoId = lo.Id
+                                WHERE t.Id = @tituloId AND v.ClienteId = @clienteId;";
+                return db.Query<Titulo, Venda, Lote, Loteamento, UsuarioCliente, Titulo>(query, (tit, venda, lote, loteam, cli) =>
+                {
+                    lote.Loteamento = loteam;
+                    venda.Lote = lote;
+                    venda.Cliente = cli;
+                    tit.Venda = venda;
+                    return tit;
+                }, new { tituloId = tituloId, clienteId = clienteId }, splitOn: "Id, Id, IndicadorMultinivel, Nome").FirstOrDefault();
+            }
+        }
+
         public void BaixarEstornar(Titulo titulo)
         {
             using (var db = new SqlConnection(ConnectionString))
@@ -124,7 +146,7 @@ namespace Um416.DAL
 
                 query.Append(" ORDER BY t.Pago, t.DataVencimento;");
 
-                return db.Query<Titulo, Venda, UsuarioCliente, Lote, Loteamento, Titulo>(query.ToString(), (tit, venda, cliente,  lote, loteamento) =>
+                return db.Query<Titulo, Venda, UsuarioCliente, Lote, Loteamento, Titulo>(query.ToString(), (tit, venda, cliente, lote, loteamento) =>
                 {
                     lote.Loteamento = loteamento;
                     venda.Lote = lote;
