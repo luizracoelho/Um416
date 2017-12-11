@@ -156,8 +156,7 @@
                         var form = document.createElement("form");
                         form.setAttribute("method", "post");
                         form.setAttribute("action", "https://shopline.itau.com.br/shopline/shopline.aspx");
-
-                        form.setAttribute("target", "view");
+                        form.setAttribute("target", "SHOPLINE");
 
                         var hiddenField = document.createElement("input");
                         hiddenField.setAttribute("type", "hidden");
@@ -166,15 +165,24 @@
                         form.appendChild(hiddenField);
                         document.body.appendChild(form);
 
-                        window.open('', 'view');
+                        var popup = window.open('', 'SHOPLINE', 'toolbar=yes,menubar=yes,resizable=yes,status=no,scrollbars=yes,width=675,height=485');
 
                         form.submit();
 
+                        var intervalo = setInterval(function () {
+                            if (popup == null || popup.closed) {
+                                window.clearInterval(intervalo);
+                                vm.consultarBoleto(id);
+                            }
+                        }, 1000);
                     }
-
                 }, function (error) {
                     vm.error = error;
                 });
         };
+
+        vm.consultarBoleto = function (id) {
+            alert(`Fechou o boleto do título: #${id}.`);
+        }
     }
 })();

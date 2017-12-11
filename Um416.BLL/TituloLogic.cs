@@ -156,7 +156,7 @@ namespace Um416.BLL
             // Instanciar a classe do Itaú e retornar os dados criptografados
             var _itau = new Itaucripto.cripto();
 
-            return _itau.geraDados(config.CodigoEmpresa, titulo.Numero.ToString(), titulo.ValorLiquido.ToString("N2"), "3", config.Chave, titulo.Venda.Cliente.Nome, "01", titulo.Venda.Cliente.Cpf, $"{titulo.Venda.Cliente.Logradouro}, {titulo.Venda.Cliente.Numero}", titulo.Venda.Cliente.Bairro, titulo.Venda.Cliente.Cep, titulo.Venda.Cliente.Cidade, titulo.Venda.Cliente.Uf, titulo.DataVencimento.ToString("ddMMyyyy"), config.UrlRetorna, config.Observacao1, config.Observacao2, config.Observacao3);
+            return _itau.geraDados(config.CodigoEmpresa, titulo.Id.ToString(), titulo.ValorLiquido.ToString("N2"), "3", config.Chave, titulo.Venda.Cliente.Nome, "01", titulo.Venda.Cliente.Cpf, $"{titulo.Venda.Cliente.Logradouro}, {titulo.Venda.Cliente.Numero}", titulo.Venda.Cliente.Bairro, titulo.Venda.Cliente.Cep, titulo.Venda.Cliente.Cidade, titulo.Venda.Cliente.Uf, titulo.DataVencimento.ToString("ddMMyyyy"), config.UrlRetorna, config.Observacao1, config.Observacao2, config.Observacao3);
         }
 
         public void ConsultarBoleto(Titulo titulo)
