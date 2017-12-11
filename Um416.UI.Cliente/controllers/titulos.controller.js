@@ -182,7 +182,13 @@
         };
 
         vm.consultarBoleto = function (id) {
-            alert(`Fechou o boleto do título: #${id}.`);
-        }
+            titulosService
+                .consultarBoleto(id)
+                .then(function (dados) {
+                    vm.filtrar();
+                }, function (error) {
+                    vm.error = error;
+                });
+        };
     }
 })();

@@ -12,6 +12,7 @@
             this.find = find;
             this.filtrar = filtrar;
             this.gerarBoleto = gerarBoleto;
+            this.consultarBoleto = consultarBoleto;
         };
 
         return new Service();
@@ -46,14 +47,14 @@
                 url: baseUrl + "titulos/" + id,
                 headers: { 'Authorization': loginService.getToken() }
             })
-            .then(function success(resp) {
-                def.resolve(resp.data);
-            }, function error(err) {
-                def.reject("Não foi possível obter o usuário.");
+                .then(function success(resp) {
+                    def.resolve(resp.data);
+                }, function error(err) {
+                    def.reject("Não foi possível obter o usuário.");
 
-                if (err.status == 401)
-                    loginService.logout();
-            });
+                    if (err.status == 401)
+                        loginService.logout();
+                });
 
             return def.promise;
         };
@@ -98,6 +99,27 @@
                     if (err.status == 401)
                         loginService.logout();
                 });
+
+            return def.promise;
+        };
+
+        function consultarBoleto(id) {
+            var def = $q.defer();
+
+            var login = loginService.getLogin();
+
+            $http({
+                method: "get",
+                url: baseUrl + `titulos/${id}/cliente/${login.id}/consultarboleto`,
+                headers: { 'Authorization': loginService.getToken() },
+            }).then(function success(resp) {
+                def.resolve(resp.data);
+            }, function error(err) {
+                def.reject(err.data.exceptionMessage);
+
+                if (err.status == 401)
+                    loginService.logout();
+            });
 
             return def.promise;
         };

@@ -10,39 +10,27 @@ namespace Um416.API.Controllers
     public class TitulosController : BaseController<Titulo, TituloLogic>
     {
         [HttpGet, Route("api/clientes/{clienteId}/venda/{vendaId}/titulos")]
-        public IEnumerable<Titulo> List(long clienteId, long? vendaId)
-        {
-            return _bo.ListPorCliente(clienteId, vendaId);
-        }
+        public IEnumerable<Titulo> List(long clienteId, long? vendaId) => _bo.ListPorCliente(clienteId, vendaId);
 
         [HttpPost, Route("api/titulos/baixar/{tituloId}/empresa/{empresaId}")]
-        public void BaixarTitulo(long tituloId, long empresaId)
-        {
-            _bo.BaixarTitulo(tituloId, empresaId);
-        }
+        public void BaixarTitulo(long tituloId, long empresaId) => _bo.BaixarTitulo(tituloId, empresaId);
 
         [HttpPost, Route("api/titulos/estornar/{tituloId}/empresa/{empresaId}")]
-        public void EstornarTitulo(long tituloId, long empresaId)
-        {
-            _bo.EstornarTitulo(tituloId, empresaId);
-        }
+        public void EstornarTitulo(long tituloId, long empresaId) => _bo.EstornarTitulo(tituloId, empresaId);
 
         [HttpGet, Route("api/titulos/{tituloId}/cliente/{clienteId}/gerarboleto")]
-        public string GerarBoleto(long tituloId, long clienteId)
-        {
-           return _bo.GerarBoleto(tituloId, clienteId);
-        }
+        public string GerarBoleto(long tituloId, long clienteId) => _bo.GerarBoleto(tituloId, clienteId);
+
+        [HttpGet, Route("api/titulos/{tituloId}/cliente/{clienteId}/consultarboleto")]
+        public void ConsultarBoleto(long tituloId, long clienteId) => _bo.ConsultarBoleto(tituloId, clienteId);
+
+        [HttpGet, AllowAnonymous, Route("api/titulos/consultarboletos")]
+        public void ConsultarBoletos() => _bo.ConsultarBoletos();
 
         [HttpGet, Route("api/titulos/{tituloId}/empresa/{empresaId}")]
-        public Titulo Get(long tituloId, long empresaId)
-        {
-            return _bo.Get(tituloId, empresaId);
-        }
+        public Titulo Get(long tituloId, long empresaId) => _bo.Get(tituloId, empresaId);
 
         [HttpPost, Route("api/titulos/filtrar")]
-        public IEnumerable<Titulo> Filtrar(TituloFiltroDTO filtro)
-        {
-            return _bo.Filtrar(filtro);
-        }
+        public IEnumerable<Titulo> Filtrar(TituloFiltroDTO filtro) => _bo.Filtrar(filtro);
     }
 }

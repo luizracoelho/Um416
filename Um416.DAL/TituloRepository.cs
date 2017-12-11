@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Um416.DAL.Base;
 using Um416.TransferModels;
+using System;
 
 namespace Um416.DAL
 {
@@ -99,7 +100,7 @@ namespace Um416.DAL
         {
             using (var db = new SqlConnection(ConnectionString))
             {
-                var query = @"  SELECT t.*, v.Id, v.QuantParcelas, v.Numero, v.DiaVencimento, v.ClienteId, v.LoteId, v.ValorParcela, l.Id, lo.IndicadorMultinivel , c.Nome, c.Cpf, c.Logradouro, c.Numero, c.Bairro, c.Cep, c.Cidade, c.Uf
+                var query = @"  SELECT t.*, v.Id, v.QuantParcelas, v.Numero, v.DiaVencimento, v.ClienteId, v.LoteId, v.ValorParcela, l.Id, lo.IndicadorMultinivel, lo.EmpresaId, c.Nome, c.Cpf, c.Logradouro, c.Numero, c.Bairro, c.Cep, c.Cidade, c.Uf
                                 FROM Titulos t
                                 LEFT JOIN Vendas v ON t.VendaId = v.Id
                                 LEFT JOIN UsuariosClientes c on v.ClienteId = c.Id
@@ -154,6 +155,28 @@ namespace Um416.DAL
                     tit.Venda = venda;
                     return tit;
                 }, filtro, splitOn: "Id, Nome, Codigo, Nome");
+            }
+        }
+
+        public IEnumerable<Titulo> GetTitulosEmAbertoBoletosGerados()
+        {
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var query = @"  SELECT t.*, v.Id, v.QuantParcelas, v.Numero, v.DiaVencimento, v.ClienteId, v.LoteId, v.ValorParcela, l.Id, lo.IndicadorMultinivel, lo.EmpresaId, c.Nome, c.Cpf, c.Logradouro, c.Numero, c.Bairro, c.Cep, c.Cidade, c.Uf
+                                FROM Titulos t
+                                LEFT JOIN Vendas v ON t.VendaId = v.Id
+                                LEFT JOIN UsuariosClientes c on v.ClienteId = c.Id
+                                LEFT JOIN Lotes l ON v.LoteId = l.Id
+                                LEFT JOIN Loteamentos lo on l.LoteamentoId = lo.Id
+                                WHERE t.Pago = 0 and t.BoletoGerado = 1;";
+                return db.Query<Titulo, Venda, Lote, Loteamento, UsuarioCliente, Titulo>(query, (tit, venda, lote, loteam, cli) =>
+                {
+                    lote.Loteamento = loteam;
+                    venda.Lote = lote;
+                    venda.Cliente = cli;
+                    tit.Venda = venda;
+                    return tit;
+                }, splitOn: "Id, Id, IndicadorMultinivel, Nome");
             }
         }
     }
